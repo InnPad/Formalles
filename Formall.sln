@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.Web.Mvc.Identity", "Formall.Web.Mvc.Identity\Formall.Web.Mvc.Identity.csproj", "{5785C160-C0C6-4C5E-A440-D044FA2836D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.Web.Mvc.Identity.Tests", "Formall.Web.Mvc.Identity.Tests\Formall.Web.Mvc.Identity.Tests.csproj", "{4AD55AC7-45DF-4BF9-8D33-666F3D63B425}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.Identity", "Formall.Identity\Formall.Identity.csproj", "{04BADD28-BEBB-4381-9232-BC95A6912A60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall", "Formall\Formall.csproj", "{1B322869-6D47-4DA8-B174-AB28B8589113}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.Web.Identity", "Formall.Web.Identity\Formall.Web.Identity.csproj", "{BA74FE74-2787-4CA5-AAAF-D58B75F70679}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.Persistence", "Formall.Persistence\Formall.Persistence.csproj", "{1C40EC3C-9D39-4367-92B6-7117CAFC73EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.Composition", "Formall.Composition\Formall.Composition.csproj", "{1934383F-4438-4199-855E-AE647B064D63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.Diagnostics", "Formall.Diagnostics\Formall.Diagnostics.csproj", "{10E63A81-B309-4DBA-BFEC-B8D3561493C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.OAuth2", "Formall.OAuth2\Formall.OAuth2.csproj", "{922B221C-F55E-4F14-8961-2EFF672B56EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.MongoDB", "Formall.MongoDB\Formall.MongoDB.csproj", "{32EE1C75-C0FF-41AF-967D-9C529C5046EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.CouchDB", "Formall.CouchDB\Formall.CouchDB.csproj", "{2853B55C-ED54-499B-8EA9-638F6C40CD25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.DynamoDB", "Formall.DynamoDB\Formall.DynamoDB.csproj", "{06B12D21-9C11-49F2-B368-5C13E1452877}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5785C160-C0C6-4C5E-A440-D044FA2836D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5785C160-C0C6-4C5E-A440-D044FA2836D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5785C160-C0C6-4C5E-A440-D044FA2836D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5785C160-C0C6-4C5E-A440-D044FA2836D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AD55AC7-45DF-4BF9-8D33-666F3D63B425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AD55AC7-45DF-4BF9-8D33-666F3D63B425}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AD55AC7-45DF-4BF9-8D33-666F3D63B425}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AD55AC7-45DF-4BF9-8D33-666F3D63B425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04BADD28-BEBB-4381-9232-BC95A6912A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04BADD28-BEBB-4381-9232-BC95A6912A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04BADD28-BEBB-4381-9232-BC95A6912A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04BADD28-BEBB-4381-9232-BC95A6912A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B322869-6D47-4DA8-B174-AB28B8589113}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B322869-6D47-4DA8-B174-AB28B8589113}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B322869-6D47-4DA8-B174-AB28B8589113}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B322869-6D47-4DA8-B174-AB28B8589113}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA74FE74-2787-4CA5-AAAF-D58B75F70679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA74FE74-2787-4CA5-AAAF-D58B75F70679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA74FE74-2787-4CA5-AAAF-D58B75F70679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA74FE74-2787-4CA5-AAAF-D58B75F70679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C40EC3C-9D39-4367-92B6-7117CAFC73EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C40EC3C-9D39-4367-92B6-7117CAFC73EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C40EC3C-9D39-4367-92B6-7117CAFC73EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C40EC3C-9D39-4367-92B6-7117CAFC73EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1934383F-4438-4199-855E-AE647B064D63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1934383F-4438-4199-855E-AE647B064D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1934383F-4438-4199-855E-AE647B064D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1934383F-4438-4199-855E-AE647B064D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10E63A81-B309-4DBA-BFEC-B8D3561493C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E63A81-B309-4DBA-BFEC-B8D3561493C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E63A81-B309-4DBA-BFEC-B8D3561493C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E63A81-B309-4DBA-BFEC-B8D3561493C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{922B221C-F55E-4F14-8961-2EFF672B56EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{922B221C-F55E-4F14-8961-2EFF672B56EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{922B221C-F55E-4F14-8961-2EFF672B56EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{922B221C-F55E-4F14-8961-2EFF672B56EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32EE1C75-C0FF-41AF-967D-9C529C5046EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32EE1C75-C0FF-41AF-967D-9C529C5046EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32EE1C75-C0FF-41AF-967D-9C529C5046EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32EE1C75-C0FF-41AF-967D-9C529C5046EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2853B55C-ED54-499B-8EA9-638F6C40CD25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2853B55C-ED54-499B-8EA9-638F6C40CD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2853B55C-ED54-499B-8EA9-638F6C40CD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2853B55C-ED54-499B-8EA9-638F6C40CD25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B12D21-9C11-49F2-B368-5C13E1452877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B12D21-9C11-49F2-B368-5C13E1452877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B12D21-9C11-49F2-B368-5C13E1452877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B12D21-9C11-49F2-B368-5C13E1452877}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

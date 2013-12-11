@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public interface IToken
+    public interface IDocumentContext
     {
-        DataType Type { get; }
     }
 }

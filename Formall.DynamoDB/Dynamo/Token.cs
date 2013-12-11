@@ -8,7 +8,7 @@ namespace Formall.Dynamo
 {
     using Amazon.DynamoDBv2.DocumentModel;
 
-    abstract class Token : IToken
+    abstract class Token : IEntry
     {
         public static implicit operator DynamoDBEntry(Token token)
         {
@@ -29,7 +29,7 @@ namespace Formall.Dynamo
             _type = type;
         }
 
-        DataType IToken.Type
+        DataType IEntry.Type
         {
             get { return _type; }
         }

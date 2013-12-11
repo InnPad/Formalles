@@ -10,7 +10,7 @@ namespace Formall.Dynamo
     using Amazon.DynamoDBv2.DataModel;
     using Amazon.DynamoDBv2.DocumentModel;
     using Amazon.DynamoDBv2.Model;
-    using AmazonDocument = Amazon.DynamoDBv2.DocumentModel.Document;
+    using DynamoDBDocument = Amazon.DynamoDBv2.DocumentModel.Document;
 
     class DocumentContext
     {
@@ -31,7 +31,7 @@ namespace Formall.Dynamo
                 });
 
             var metadata = response.ResponseMetadata;
-            var document = Document.FromAttributeMap(response.Item);
+            var document = DynamoDBDocument.FromAttributeMap(response.Item);
         }
     }
 }

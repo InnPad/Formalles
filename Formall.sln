@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.CouchDB", "Formall.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.DynamoDB", "Formall.DynamoDB\Formall.DynamoDB.csproj", "{06B12D21-9C11-49F2-B368-5C13E1452877}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formall.Xml", "Formall.Xml\Formall.Xml.csproj", "{9A6D92B5-C7B3-4437-8E8A-455950E7A22F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{06B12D21-9C11-49F2-B368-5C13E1452877}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06B12D21-9C11-49F2-B368-5C13E1452877}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06B12D21-9C11-49F2-B368-5C13E1452877}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6D92B5-C7B3-4437-8E8A-455950E7A22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6D92B5-C7B3-4437-8E8A-455950E7A22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6D92B5-C7B3-4437-8E8A-455950E7A22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6D92B5-C7B3-4437-8E8A-455950E7A22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

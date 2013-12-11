@@ -1,33 +1,37 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Formall.Dynamo
+namespace Formall
 {
-    using Amazon.DynamoDBv2.DocumentModel;
-    using Amazon.DynamoDBv2.Model;
-    using DynamoDBDocument = Amazon.DynamoDBv2.DocumentModel.Document;
-
     internal class Document : IDocument
     {
-        public static implicit operator DynamoDBDocument(Document document)
+        public static implicit operator XDocument(Document document)
         {
             return document != null ? document._document : null;
         }
 
-        private readonly DynamoDBDocument _document;
+        private readonly XDocument _document;
         private readonly Model _model;
 
-        public Document(DynamoDBDocument document, Model model)
+        public Document(XDocument document, Model model)
         {
             _document = document;
             _model = model;
+        }
+
+        public Document(IDocument document, Model model)
+            : this(new XDocument(), model)
+        {
+            // deep copy document in _document
+        }
+
+        public Document(IDocument document)
+            : this(document, document.Model)
+        {
         }
 
         #region - ICollection -
@@ -117,6 +121,11 @@ namespace Formall.Dynamo
 
         #region - IDocument -
 
+        public Model Model
+        {
+            get { return _model; }
+        }
+
         #endregion - IDocument -
 
         #region - IEntry -
@@ -135,7 +144,7 @@ namespace Formall.Dynamo
             throw new NotImplementedException();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
         }

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    class Model
+    public class Model : DataType
     {
+        public override Kind Kind
+        {
+            get { return Kind.Object; }
+        }
     }
 }

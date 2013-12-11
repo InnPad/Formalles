@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public class Kind
+    public class Kind : IEquatable<Kind>
     {
         public static Kind Array = new Kind("Array");
-        public static Kind Complex = new Kind("Complex");
         public static Kind Magnitude = new Kind("Magnitude");
         public static Kind Money = new Kind("Money");
+        public static Kind Object = new Kind("Object");
         public static Kind Value = new Kind("Value");
 
         private readonly string _name;
@@ -29,6 +29,11 @@ namespace Formall
         public override string ToString()
         {
             return _name;
+        }
+
+        bool IEquatable<Kind>.Equals(Kind other)
+        {
+            return _name.Equals(other._name);
         }
     }
 }

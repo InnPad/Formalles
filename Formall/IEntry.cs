@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public interface IDocument : IDictionary
+    public interface IEntry
     {
+        DataType Type { get; }
     }
 }

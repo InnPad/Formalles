@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public interface IDocument : IDictionary
+    public interface IValue : IEntry, IValidatable
     {
     }
 }

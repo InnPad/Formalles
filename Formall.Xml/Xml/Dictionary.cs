@@ -1,33 +1,39 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Formall.Dynamo
+namespace Formall.Xml
 {
-    using Amazon.DynamoDBv2.DocumentModel;
-    using Amazon.DynamoDBv2.Model;
-    using DynamoDBDocument = Amazon.DynamoDBv2.DocumentModel.Document;
-
-    internal class Document : IDocument
+    internal class Dictionary : Entry, IDictionary
     {
-        public static implicit operator DynamoDBDocument(Document document)
+        public static implicit operator XElement(Dictionary dictionary)
         {
-            return document != null ? document._document : null;
+            return dictionary != null ? dictionary._element : null;
         }
 
-        private readonly DynamoDBDocument _document;
+        private readonly XElement _element;
         private readonly Model _model;
 
-        public Document(DynamoDBDocument document, Model model)
+        public Dictionary(XElement element, Model model)
         {
-            _document = document;
+            _element = element;
             _model = model;
+        }
+
+        public Dictionary(XElement element, Model model, IDictionary dictionary)
+            : this(element, model)
+        {
+            // deep copy document in _document
+        }
+
+        public Dictionary(XElement element, IDictionary dictionary)
+            : this(element, dictionary.Model, dictionary)
+        {
+        }
+
+        public override DataType Type
+        {
+            get { return _model; }
         }
 
         #region - ICollection -
@@ -71,9 +77,13 @@ namespace Formall.Dynamo
 
         #region - IDictionary -
 
+        public Model Model
+        {
+            get { return _model; }
+        }
+
         void IDictionary<string, IEntry>.Add(string key, IEntry value)
         {
-            throw new NotImplementedException();
         }
 
         bool IDictionary<string, IEntry>.ContainsKey(string key)
@@ -115,16 +125,7 @@ namespace Formall.Dynamo
 
         #endregion - IDictionary -
 
-        #region - IDocument -
-
-        #endregion - IDocument -
-
         #region - IEntry -
-
-        DataType IEntry.Type
-        {
-            get { return _model; }
-        }
 
         #endregion - IEntry -
 
@@ -135,7 +136,7 @@ namespace Formall.Dynamo
             throw new NotImplementedException();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
         }

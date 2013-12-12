@@ -62,8 +62,10 @@
     <Compile Include="IDictionary.cs" />
     <Compile Include="IEntry.cs" />
     <Compile Include="IValidatable.cs" />
+    <Compile Include="IValidationProvider.cs" />
     <Compile Include="IValue.cs" />
     <Compile Include="IXaml.cs" />
+    <Compile Include="Kind.cs" />
     <Compile Include="List.cs" />
     <Compile Include="Magnitude.cs" />
     <Compile Include="Metadata.cs" />

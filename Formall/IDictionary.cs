@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace Formall
 {
-    public interface IDictionary : IDictionary<string, IEntry>, IEntry, IValidatable
+    public interface IDictionary : IDictionary<string, IEntry>, IEntry//, IValidatable
     {
         Model Model { get; }
     }

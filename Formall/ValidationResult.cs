@@ -9,6 +9,15 @@ namespace Formall
 {
     public class ValidationResult : IResult
     {
+        public static readonly ValidationResult Success;
+
+        private readonly Error _error;
+
+        public ValidationResult(Error error)
+        {
+            _error = error;
+        }
+        
         public bool IsAsynchronous
         {
             get { throw new NotImplementedException(); }

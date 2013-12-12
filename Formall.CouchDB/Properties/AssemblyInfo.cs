@@ -8,8 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Formall.CouchDB")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TradeStation")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Formall.CouchDB")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyCopyright("Copyright © TradeStation 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6d9e1d24-851a-40a9-83ba-3142097a6934")]
+[assembly: Guid("0279f75b-cf20-4f0f-b932-b178732087ee")]
 
 // Version information for an assembly consists of the following four values:
 //

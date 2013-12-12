@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{10E63A81-B309-4DBA-BFEC-B8D3561493C3}</ProjectGuid>
+    <ProjectGuid>{BBD01F42-A9A8-4426-B30C-3AF9B716C864}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Formall.Diagnostics</RootNamespace>

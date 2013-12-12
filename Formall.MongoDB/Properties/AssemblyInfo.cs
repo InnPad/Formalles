@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Formall.MongoDB")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TradeStation")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Formall.MongoDB")]
-[assembly: AssemblyCopyright("Copyright © TradeStation 2013")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2469fcbe-09ba-4292-819c-81c2d9ba5cfa")]
+[assembly: Guid("b441ba42-a56d-4151-a80c-7afd941a2870")]
 
 // Version information for an assembly consists of the following four values:
 //

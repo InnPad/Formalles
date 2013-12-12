@@ -8,9 +8,16 @@ namespace Formall
 {
     public class Model : DataType
     {
-        public override Kind Kind
+        public List<Action> Actions
         {
-            get { return Kind.Object; }
+            get;
+            set;
+        }
+
+        public List<Field> Fields
+        {
+            get;
+            set;
         }
     }
 }

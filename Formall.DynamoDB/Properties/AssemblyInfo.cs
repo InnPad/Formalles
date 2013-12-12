@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Formall.DynamoDB")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TradeStation")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Formall.DynamoDB")]
-[assembly: AssemblyCopyright("Copyright © TradeStation 2013")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("977fc12f-d0c0-4693-9ef4-ab5b7ba647be")]
+[assembly: Guid("0d18bc7e-92eb-4c51-840f-20f72a2214f7")]
 
 // Version information for an assembly consists of the following four values:
 //

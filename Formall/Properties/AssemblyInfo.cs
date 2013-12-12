@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Formall")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TradeStation")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Formall")]
-[assembly: AssemblyCopyright("Copyright © TradeStation 2013")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f0112a65-a8ee-4652-b5c0-aadf59509e26")]
+[assembly: Guid("68f3da25-0cff-46c0-8967-75c9ead62aa3")]
 
 // Version information for an assembly consists of the following four values:
 //

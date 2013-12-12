@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public class Text : Dictionary<string, string>
+    public class Text : Dictionary<string, string>//, IObject
     {
     }
 }

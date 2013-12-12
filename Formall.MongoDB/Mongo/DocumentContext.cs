@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall.Mongo
 {
-    class DocumentContext
+    public class DocumentContext : IDocumentContext
     {
     }
 }

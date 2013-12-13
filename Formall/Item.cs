@@ -6,7 +6,24 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public class Item //: IObject
+    public class Item //: IDictionary
     {
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public Text Title
+        {
+            get;
+            set;
+        }
+
+        public Text Tooltip
+        {
+            get;
+            set;
+        }
     }
 }

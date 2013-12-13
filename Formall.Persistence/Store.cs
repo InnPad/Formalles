@@ -1,33 +1,23 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
-namespace Formall.Dynamo
+namespace Formall
 {
-    using Amazon.DynamoDBv2.DocumentModel;
-    using Amazon.DynamoDBv2.Model;
-    using DynamoDBDocument = Amazon.DynamoDBv2.DocumentModel.Document;
-
-    internal class Document : IDocument
+    public class Store : IDocument, IFileSystem, ISegment
     {
-        public static implicit operator DynamoDBDocument(Document document)
-        {
-            return document != null ? document._document : null;
-        }
+        private static Model _model;
+        private IDocument _document;
 
-        private readonly DynamoDBDocument _document;
-        private readonly Model _model;
-
-        public Document(DynamoDBDocument document, Model model)
+        public string Name
         {
-            _document = document;
-            _model = model;
+            get;
+            set;
         }
 
         #region - ICollection -
@@ -78,7 +68,6 @@ namespace Formall.Dynamo
 
         void IDictionary<string, IEntry>.Add(string key, IEntry value)
         {
-            throw new NotImplementedException();
         }
 
         bool IDictionary<string, IEntry>.ContainsKey(string key)
@@ -122,16 +111,57 @@ namespace Formall.Dynamo
 
         #region - IDocument -
 
-        #endregion - IDocument -
+        IEntry IDocument.this[string name]
+        {
+            get { return _document[name]; }
+        }
 
-        #region - IEntry -
+        Guid IDocument.Id
+        {
+            get { return _document.Id; }
+        }
 
-        DataType IEntry.Type
+        string IDocument.Key
+        {
+            get { return _document.Key; }
+        }
+
+        Metadata IDocument.Metadata
+        {
+            get { return _document.Metadata; }
+        }
+
+        Model IDocument.Model
         {
             get { return _model; }
         }
 
-        #endregion - IEntry -
+        IDictionary IDocument.ToObject()
+        {
+            return _document.ToObject();
+        }
+
+        TObject IDocument.ToObject<TObject>()
+        {
+            return _document.ToObject<TObject>();
+        }
+
+        XDocument IDocument.ToXml()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDocument.WriteJson(TextWriter writer)
+        {
+            _document.WriteJson(writer);
+        }
+
+        void IDocument.WriteJson(Stream stream)
+        {
+            _document.WriteJson(stream);
+        }
+
+        #endregion - IDocument -
 
         #region - IEnumerable -
 
@@ -140,20 +170,59 @@ namespace Formall.Dynamo
             throw new NotImplementedException();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
         #endregion - IEnumerable -
 
-        #region - IValidatable -
+        #region - IFileSystem -
 
-        IEnumerable<ValidationResult> IValidatable.Validate(ValidationContext validationContext)
+        DateTime IFileSystem.CreationTime
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        #endregion - IValidatable -
+        string IFileSystem.FullName
+        {
+            get { return this.Name; }
+        }
+
+        DateTime IFileSystem.LastAccessTime
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        DateTime IFileSystem.LastWriteTime
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion - IFileSystem -
+
+        #region - ISegment -
+
+        string ISegment.Name
+        {
+            get { return this.Name.Split('/').Last(); }
+        }
+
+        ISegment ISegment.Parent
+        {
+            get { return Schema.Current.ParentOf(this); }
+        }
+
+        string ISegment.Path
+        {
+            get { return this.Name; }
+        }
+
+        List<ISegment> ISegment.Children
+        {
+            get { return null; }
+        }
+
+        #endregion - ISegment -
     }
 }

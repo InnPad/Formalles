@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formall
+namespace Formall.Raven
 {
-    public class View //: IObject
+    internal class Entry
     {
     }
 }

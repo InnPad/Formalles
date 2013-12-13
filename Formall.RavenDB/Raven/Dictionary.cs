@@ -8,11 +8,11 @@ namespace Formall.Raven
 {
     using global::Raven.Json.Linq;
 
-    internal class Object : IDictionary
+    internal class Dictionary : IDictionary
     {
         private readonly RavenJObject _jsonObject;
 
-        public Object(RavenJObject jsonObject)
+        public Dictionary(RavenJObject jsonObject)
         {
             _jsonObject = jsonObject;
         }

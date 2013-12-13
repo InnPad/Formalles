@@ -73,10 +73,13 @@
   <ItemGroup>
     <Compile Include="JsonCreationConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Raven\Collection.cs" />
     <Compile Include="Raven\Document.cs" />
     <Compile Include="Raven\DocumentContext.cs" />
     <Compile Include="Raven\EmbeddableDocumentContext.cs" />
-    <Compile Include="Raven\Object.cs" />
+    <Compile Include="Raven\Dictionary.cs" />
+    <Compile Include="Raven\Entry.cs" />
+    <Compile Include="Raven\Value.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

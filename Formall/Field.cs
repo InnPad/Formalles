@@ -6,22 +6,12 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public class Field //: IObject
+    public class Field //: IDictionary
     {
-        #region <General>
-
-        public Guid Identity
-        {
-            get;
-            set;
-        }
-
         public string Name
         {
             get;
             set;
         }
-
-        #endregion 
     }
 }

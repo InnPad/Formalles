@@ -39,7 +39,7 @@ namespace Formall.Raven
 
         public IDictionary ToObject()
         {
-            return new Object(_jsonDocument.ToJson());
+            return new Dictionary(_jsonDocument.ToJson());
         }
 
         public TObject ToObject<TObject>()

@@ -14,7 +14,7 @@ namespace Formall
 
             // add an error ALWAYS for testing - it doesn't show up
             // and the debugger never hits this code
-            results.Add(new ValidationResult(/*"Validate Added message", new[] { "Company" }*/));
+            //results.Add(new ValidationResult(/*"Validate Added message", new[] { "Company" }*/));
 
             return results;
         }

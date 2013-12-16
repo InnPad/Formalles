@@ -9,7 +9,7 @@ namespace Formall.Reflection
     using Formall.Linq;
     using Formall.Navigation;
 
-    public class Value : DataType
+    public class Value : DataType, IDictionary, IDocument, IEntry, IFileSystem, ISegment
     {
         public const string GUID = "";
 

@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content.cs" />
-    <Compile Include="DisplayMode.cs" />
-    <Compile Include="IXaml.cs" />
-    <Compile Include="Note.cs" />
-    <Compile Include="Page.cs" />
+    <Compile Include="Presentation\Content.cs" />
+    <Compile Include="Presentation\DisplayMode.cs" />
+    <Compile Include="Presentation\IXaml.cs" />
+    <Compile Include="Presentation\Note.cs" />
+    <Compile Include="Presentation\Page.cs" />
+    <Compile Include="Presentation\AngularSyntaxTransformation.cs" />
+    <Compile Include="Presentation\TemplateSyntaxTransformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

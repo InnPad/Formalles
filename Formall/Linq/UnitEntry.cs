@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall.Linq
 {
-    public interface IValue : IObject
+    class UnitEntry
     {
     }
 }

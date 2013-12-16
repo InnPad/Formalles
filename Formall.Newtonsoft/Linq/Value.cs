@@ -17,7 +17,7 @@ namespace Formall.Linq
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    internal class Value : Entry, IValue
+    internal class Value : Entry
     {
         public static implicit operator JValue(Value value)
         {

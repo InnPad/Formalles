@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formall.Reflection
+namespace Formall.Linq
 {
-    /// <summary>
-    /// This is not a actual object
-    /// </summary>
-    public static class Multitude
+    class MoneyEntry
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall.Reflection
 {
-    public class List : DataType
+    public class List : DataType, IDictionary, IDocument, IEntry, IFileSystem, ISegment
     {
         private static readonly object _lock = new object();
         private static Model _model;

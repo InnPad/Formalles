@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace Formall.Linq
 {
+    using Formall.Navigation;
     using Formall.Reflection;
-    
+
     internal class Dictionary : IDictionary
     {
         private readonly Dictionary<string, IEntry> _internal;
@@ -20,6 +21,86 @@ namespace Formall.Linq
         {
             _model = model;
             _internal = new Dictionary<string, IEntry>();
+        }
+
+        protected virtual IEntry CreateEntry(string name, object value)
+        {
+            var field = _model.Fields.FirstOrDefault(o => o.Name == name) ?? _model.Fields.FirstOrDefault(o => string.Equals(o.Name, name, StringComparison.OrdinalIgnoreCase));
+
+            var typeName = field.Type;
+            var typeDocument = Schema.Current.Read(typeName);
+            var typeMetadata = typeDocument.Metadata;
+
+            IEntry entry = null;
+
+            var typeKey = typeDocument.Key.Split('/');
+            if (typeKey[0] == "Type")
+            {
+                if (typeKey[1] == "Model")
+                {
+                    return new ObjectEntry(name, value, typeDocument as Model);
+                }
+                else
+                {
+
+                }
+            }
+
+            var dataType = typeDocument as DataType;
+
+            return entry;
+        }
+
+        protected virtual object GetDefaultValue(string key)
+        {
+            return null;
+        }
+
+        private object GetValue(string key)
+        {
+            IEntry entry;
+
+            if (_internal.TryGetValue(key, out entry))
+            {
+                if (entry.Type == EntryType.Object)
+                {
+                    return entry;
+                }
+            }
+
+            return GetDefaultValue(key);
+        }
+
+        public object SetValue(string key, object value)
+        {
+            IEntry entry;
+            if (_internal.TryGetValue(key, out entry))
+            {
+                _internal.Remove(key);
+                entry = null;
+            }
+
+            if (value != null)
+            {
+                entry = CreateEntry(key, value);
+                _internal.Add(key, entry);
+            }
+
+            return entry;
+        }
+
+        public override string ToString()
+        {
+            var message = new StringWriter();
+            foreach (var item in _internal)
+                message.WriteLine("{0}:\t{1}", item.Key, item.Value);
+            return message.ToString();
+        }
+
+        public object WriteMethodInfo(string methodInfo)
+        {
+            Console.WriteLine(methodInfo);
+            return 42; // because it is the answer to everything
         }
 
         #region  - IDictionary -
@@ -138,7 +219,7 @@ namespace Formall.Linq
 
         public DynamicMetaObject GetMetaObject(Expression parameter)
         {
-            throw new NotImplementedException();
+            return new MetaObject(parameter, this);
         }
 
         #endregion  - IDynamicMetaObjectProvider -
@@ -166,5 +247,89 @@ namespace Formall.Linq
         }
 
         #endregion - IObject -
+
+        #region = MetaObject =
+
+        private class MetaObject : System.Dynamic.DynamicMetaObject
+        {
+            private readonly Dictionary _dictionary;
+
+            public MetaObject(Expression expression, Dictionary value)
+                : base(expression, BindingRestrictions.Empty, value)
+            {
+            }
+
+            public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
+            {
+                // Method call in the containing class:
+                string methodName = "GetValue";
+
+                // One parameter
+                Expression[] parameters = new Expression[]
+                {
+                    Expression.Constant(binder.Name)
+                };
+
+                DynamicMetaObject getValue = new DynamicMetaObject(
+                    Expression.Call(
+                        Expression.Convert(Expression, LimitType),
+                        typeof(Dictionary).GetMethod(methodName),
+                        parameters),
+                    BindingRestrictions.GetTypeRestriction(Expression, LimitType));
+                return getValue;
+            }
+
+            public override DynamicMetaObject BindInvokeMember(InvokeMemberBinder binder, DynamicMetaObject[] args)
+            {
+                var paramInfo = new StringBuilder();
+                paramInfo.AppendFormat("Calling {0}(", binder.Name);
+                foreach (var item in args)
+                    paramInfo.AppendFormat("{0}, ", item.Value);
+                paramInfo.Append(")");
+
+                var parameters = new Expression[]
+                {
+                    Expression.Constant(paramInfo.ToString())
+                };
+
+                DynamicMetaObject methodInfo = new DynamicMetaObject(
+                    Expression.Call(
+                    Expression.Convert(Expression, LimitType),
+                    typeof(Dictionary).GetMethod("WriteMethodInfo"),
+                    parameters),
+                    BindingRestrictions.GetTypeRestriction(Expression, LimitType));
+                return methodInfo;
+            }
+
+            public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
+            {
+                // Method to call in the containing class:
+                string methodName = "SetValue";
+
+                // setup the binding restrictions.
+                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                // setup the parameters:
+                var args = new Expression[2];
+                // First parameter is the name of the property to Set
+                args[0] = Expression.Constant(binder.Name);
+                // Second parameter is the value
+                args[1] = Expression.Convert(value.Expression, typeof(object));
+
+                // Setup the 'this' reference
+                var self = Expression.Convert(Expression, LimitType);
+
+                // Setup the method call expression
+                var methodCall = Expression.Call(self, typeof(Dictionary).GetMethod(methodName), args);
+
+                // Create a meta object to invoke Set later:
+                var setValue = new DynamicMetaObject(methodCall, restrictions);
+
+                // return that dynamic object
+                return setValue;
+            }
+        }
+
+        #endregion = MetaObject =
     }
 }

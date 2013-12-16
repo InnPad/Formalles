@@ -124,6 +124,11 @@ namespace Formall.Navigation
 
         #region - IDocumentContext -
 
+        public IDocument Read(string path)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion - IDocumentContext -
 
         #region - IEdmx -

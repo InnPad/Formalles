@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Formall.Reflection
 {
-    public class Money : DataType
-    {
-        private static Model _model;
+    using Formall.Linq;
 
-        protected override Model Template
+    public class Money : Unit
+    {
+        internal Money(IDocument document)
+            : base(document)
         {
-            get { return _model; }
         }
     }
 }

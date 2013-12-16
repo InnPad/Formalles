@@ -2,8 +2,8 @@
 
 namespace Formall
 {
-    using global::Raven.Imports.Newtonsoft.Json;
-    using global::Raven.Imports.Newtonsoft.Json.Linq;
+    using Raven.Imports.Newtonsoft.Json;
+    using Raven.Imports.Newtonsoft.Json.Linq;
 
     public abstract class JsonCreationConverter<T> : JsonConverter
     {

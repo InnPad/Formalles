@@ -58,6 +58,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Spatial, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -73,13 +74,13 @@
   <ItemGroup>
     <Compile Include="JsonCreationConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Raven\Collection.cs" />
-    <Compile Include="Raven\Document.cs" />
-    <Compile Include="Raven\DocumentContext.cs" />
-    <Compile Include="Raven\EmbeddableDocumentContext.cs" />
-    <Compile Include="Raven\Dictionary.cs" />
-    <Compile Include="Raven\Entry.cs" />
-    <Compile Include="Raven\Value.cs" />
+    <Compile Include="Linq\Collection.cs" />
+    <Compile Include="Linq\Document.cs" />
+    <Compile Include="Linq\DocumentContext.cs" />
+    <Compile Include="Linq\EmbeddableDocumentContext.cs" />
+    <Compile Include="Linq\Dictionary.cs" />
+    <Compile Include="Linq\Entry.cs" />
+    <Compile Include="Linq\Value.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

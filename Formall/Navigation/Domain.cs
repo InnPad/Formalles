@@ -4,21 +4,23 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Formall
+namespace Formall.Navigation
 {
     using Formall.Linq;
     using Formall.Navigation;
     using Formall.Persistence;
     using Formall.Reflection;
 
-    public class Error : IDictionary, IDocument, IEntry, IFileSystem, ISegment
+    /// <summary>
+    /// Root Segment
+    /// </summary>
+    public class Domain : IDictionary, IDocument, IEntry, IFileSystem, ISegment
     {
         private static readonly object _lock = new object();
         private static Model _model;
-
+        
         private static Model GetModel()
         {
             var model = _model;
@@ -37,10 +39,9 @@ namespace Formall
 
         private IDictionary _internal;
         private IDocument _document;
-        private IList<Action> _actions;
-        private IList<Field> _fields;
+        private List<ISegment> _children;
 
-        public Error(IDocument document)
+        internal Domain(IDocument document)
         {
             _document = document;
         }
@@ -49,14 +50,8 @@ namespace Formall
         {
             get { return _internal ?? (_internal = (_document.Content as IDictionary) ?? new Dictionary(GetModel())); }
         }
-
+        
         public string Name
-        {
-            get;
-            set;
-        }
-
-        public Text Message
         {
             get;
             set;
@@ -260,7 +255,7 @@ namespace Formall
 
         List<ISegment> ISegment.Children
         {
-            get { return null; }
+            get { return _children ?? (_children = new List<ISegment>()); }
         }
 
         #endregion - ISegment -

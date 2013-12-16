@@ -4,21 +4,18 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Formall
+namespace Formall.Reflection
 {
     using Formall.Linq;
     using Formall.Navigation;
     using Formall.Persistence;
-    using Formall.Reflection;
 
-    public class Error : IDictionary, IDocument, IEntry, IFileSystem, ISegment
+    public class Model : DataType, IDictionary, IDocument, IEntry, IFileSystem, ISegment
     {
         private static readonly object _lock = new object();
         private static Model _model;
-
+        
         private static Model GetModel()
         {
             var model = _model;
@@ -40,7 +37,7 @@ namespace Formall
         private IList<Action> _actions;
         private IList<Field> _fields;
 
-        public Error(IDocument document)
+        internal Model(IDocument document)
         {
             _document = document;
         }
@@ -50,16 +47,16 @@ namespace Formall
             get { return _internal ?? (_internal = (_document.Content as IDictionary) ?? new Dictionary(GetModel())); }
         }
 
-        public string Name
+        public IList<Action> Actions
         {
-            get;
-            set;
+            get { return _actions ?? (_actions = new List<Action>()); }
+            set { _actions = value; }
         }
 
-        public Text Message
+        public IList<Field> Fields
         {
-            get;
-            set;
+            get { return _fields ?? (_fields = new List<Field>()); }
+            set { _fields = value; }
         }
 
         #region - ICollection -

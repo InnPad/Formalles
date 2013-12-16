@@ -4,20 +4,17 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Formall
+namespace Formall.Reflection
 {
     using Formall.Linq;
-    using Formall.Navigation;
-    using Formall.Persistence;
-    using Formall.Reflection;
 
-    public class Error : IDictionary, IDocument, IEntry, IFileSystem, ISegment
+    public class Action : IDictionary, IEntry
     {
         private static readonly object _lock = new object();
         private static Model _model;
+        private IDictionary _dictionary;
 
         private static Model GetModel()
         {
@@ -35,19 +32,9 @@ namespace Formall
             return model;
         }
 
-        private IDictionary _internal;
-        private IDocument _document;
-        private IList<Action> _actions;
-        private IList<Field> _fields;
-
-        public Error(IDocument document)
+        internal Action(IDictionary dictionary)
         {
-            _document = document;
-        }
-
-        private IDictionary InternalDictionary
-        {
-            get { return _internal ?? (_internal = (_document.Content as IDictionary) ?? new Dictionary(GetModel())); }
+            _dictionary = dictionary;
         }
 
         public string Name
@@ -56,47 +43,46 @@ namespace Formall
             set;
         }
 
-        public Text Message
+        public XElement ToXElement()
         {
-            get;
-            set;
+            throw new NotImplementedException();
         }
 
         #region - ICollection -
 
         void ICollection<KeyValuePair<string, IEntry>>.Add(KeyValuePair<string, IEntry> item)
         {
-            InternalDictionary.Add(item);
+            _dictionary.Add(item);
         }
 
         void ICollection<KeyValuePair<string, IEntry>>.Clear()
         {
-            InternalDictionary.Clear();
+            _dictionary.Clear();
         }
 
         bool ICollection<KeyValuePair<string, IEntry>>.Contains(KeyValuePair<string, IEntry> item)
         {
-            return InternalDictionary.Contains(item);
+            return _dictionary.Contains(item);
         }
 
         void ICollection<KeyValuePair<string, IEntry>>.CopyTo(KeyValuePair<string, IEntry>[] array, int arrayIndex)
         {
-            InternalDictionary.CopyTo(array, arrayIndex);
+            _dictionary.CopyTo(array, arrayIndex);
         }
 
         int ICollection<KeyValuePair<string, IEntry>>.Count
         {
-            get { return InternalDictionary.Count; }
+            get { return _dictionary.Count; }
         }
 
         bool ICollection<KeyValuePair<string, IEntry>>.IsReadOnly
         {
-            get { return InternalDictionary.IsReadOnly; }
+            get { return _dictionary.IsReadOnly; }
         }
 
         bool ICollection<KeyValuePair<string, IEntry>>.Remove(KeyValuePair<string, IEntry> item)
         {
-            return InternalDictionary.Remove(item);
+            return _dictionary.Remove(item);
         }
 
         #endregion - ICollection -
@@ -110,76 +96,52 @@ namespace Formall
 
         T IDictionary.Value<T>(string name)
         {
-            return InternalDictionary.Value<T>(name);
+            return _dictionary.Value<T>(name);
         }
 
         void IDictionary<string, IEntry>.Add(string key, IEntry value)
         {
-            InternalDictionary.Add(key, value);
+            _dictionary.Add(key, value);
         }
 
         bool IDictionary<string, IEntry>.ContainsKey(string key)
         {
-            return InternalDictionary.ContainsKey(key);
+            return _dictionary.ContainsKey(key);
         }
 
         ICollection<string> IDictionary<string, IEntry>.Keys
         {
-            get { return InternalDictionary.Keys; }
+            get { return _dictionary.Keys; }
         }
 
         bool IDictionary<string, IEntry>.Remove(string key)
         {
-            return InternalDictionary.Remove(key);
+            return _dictionary.Remove(key);
         }
 
         bool IDictionary<string, IEntry>.TryGetValue(string key, out IEntry value)
         {
-            return InternalDictionary.TryGetValue(key, out value);
+            return _dictionary.TryGetValue(key, out value);
         }
 
         ICollection<IEntry> IDictionary<string, IEntry>.Values
         {
-            get { return InternalDictionary.Values; }
+            get { return _dictionary.Values; }
         }
 
         IEntry IDictionary<string, IEntry>.this[string key]
         {
-            get { return InternalDictionary[key]; }
-            set { InternalDictionary[key] = value; }
+            get { return _dictionary[key]; }
+            set { _dictionary[key] = value; }
         }
 
         #endregion - IDictionary -
-
-        #region - IDocument -
-
-        object IDocument.Content
-        {
-            get { return InternalDictionary; }
-        }
-
-        Guid IDocument.Id
-        {
-            get { return _document.Id; }
-        }
-
-        string IDocument.Key
-        {
-            get { return _document.Key; }
-        }
-
-        Metadata IDocument.Metadata
-        {
-            get { return _document.Metadata; }
-        }
-
-        #endregion - IDocument -
 
         #region - DynamicMetaObjectProvider -
 
         DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(Expression parameter)
         {
-            return InternalDictionary.GetMetaObject(parameter);
+            return _dictionary.GetMetaObject(parameter);
         }
 
         #endregion - DynamicMetaObjectProvider -
@@ -207,63 +169,15 @@ namespace Formall
 
         IEnumerator<KeyValuePair<string, IEntry>> IEnumerable<KeyValuePair<string, IEntry>>.GetEnumerator()
         {
-            return InternalDictionary.GetEnumerator();
+            return _dictionary.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return InternalDictionary.GetEnumerator();
+            return _dictionary.GetEnumerator();
         }
 
         #endregion - IEnumerable -
-
-        #region - IFileSystem -
-
-        DateTime IFileSystem.CreationTime
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        string IFileSystem.FullName
-        {
-            get { return this.Name; }
-        }
-
-        DateTime IFileSystem.LastAccessTime
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        DateTime IFileSystem.LastWriteTime
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion - IFileSystem -
-
-        #region - ISegment -
-
-        string ISegment.Name
-        {
-            get { return this.Name.Split('/').Last(); }
-        }
-
-        ISegment ISegment.Parent
-        {
-            get { return Schema.Current.ParentOf(this); }
-        }
-
-        string ISegment.Path
-        {
-            get { return this.Name; }
-        }
-
-        List<ISegment> ISegment.Children
-        {
-            get { return null; }
-        }
-
-        #endregion - ISegment -
 
         #region - IObject -
 
@@ -274,17 +188,17 @@ namespace Formall
 
         TObject IObject.ToObject<TObject>()
         {
-            return InternalDictionary.ToObject<TObject>();
+            return _dictionary.ToObject<TObject>();
         }
 
         void IObject.WriteJson(Stream stream)
         {
-            InternalDictionary.WriteJson(stream);
+            _dictionary.WriteJson(stream);
         }
 
         void IObject.WriteJson(TextWriter writer)
         {
-            InternalDictionary.WriteJson(writer);
+            _dictionary.WriteJson(writer);
         }
 
         #endregion - IObject -

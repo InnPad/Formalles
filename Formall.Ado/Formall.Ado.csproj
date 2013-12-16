@@ -7,7 +7,7 @@
     <ProjectGuid>{4AC5F930-FD08-4C6E-9F22-99CE70985DEE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Formall.Ado</RootNamespace>
+    <RootNamespace>Formall</RootNamespace>
     <AssemblyName>Formall.Ado</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -39,7 +39,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Persistence\AdoDocumentContext.cs" />
+    <Compile Include="Linq\Dictionary.cs" />
+    <Compile Include="Linq\Document.cs" />
+    <Compile Include="Linq\Entry.cs" />
+    <Compile Include="Linq\Value.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Formall\Formall.csproj">
+      <Project>{f2147785-4648-4bd4-9d73-d61e07e1b0de}</Project>
+      <Name>Formall</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,54 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
-namespace Formall
+namespace Formall.Reflection
 {
-    using Formall.Linq;
-    using Formall.Navigation;
-    using Formall.Persistence;
-    using Formall.Reflection;
-
-    public class Error : IDictionary, IDocument, IEntry, IFileSystem, ISegment
+    public class Area : IDocument, IEdmx, IFileSystem, ISegment
     {
-        private static readonly object _lock = new object();
         private static Model _model;
-
-        private static Model GetModel()
-        {
-            var model = _model;
-
-            if (model == null)
-            {
-                lock (_lock)
-                {
-                    model = _model ?? (_model = new Model(null));
-                    throw new NotImplementedException();
-                }
-            }
-
-            return model;
-        }
-
-        private IDictionary _internal;
         private IDocument _document;
-        private IList<Action> _actions;
-        private IList<Field> _fields;
-
-        public Error(IDocument document)
-        {
-            _document = document;
-        }
-
-        private IDictionary InternalDictionary
-        {
-            get { return _internal ?? (_internal = (_document.Content as IDictionary) ?? new Dictionary(GetModel())); }
-        }
+        private List<ISegment> _children;
 
         public string Name
         {
@@ -56,7 +21,13 @@ namespace Formall
             set;
         }
 
-        public Text Message
+        public Text Summary
+        {
+            get;
+            set;
+        }
+
+        public Text Title
         {
             get;
             set;
@@ -66,96 +37,96 @@ namespace Formall
 
         void ICollection<KeyValuePair<string, IEntry>>.Add(KeyValuePair<string, IEntry> item)
         {
-            InternalDictionary.Add(item);
+            throw new NotImplementedException();
         }
 
         void ICollection<KeyValuePair<string, IEntry>>.Clear()
         {
-            InternalDictionary.Clear();
+            throw new NotImplementedException();
         }
 
         bool ICollection<KeyValuePair<string, IEntry>>.Contains(KeyValuePair<string, IEntry> item)
         {
-            return InternalDictionary.Contains(item);
+            throw new NotImplementedException();
         }
 
         void ICollection<KeyValuePair<string, IEntry>>.CopyTo(KeyValuePair<string, IEntry>[] array, int arrayIndex)
         {
-            InternalDictionary.CopyTo(array, arrayIndex);
+            throw new NotImplementedException();
         }
 
         int ICollection<KeyValuePair<string, IEntry>>.Count
         {
-            get { return InternalDictionary.Count; }
+            get { throw new NotImplementedException(); }
         }
 
         bool ICollection<KeyValuePair<string, IEntry>>.IsReadOnly
         {
-            get { return InternalDictionary.IsReadOnly; }
+            get { throw new NotImplementedException(); }
         }
 
         bool ICollection<KeyValuePair<string, IEntry>>.Remove(KeyValuePair<string, IEntry> item)
         {
-            return InternalDictionary.Remove(item);
+            throw new NotImplementedException();
         }
 
         #endregion - ICollection -
 
         #region - IDictionary -
 
-        Model IDictionary.Model
+        public Model Model
         {
-            get { return GetModel(); }
-        }
-
-        T IDictionary.Value<T>(string name)
-        {
-            return InternalDictionary.Value<T>(name);
+            get { return _model; }
         }
 
         void IDictionary<string, IEntry>.Add(string key, IEntry value)
         {
-            InternalDictionary.Add(key, value);
         }
 
         bool IDictionary<string, IEntry>.ContainsKey(string key)
         {
-            return InternalDictionary.ContainsKey(key);
+            throw new NotImplementedException();
         }
 
         ICollection<string> IDictionary<string, IEntry>.Keys
         {
-            get { return InternalDictionary.Keys; }
+            get { throw new NotImplementedException(); }
         }
 
         bool IDictionary<string, IEntry>.Remove(string key)
         {
-            return InternalDictionary.Remove(key);
+            throw new NotImplementedException();
         }
 
         bool IDictionary<string, IEntry>.TryGetValue(string key, out IEntry value)
         {
-            return InternalDictionary.TryGetValue(key, out value);
+            throw new NotImplementedException();
         }
 
         ICollection<IEntry> IDictionary<string, IEntry>.Values
         {
-            get { return InternalDictionary.Values; }
+            get { throw new NotImplementedException(); }
         }
 
         IEntry IDictionary<string, IEntry>.this[string key]
         {
-            get { return InternalDictionary[key]; }
-            set { InternalDictionary[key] = value; }
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion - IDictionary -
 
         #region - IDocument -
 
-        object IDocument.Content
+        IEntry IDocument.this[string name]
         {
-            get { return InternalDictionary; }
+            get { return _document[name]; }
         }
 
         Guid IDocument.Id
@@ -173,33 +144,48 @@ namespace Formall
             get { return _document.Metadata; }
         }
 
+        Model IDocument.Model
+        {
+            get { return _model; }
+        }
+
+        IDictionary IDocument.ToObject()
+        {
+            return _document.ToObject();
+        }
+
+        TObject IDocument.ToObject<TObject>()
+        {
+            return _document.ToObject<TObject>();
+        }
+
+        XDocument IDocument.ToXml()
+        {
+            return _document.ToXml();
+        }
+
+        void IDocument.WriteJson(TextWriter writer)
+        {
+            _document.WriteJson(writer);
+        }
+
+        void IDocument.WriteJson(Stream stream)
+        {
+            _document.WriteJson(stream);
+        }
+
         #endregion - IDocument -
 
-        #region - DynamicMetaObjectProvider -
+        #region - IEdmx -
 
-        DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(Expression parameter)
+        XElement IEdmx.ToEdmx()
         {
-            return InternalDictionary.GetMetaObject(parameter);
+            throw new NotImplementedException();
         }
 
-        #endregion - DynamicMetaObjectProvider -
+        #endregion - IEdmx -
 
         #region - IEntry -
-
-        string IEntry.Name
-        {
-            get { return this.Name.Split('/').Last(); }
-        }
-
-        string IEntry.Path
-        {
-            get { return this.Name; }
-        }
-
-        EntryType IEntry.Type
-        {
-            get { return EntryType.Object; }
-        }
 
         #endregion - IEntry -
 
@@ -207,12 +193,12 @@ namespace Formall
 
         IEnumerator<KeyValuePair<string, IEntry>> IEnumerable<KeyValuePair<string, IEntry>>.GetEnumerator()
         {
-            return InternalDictionary.GetEnumerator();
+            throw new NotImplementedException();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return InternalDictionary.GetEnumerator();
+            throw new NotImplementedException();
         }
 
         #endregion - IEnumerable -
@@ -260,33 +246,9 @@ namespace Formall
 
         List<ISegment> ISegment.Children
         {
-            get { return null; }
+            get { return _children ?? (_children = new List<ISegment>()); }
         }
 
         #endregion - ISegment -
-
-        #region - IObject -
-
-        DataType IObject.DataType
-        {
-            get { return GetModel(); }
-        }
-
-        TObject IObject.ToObject<TObject>()
-        {
-            return InternalDictionary.ToObject<TObject>();
-        }
-
-        void IObject.WriteJson(Stream stream)
-        {
-            InternalDictionary.WriteJson(stream);
-        }
-
-        void IObject.WriteJson(TextWriter writer)
-        {
-            InternalDictionary.WriteJson(writer);
-        }
-
-        #endregion - IObject -
     }
 }

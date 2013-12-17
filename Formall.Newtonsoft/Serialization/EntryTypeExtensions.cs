@@ -18,7 +18,7 @@ namespace Formall.Linq
                 case JTokenType.Object:
                     return EntryType.Object;
                 case JTokenType.Array:
-                    return EntryType.Array;
+                    return EntryType.List;
                 case JTokenType.Constructor:
                     return EntryType.Constructor;
                 case JTokenType.Property:

@@ -16,14 +16,12 @@ namespace Formall.Reflection
         private static readonly object _lock = new object();
         private static Model _model;
         
-        private IDocument _document;
-        private IList<Action> _actions;
-        private IList<Field> _fields;
+        private Collection<Action> _actions;
+        private Collection<Field> _fields;
 
-        internal Model(IDocument document, ISegment parent)
-            : base(document, parent)
+        internal Model(IEntity entity, ISegment parent)
+            : base(entity, parent)
         {
-            _document = document;
         }
 
         private IDataContext DataContext
@@ -31,16 +29,14 @@ namespace Formall.Reflection
             get { throw new NotFiniteNumberException(); }
         }
 
-        public IList<Action> Actions
+        public Collection<Action> Actions
         {
-            get { return _actions ?? (_actions = new List<Action>()); }
-            set { _actions = value; }
+            get { return _actions ?? (_actions = new Collection<Action>(Data["Actions"].Value as IDictionary, (action) => { return action.Name; })); }
         }
 
-        public IList<Field> Fields
+        public Collection<Field> Fields
         {
-            get { return _fields ?? (_fields = new List<Field>()); }
-            set { _fields = value; }
+            get { return _fields ?? (_fields = new Collection<Field>(Data["Fields"].Value as IDictionary, (field) => { return field.Name; })); }
         }
 
         public string Store

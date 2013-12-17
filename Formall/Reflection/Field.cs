@@ -10,7 +10,7 @@ namespace Formall.Reflection
 {
     using Formall.Linq;
 
-    public class Field : Dictionary
+    public class Field : DynamicObject
     {
         private static readonly object _lock = new object();
         private static Model _model;

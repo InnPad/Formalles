@@ -46,15 +46,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Linq\Dictionary.cs" />
+    <Compile Include="Linq\DynamicObject.cs" />
     <Compile Include="Linq\Entry.cs" />
     <Compile Include="Linq\EntryType.cs" />
     <Compile Include="Linq\ICollection.cs" />
     <Compile Include="Linq\IDocument.cs" />
     <Compile Include="Linq\IDictionary.cs" />
     <Compile Include="Linq\IEntry.cs" />
+    <Compile Include="Linq\IItem.cs" />
     <Compile Include="Linq\IObject.cs" />
-    <Compile Include="Linq\MoneyEntry.cs" />
-    <Compile Include="Linq\UnitEntry.cs" />
+    <Compile Include="Linq\Item.cs" />
+    <Compile Include="Linq\List.cs" />
     <Compile Include="Navigation\Domain.cs">
       <SubType>Code</SubType>
     </Compile>

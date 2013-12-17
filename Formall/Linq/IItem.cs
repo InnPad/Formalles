@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall.Linq
 {
-    class MoneyEntry
+    public interface IItem
     {
     }
 }

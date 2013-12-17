@@ -8,11 +8,12 @@ namespace Formall.Reflection
 {
     using Formall.Linq;
     using Formall.Navigation;
+    using Formall.Persistence;
 
     public class Money : Unit
     {
-        internal Money(IDocument document, ISegment parent)
-            : base(document, parent)
+        internal Money(IEntity entity, ISegment parent)
+            : base(entity, parent)
         {
         }
     }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Formall.Linq
+namespace Formall.Serialization
 {
     using Formall.Linq;
     using Formall.Persistence;
@@ -17,9 +17,9 @@ namespace Formall.Linq
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Converters;
     
-    internal class Dictionary : IDictionary
+    internal class JsonObject : IDictionary
     {
-        public static implicit operator JObject(Dictionary value)
+        public static implicit operator JObject(JsonObject value)
         {
             return value != null ? value._object : null;
         }
@@ -27,7 +27,7 @@ namespace Formall.Linq
         private readonly JObject _object;
         private readonly Model _model;
 
-        public Dictionary(JObject json, Model model)
+        public JsonObject(JObject json, Model model)
         {
             _object = json;
             _model = model;
@@ -81,11 +81,6 @@ namespace Formall.Linq
         Model IDictionary.Model
         {
             get { return _model; }
-        }
-
-        T IDictionary.Value<T>(string name)
-        {
-            return _object.Value<T>(name);
         }
 
         void IDictionary<string, IEntry>.Add(string key, IEntry value)

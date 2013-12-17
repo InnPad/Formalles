@@ -25,17 +25,13 @@ namespace Formall.Linq
         }
 
         private readonly JValue _value;
-        private readonly Prototype _dataType;
+        private readonly Prototype _prototype;
 
-        public Value(JProperty property, Prototype dataType)
+        public Value(JProperty property, Prototype prototype)
             : base(property)
         {
+            _prototype = prototype;
             _value = property.Value as JValue;
-        }
-
-        Prototype IObject.DataType
-        {
-            get { return _dataType; }
         }
 
         public override JToken Token
@@ -101,27 +97,17 @@ namespace Formall.Linq
             }
         }
 
-        public XObject ToXObject()
-        {
-            switch (_value.Parent.Type)
-            {
-                case JTokenType.Object:
-                    return new XAttribute(Name, _value.Value);
-            }
-            return new XElement(Name, _value.Value);
-        }
-
         #region - IObject -
 
-        public Prototype DataType
+        public Prototype Prototype
         {
-            get { return _dataType; }
+            get { return _prototype; }
         }
 
-        TObject IObject.ToObject<TObject>()
+        /*TObject IObject.ToObject<TObject>()
         {
             return _value.ToObject<TObject>();
-        }
+        }*/
 
         /// <summary>
         /// Writes this in JSON format to a System.IO.Stream.

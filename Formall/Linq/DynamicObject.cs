@@ -12,18 +12,20 @@ namespace Formall.Linq
     using Formall.Navigation;
     using Formall.Reflection;
 
-    public class Dictionary : IDictionary
+    public class DynamicObject : IDictionary
     {
-        private readonly IDictionary _internal;
+        private readonly IDictionary<string, IEntry> _internal;
+        private readonly Model _model;
 
-        public Dictionary(IDictionary source)
+        public DynamicObject(Model model, IDictionary<string, IEntry> source = null)
         {
-            _internal = source;
+            _model = model;
+            _internal = source ?? new Dictionary<string, IEntry>();
         }
 
         protected virtual IEntry CreateEntry(string name)
         {
-            var field = Model.Fields.AsQueryable<Field>().FirstOrDefault(o => o.Name == name) ?? Model.Fields.AsQueryable<Field>().FirstOrDefault(o => string.Equals(o.Name, name, StringComparison.OrdinalIgnoreCase));
+            var field = _model.Fields.AsQueryable<Field>().FirstOrDefault(o => o.Name == name) ?? _model.Fields.AsQueryable<Field>().FirstOrDefault(o => string.Equals(o.Name, name, StringComparison.OrdinalIgnoreCase));
 
             return new Entry(field);
         }
@@ -77,7 +79,7 @@ namespace Formall.Linq
 
         public Model Model
         {
-            get { return _internal.Model; }
+            get { return _model; }
         }
 
         public void Add(string key, IEntry value)
@@ -205,7 +207,7 @@ namespace Formall.Linq
 
         Prototype IObject.Prototype
         {
-            get { return Model; }
+            get { return _model; }
         }
 
         public TObject ToObject<TObject>()
@@ -229,12 +231,11 @@ namespace Formall.Linq
 
         private class MetaObject : System.Dynamic.DynamicMetaObject
         {
-            private readonly Dictionary _dictionary;
+            private readonly DynamicObject _dictionary;
 
-            public MetaObject(Expression expression, Dictionary dictionary)
-                : base(expression, BindingRestrictions.Empty, dictionary)
+            public MetaObject(Expression expression, DynamicObject value)
+                : base(expression, BindingRestrictions.Empty, value)
             {
-                _dictionary = dictionary;
             }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)

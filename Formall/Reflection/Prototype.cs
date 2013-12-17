@@ -20,22 +20,21 @@ namespace Formall.Reflection
     public abstract class Prototype : Document
     {
         private IDictionary _data;
-        private IDocument _document;
+        private IEntity _entity;
         private ISegment _parent;
 
-        protected Prototype(IDocument document, ISegment parent)
-            : base(document, parent)
+        protected Prototype(IEntity entity, ISegment parent)
+            : base(entity as IDocument, parent)
         {
             _parent = parent;
-            _document = document;
+            _entity = entity;
         }
 
         protected IDictionary Data
         {
             get
             {
-                var entity = _document as IEntity;
-                return entity != null ? entity.Data : null;
+                return _entity.Data;
             }
         }
 

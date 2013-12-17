@@ -16,8 +16,8 @@ namespace Formall.Reflection
         private static readonly object _lock = new object();
         private static Model _model;
         
-        internal Unit(IDocument document, ISegment parent)
-            : base(document, parent)
+        internal Unit(IEntity entity, ISegment parent)
+            : base(entity, parent)
         {
         }
 

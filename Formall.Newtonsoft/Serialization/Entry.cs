@@ -764,5 +764,27 @@ namespace Formall.Linq
         }
 
         #endregion - IEntry -
+
+        string IEntry.Name
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        string IEntry.Path
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        object IEntry.Value
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

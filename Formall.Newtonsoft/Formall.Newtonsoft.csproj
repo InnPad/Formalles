@@ -46,22 +46,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Linq\Collection.cs">
+    <Compile Include="Serialization\Collection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Linq\Dictionary.cs">
+    <Compile Include="Serialization\JsonObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Linq\Document.cs" />
-    <Compile Include="Linq\EntryTypeExtensions.cs" />
-    <Compile Include="Linq\Value.cs">
+    <Compile Include="Serialization\Document.cs" />
+    <Compile Include="Serialization\EntryTypeExtensions.cs" />
+    <Compile Include="Serialization\Value.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Persistence\JsonDocumentContext.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Linq\Entry.cs" />
+    <Compile Include="Serialization\Entry.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

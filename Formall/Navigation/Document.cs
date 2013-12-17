@@ -26,7 +26,7 @@ namespace Formall.Navigation
 
         protected IDictionary Content
         {
-            get { return _internal ?? (_internal = (_document.Content as IDictionary) ?? new Dictionary(GetModel())); }
+            get { return _internal ?? (_internal = (_document.Content as IDictionary) ?? new DynamicObject(GetModel())); }
         }
 
         protected abstract Model GetModel();

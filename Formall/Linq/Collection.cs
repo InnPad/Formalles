@@ -10,50 +10,20 @@ namespace Formall.Linq
 {
     using Formall.Reflection;
 
-    internal class Collection<T> : IList<T>
+    public class Collection<T> : Dictionary, IDictionary<string, T>, ICollection<T>, IEnumerable<T>
+        where T : class
     {
-        private readonly ICollection _internal;
+        private readonly Func<T, string> _keyGetter;
 
-        public Collection(ICollection collection)
+        public Collection(IDictionary source, Func<T, string> keyGetter)
+            : base(source)
         {
-            _internal = collection;
-        }
-
-        public int IndexOf(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(int index, T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAt(int index)
-        {
-            _internal.RemoveAt(index);
-        }
-
-        public T this[int index]
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            _keyGetter = keyGetter;
         }
 
         public void Add(T item)
         {
             throw new NotImplementedException();
-        }
-
-        public void Clear()
-        {
-            _internal.Clear();
         }
 
         public bool Contains(T item)
@@ -66,22 +36,72 @@ namespace Formall.Linq
             throw new NotImplementedException();
         }
 
-        public int Count
-        {
-            get { return _internal.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return _internal.IsReadOnly; }
-        }
-
         public bool Remove(T item)
         {
             throw new NotImplementedException();
         }
 
+        #region - IDictionary<string, T> -
+
+        void IDictionary<string, T>.Add(string key, T value)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IDictionary<string, T>.TryGetValue(string key, out T value)
+        {
+            throw new NotImplementedException();
+        }
+
+        ICollection<T> IDictionary<string, T>.Values
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public new T this[string key]
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion - IDictionary<string, T> -
+
+        #region - ICollection<KeyValuePair<string, T>> -
+
+        void ICollection<KeyValuePair<string, T>>.Add(KeyValuePair<string, T> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICollection<KeyValuePair<string, T>>.Contains(KeyValuePair<string, T> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ICollection<KeyValuePair<string, T>>.CopyTo(KeyValuePair<string, T>[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICollection<KeyValuePair<string, T>>.Remove(KeyValuePair<string, T> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion - ICollection<KeyValuePair<string, T>> -
+
         public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator<KeyValuePair<string, T>> IEnumerable<KeyValuePair<string, T>>.GetEnumerator()
         {
             throw new NotImplementedException();
         }

@@ -13,6 +13,7 @@ namespace Formall.Linq
     using Formall.Linq;
     using Formall.Persistence;
     using Formall.Reflection;
+    using Formall.Serialization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -20,16 +21,16 @@ namespace Formall.Linq
     {
         private readonly Metadata _metadata;
         private readonly Model _model;
-        private Dictionary _dictionary;
+        private JsonObject _dictionary;
 
         public Document(JObject document, Metadata metadata, Model model)
         {
-            _dictionary = new Dictionary(document, model);
+            _dictionary = new JsonObject(document, model);
             _metadata = metadata;
             _model = model;
         }
 
-        public Dictionary Content
+        public JsonObject Content
         {
             get { return _dictionary; }
             set { _dictionary = value; }
@@ -61,5 +62,21 @@ namespace Formall.Linq
         }
 
         #endregion - IDocument -
+
+
+        IDocumentContext IDocument.Context
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        string IDocument.Key
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        Metadata IDocument.Metadata
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

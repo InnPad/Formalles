@@ -20,13 +20,13 @@ namespace Formall.Linq
 
         public static readonly EntryType None = new EntryType("None");
 
-        public static readonly EntryType Array = new EntryType("Array");
-
         public static readonly EntryType Binary = new EntryType("Binary");
 
         public static readonly EntryType Boolean = new EntryType("Boolean");
 
         public static readonly EntryType Byte = new EntryType("Byte");
+
+        public static readonly EntryType Collection = new EntryType("Collection");
 
         public static readonly EntryType Comment = new EntryType("Comment");
 
@@ -50,15 +50,15 @@ namespace Formall.Linq
 
         public static readonly EntryType Integer = new EntryType("Integer");
 
-        public static readonly EntryType Object = new EntryType("Object");
+        public static readonly EntryType List = new EntryType("List");
 
-        public static EntryType Magnitude = new EntryType("Magnitude");
-
-        public static EntryType Money = new EntryType("Money");
+        public static readonly EntryType Money = new EntryType("Money");
 
         public static readonly EntryType Null = new EntryType("Null");
 
         public static readonly EntryType Number = new EntryType("Number");
+
+        public static readonly EntryType Object = new EntryType("Object");
 
         public static readonly EntryType Property = new EntryType("Property");
 
@@ -81,6 +81,8 @@ namespace Formall.Linq
         public static readonly EntryType UInt32 = new EntryType("UInt32");
 
         public static readonly EntryType UInt64 = new EntryType("UInt64");
+
+        public static readonly EntryType Unit = new EntryType("Unit");
 
         public static readonly EntryType Uri = new EntryType("Uri");
 

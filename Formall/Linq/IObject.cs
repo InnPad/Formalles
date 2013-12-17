@@ -7,7 +7,7 @@ namespace Formall.Linq
 
     public interface IObject
     {
-        DataType DataType { get; }
+        Prototype Prototype { get; }
 
         TObject ToObject<TObject>();
 

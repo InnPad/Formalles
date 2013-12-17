@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formall.Reflection
+namespace Formall.Persistence
 {
-    public class Text : Dictionary<string, string>//, IObject
+    public class RavenStore : Store
     {
     }
 }

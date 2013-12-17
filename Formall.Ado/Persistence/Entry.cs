@@ -7,13 +7,22 @@ using System.Threading.Tasks;
 
 namespace Formall.Linq
 {
+    using Formall.Reflection;
+
     internal class Entry
     {
         private readonly DataColumn _dataColumn;
+        private DataRow _dataRow;
 
-        public Entry(DataColumn dataColumn)
+        public Entry(DataRow dataRow, Field field)
         {
-            _dataColumn = dataColumn;
+            _dataRow = dataRow;
+        }
+
+        public object Value
+        {
+            get;
+            set;
         }
     }
 }

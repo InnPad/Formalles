@@ -54,9 +54,7 @@
     <Compile Include="Linq\IEntry.cs" />
     <Compile Include="Linq\IObject.cs" />
     <Compile Include="Linq\MoneyEntry.cs" />
-    <Compile Include="Linq\ObjectEntry.cs" />
     <Compile Include="Linq\UnitEntry.cs" />
-    <Compile Include="Linq\ValueEntry.cs" />
     <Compile Include="Navigation\Domain.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -69,6 +67,7 @@
     <Compile Include="OperationResult.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Persistence\IDataContext.cs" />
     <Compile Include="Persistence\DocumentContext.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -78,9 +77,12 @@
     <Compile Include="Persistence\IDocumentContext.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Persistence\IDocumentRepository.cs" />
     <Compile Include="Persistence\IDocumentSession.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Persistence\IRepository.cs" />
+    <Compile Include="Persistence\Store.cs" />
     <Compile Include="Presentation\IHtml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -90,10 +92,15 @@
     <Compile Include="Presentation\ISortable.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Navigation\Document.cs" />
     <Compile Include="Reflection\Action.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Reflection\DataType.cs">
+    <Compile Include="Navigation\Area.cs" />
+    <Compile Include="Persistence\IEntity.cs" />
+    <Compile Include="Reflection\IProperty.cs" />
+    <Compile Include="Reflection\IPrototype.cs" />
+    <Compile Include="Reflection\Prototype.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Reflection\Field.cs">
@@ -111,7 +118,8 @@
     <Compile Include="Reflection\Money.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Reflection\Text.cs">
+    <Compile Include="SuccessResult.cs" />
+    <Compile Include="Text.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Navigation\ISegment.cs">

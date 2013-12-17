@@ -17,5 +17,7 @@ namespace Formall.Linq
         string Path { get; }
 
         EntryType Type { get; }
+
+        object Value { get; set; }
     }
 }

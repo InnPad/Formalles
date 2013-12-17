@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
-    public class AdoDocumentContext
+    using Formall.Reflection;
+
+    public abstract class AdoDocumentContext
     {
         private readonly DataSet _dataSet;
 
@@ -20,5 +22,17 @@ namespace Formall.Persistence
         {
             get { return _dataSet; }
         }
+
+        internal protected abstract IDataAdapter CreateDataAdapter(Model model);
+
+        internal protected abstract IDataReader CreateDataReader(Model model);
+
+        internal protected abstract IDbCommand CreateSelectCommand(Model model);
+
+        internal protected abstract IDbCommand CreateUpdateCommand(Model model);
+
+        internal protected abstract IDbCommand CreateDeleteCommand(Model model);
+
+        internal protected abstract IDbCommand CreateInsertCommand(Model model);
     }
 }

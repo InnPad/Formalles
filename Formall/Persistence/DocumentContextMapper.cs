@@ -17,7 +17,7 @@ namespace Formall.Persistence
             private IDocument _config;
             private IDocumentContext _instance;
             private readonly string _name;
-            private readonly DataType _type;
+            private readonly Prototype _type;
         }
 
         private readonly static object _lock = new object();

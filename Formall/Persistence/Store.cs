@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formall.Linq
+namespace Formall.Persistence
 {
-    internal class Entry
+    public class Store
     {
     }
 }

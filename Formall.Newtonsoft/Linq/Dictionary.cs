@@ -154,7 +154,7 @@ namespace Formall.Linq
 
         #region - IObject -
 
-        public DataType DataType
+        public Prototype Prototype
         {
             get { return _model; }
         }

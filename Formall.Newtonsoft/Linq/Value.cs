@@ -25,15 +25,15 @@ namespace Formall.Linq
         }
 
         private readonly JValue _value;
-        private readonly DataType _dataType;
+        private readonly Prototype _dataType;
 
-        public Value(JProperty property, DataType dataType)
+        public Value(JProperty property, Prototype dataType)
             : base(property)
         {
             _value = property.Value as JValue;
         }
 
-        DataType IObject.DataType
+        Prototype IObject.DataType
         {
             get { return _dataType; }
         }
@@ -113,7 +113,7 @@ namespace Formall.Linq
 
         #region - IObject -
 
-        public DataType DataType
+        public Prototype DataType
         {
             get { return _dataType; }
         }

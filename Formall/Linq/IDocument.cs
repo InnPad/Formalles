@@ -17,7 +17,7 @@ namespace Formall.Linq
     {
         object Content { get; }
 
-        Guid Id { get; }
+        IDocumentContext Context { get; }
 
         string Key { get; }
 

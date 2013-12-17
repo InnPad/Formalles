@@ -1,27 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
-namespace Formall.Reflection
+namespace Formall.Navigation
 {
     using Formall.Linq;
-    using Formall.Navigation;
-    using Formall.Persistence;
+    using Formall.Reflection;
 
-    public class Unit : Prototype
+    public class Area : Document
     {
         private static readonly object _lock = new object();
         private static Model _model;
-        
-        internal Unit(IDocument document, ISegment parent)
-            : base(document, parent)
+
+        internal Area(IDocument document, ISegment segment)
+            : base(document, segment)
         {
         }
+        
+        public Text Summary
+        {
+            get;
+            set;
+        }
 
-        public double Factor
+        public Text Title
         {
             get;
             set;

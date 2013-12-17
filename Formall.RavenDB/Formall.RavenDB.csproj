@@ -73,14 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonCreationConverter.cs" />
+    <Compile Include="Persistence\Context.cs" />
+    <Compile Include="Persistence\Dictionary.cs" />
+    <Compile Include="Persistence\Document.cs" />
+    <Compile Include="Persistence\Entry.cs" />
+    <Compile Include="Persistence\List.cs" />
+    <Compile Include="Persistence\RavenStore.cs" />
+    <Compile Include="Persistence\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Linq\Collection.cs" />
-    <Compile Include="Linq\Document.cs" />
-    <Compile Include="Linq\DocumentContext.cs" />
-    <Compile Include="Linq\EmbeddableDocumentContext.cs" />
-    <Compile Include="Linq\Dictionary.cs" />
-    <Compile Include="Linq\Entry.cs" />
-    <Compile Include="Linq\Value.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

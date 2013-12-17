@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall.Navigation
 {
-    internal class Segment : ISegment
+    public class Segment : ISegment
     {
         private ISegment _parent;
         private List<ISegment> _children;
@@ -16,25 +16,40 @@ namespace Formall.Navigation
             _parent = parent;
         }
 
-        public List<ISegment> Children
-        {
-            get { return _children ?? (_children = new List<ISegment>()); }
-        }
-
-        public string Name
+        protected virtual string Name
         {
             get;
             set;
         }
 
-        public ISegment Parent
+        protected ISegment Parent
         {
             get { return _parent; }
         }
 
-        public string Path
+        protected string Path
         {
             get { return Parent.Path + '/' + Name; }
+        }
+
+        string ISegment.Name
+        {
+            get { return this.Name; }
+        }
+
+        string ISegment.Path
+        {
+            get { return this.Path; }
+        }
+
+        ISegment ISegment.Parent
+        {
+            get { return this.Parent; }
+        }
+
+        List<ISegment> ISegment.Children
+        {
+            get { return _children ?? (_children = new List<ISegment>()); }
         }
     }
 }

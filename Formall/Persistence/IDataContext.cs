@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
-namespace Formall.Linq
+namespace Formall.Persistence
 {
+    using Formall.Linq;
     using Formall.Reflection;
 
-    public interface IDictionary : IDictionary<string, IEntry>, IDynamicMetaObjectProvider, IObject
+    public interface IDataContext
     {
-        Model Model { get; }
+        IRepository CreateRopository(Model model);
     }
 }

@@ -8,50 +8,51 @@ using System.Threading.Tasks;
 namespace Formall.Linq
 {
     using Formall.Reflection;
-    
+    using Formall.Navigation;
 
     internal class Entry : IEntry
     {
-        private readonly string _name;
+        private readonly Field _field;
+        private object _value;
+        private EntryType _entryType;
+        private Prototype _dataType;
 
-        public Entry(string name, object value)
+        public Entry(Field field)
         {
-            _name = name;
+            _entryType = EntryType.Undefined;
+
+            var typeName = field.Type;
+            var typeDocument = Schema.Current.Read(typeName);
+            var typeMetadata = typeDocument.Metadata;
+        }
+
+        public Field Field
+        {
+            get { return _field; }
         }
 
         public string Name
         {
-            get { return _name; }
+            get { return _field.Name; }
         }
 
         public string Path
         {
-            get { throw new NotImplementedException(); }
+            get { return (_field.Model as ISegment).Path; }
         }
 
         public EntryType Type
         {
-            get { throw new NotImplementedException(); }
+            get { return _entryType; }
         }
 
-        public DataType DataType
+        public object Value
         {
-            get { throw new NotImplementedException(); }
-        }
-
-        public TObject ToObject<TObject>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteJson(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteJson(TextWriter writer)
-        {
-            throw new NotImplementedException();
+            get { return _value; }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

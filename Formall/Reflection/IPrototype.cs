@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formall.Linq
+namespace Formall.Reflection
 {
-    internal class Value
+    public interface IPrototype
     {
+        Model Model { get; }
     }
 }

@@ -12,43 +12,22 @@ namespace Formall.Linq
     using Formall.Navigation;
     using Formall.Reflection;
 
-    internal class Dictionary : IDictionary
+    public class Dictionary : IDictionary
     {
-        private readonly Dictionary<string, IEntry> _internal;
+        private readonly IDictionary<string, IEntry> _internal;
         private readonly Model _model;
 
-        public Dictionary(Model model)
+        public Dictionary(Model model, IDictionary<string, IEntry> source = null)
         {
             _model = model;
-            _internal = new Dictionary<string, IEntry>();
+            _internal = source ?? new Dictionary<string, IEntry>();
         }
 
-        protected virtual IEntry CreateEntry(string name, object value)
+        protected virtual IEntry CreateEntry(string name)
         {
             var field = _model.Fields.FirstOrDefault(o => o.Name == name) ?? _model.Fields.FirstOrDefault(o => string.Equals(o.Name, name, StringComparison.OrdinalIgnoreCase));
 
-            var typeName = field.Type;
-            var typeDocument = Schema.Current.Read(typeName);
-            var typeMetadata = typeDocument.Metadata;
-
-            IEntry entry = null;
-
-            var typeKey = typeDocument.Key.Split('/');
-            if (typeKey[0] == "Type")
-            {
-                if (typeKey[1] == "Model")
-                {
-                    return new ObjectEntry(name, value, typeDocument as Model);
-                }
-                else
-                {
-
-                }
-            }
-
-            var dataType = typeDocument as DataType;
-
-            return entry;
+            return new Entry(field);
         }
 
         protected virtual object GetDefaultValue(string key)
@@ -62,10 +41,7 @@ namespace Formall.Linq
 
             if (_internal.TryGetValue(key, out entry))
             {
-                if (entry.Type == EntryType.Object)
-                {
-                    return entry;
-                }
+                return entry.Value;
             }
 
             return GetDefaultValue(key);
@@ -74,17 +50,13 @@ namespace Formall.Linq
         public object SetValue(string key, object value)
         {
             IEntry entry;
-            if (_internal.TryGetValue(key, out entry))
+            if (!_internal.TryGetValue(key, out entry))
             {
-                _internal.Remove(key);
-                entry = null;
-            }
-
-            if (value != null)
-            {
-                entry = CreateEntry(key, value);
+                entry = CreateEntry(key);
                 _internal.Add(key, entry);
             }
+
+            entry.Value = value;
 
             return entry;
         }
@@ -108,14 +80,6 @@ namespace Formall.Linq
         public Model Model
         {
             get { return _model; }
-        }
-
-        T IDictionary.Value<T>(string name)
-        {
-            IEntry value;
-            if (_internal.TryGetValue(name, out value) && value is T)
-                return (T)value;
-            return default(T);
         }
 
         public void Add(string key, IEntry value)
@@ -152,7 +116,22 @@ namespace Formall.Linq
         {
             get
             {
-                return _internal[key];
+                var dictionary = _internal as IDictionary;
+
+                if (dictionary != null)
+                {
+                    return dictionary[key];
+                }
+
+                IEntry entry;
+                if (_internal.TryGetValue(key, out entry))
+                    return entry;
+
+                entry = CreateEntry(key);
+
+                _internal.Add(key, entry);
+
+                return entry;
             }
             set
             {
@@ -226,7 +205,7 @@ namespace Formall.Linq
 
         #region - IObject -
 
-        DataType IObject.DataType
+        Prototype IObject.Prototype
         {
             get { return _model; }
         }

@@ -20,10 +20,10 @@ namespace Formall.Linq
         }
 
         private readonly JArray _array;
-        private readonly DataType _dataType;
+        private readonly Prototype _dataType;
         private readonly List<Entry> _items;
 
-        public Collection(JProperty property, JArray array, DataType dataType)
+        public Collection(JProperty property, JArray array, Prototype dataType)
             : base(property)
         {
             _array = array;
@@ -147,7 +147,7 @@ namespace Formall.Linq
 
         #region - IObject -
 
-        public DataType DataType
+        public Prototype Prototype
         {
             get { return _dataType; }
         }

@@ -17,7 +17,7 @@ namespace Formall.Persistence
     using Raven.Imports.Newtonsoft.Json.Serialization;
     using Raven.Json.Linq;
 
-    internal class Document : IDocument, IEntity
+    internal class Document : IDocument
     {
         public static implicit operator JsonDocument(Document document)
         {
@@ -74,11 +74,6 @@ namespace Formall.Persistence
         public IResult Refresh()
         {
             throw new NotImplementedException();
-        }
-
-        public IResult Remove(string field, string value)
-        {
-            return _repository.Remove(_id, field, value);
         }
 
         public IResult Patch(IDictionary data)

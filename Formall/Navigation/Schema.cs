@@ -113,7 +113,7 @@ namespace Formall.Navigation
         private Schema(string name, IDocumentContext context)
         {
             _name = name;
-            _domain = new Domain(null);
+            _domain = new Domain();
             _context = context;
         }
 

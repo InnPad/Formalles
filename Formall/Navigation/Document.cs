@@ -24,12 +24,10 @@ namespace Formall.Navigation
             _document = document;
         }
 
-        protected IDictionary Content
+        protected dynamic Content
         {
-            get { return _internal ?? (_internal = (_document.Content as IDictionary) ?? new DynamicObject(GetModel())); }
+            get { return _document.Content; }
         }
-
-        protected abstract Model GetModel();
 
         #region - IDocument -
 

@@ -60,6 +60,7 @@
     <Compile Include="Navigation\Domain.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Navigation\Entity.cs" />
     <Compile Include="Navigation\Schema.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -15,7 +15,7 @@ namespace Formall.Linq
     
     public interface IDocument
     {
-        object Content { get; }
+        dynamic Content { get; }
 
         IDocumentContext Context { get; }
 

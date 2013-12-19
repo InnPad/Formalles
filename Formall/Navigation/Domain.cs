@@ -16,30 +16,7 @@ namespace Formall.Navigation
     /// <summary>
     /// Root Segment
     /// </summary>
-    public class Domain : Document
-    {
-        private static readonly object _lock = new object();
-        private static Model _model;
-        
-        internal Domain(IDocument document)
-            : base(document, null)
-        {
-        }
-
-        protected override Model GetModel()
-        {
-            var model = _model;
-
-            if (model == null)
-            {
-                lock (_lock)
-                {
-                    model = _model ?? (_model = Schema.Current["Reflection/Model"] as Model);
-                    throw new NotImplementedException();
-                }
-            }
-
-            return model;
-        }
+    public class Domain
+    {   
     }
 }

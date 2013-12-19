@@ -9,10 +9,8 @@ namespace Formall.Persistence
     using Formall.Linq;
     using Formall.Reflection;
 
-    public interface IEntity
+    public interface IEntity : IDocument
     {
-        dynamic Data { get; }
-
         Guid Id { get; }
 
         Model Model { get; }
@@ -21,15 +19,11 @@ namespace Formall.Persistence
 
         IResult Delete();
 
+        T Get<T>();
+
         IResult Refresh();
 
-        /// <summary>
-        /// Remove from a list
-        /// </summary>
-        /// <param name="field"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        IResult Remove(string field, string value);
+        IResult Set<T>(T value);
 
         IResult Patch(IDictionary data);
 

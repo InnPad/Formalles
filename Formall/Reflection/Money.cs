@@ -12,9 +12,5 @@ namespace Formall.Reflection
 
     public class Money : Unit
     {
-        internal Money(IEntity entity, ISegment parent)
-            : base(entity, parent)
-        {
-        }
     }
 }

@@ -14,37 +14,12 @@ namespace Formall
     using Formall.Persistence;
     using Formall.Reflection;
 
-    public class Error : Document
+    public class Error
     {
-        private static readonly object _lock = new object();
-        private static Model _model;
-
-        
-        public Error(IDocument document, ISegment parent)
-            : base(document, parent)
-        {
-        }
-
         public Text Message
         {
             get;
             set;
-        }
-
-        protected override Model GetModel()
-        {
-            var model = _model;
-
-            if (model == null)
-            {
-                lock (_lock)
-                {
-                    model = _model ?? (_model = new Model(null, null));
-                    throw new NotImplementedException();
-                }
-            }
-
-            return model;
         }
     }
 }

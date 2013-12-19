@@ -10,7 +10,7 @@ namespace Formall.Persistence
     using Formall.Linq;
     using Formall.Reflection;
 
-    internal class Document : IDocument, IEntity
+    internal class Document : IEntity
     {
         private readonly DataRow _dataRow;
 
@@ -26,7 +26,7 @@ namespace Formall.Persistence
 
         #region - Document -
 
-        object IDocument.Content
+        dynamic IDocument.Content
         {
             get { throw new NotImplementedException(); }
         }
@@ -48,7 +48,7 @@ namespace Formall.Persistence
 
         #endregion - Document -
 
-        public dynamic Data
+        public dynamic Content
         {
             get { throw new NotImplementedException(); }
         }
@@ -73,12 +73,17 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
+        public T Get<T>()
+        {
+            throw new NotImplementedException();
+        }
+
         public IResult Refresh()
         {
             throw new NotImplementedException();
         }
 
-        public IResult Remove(string field, string value)
+        public IResult Set<T>(T value)
         {
             throw new NotImplementedException();
         }

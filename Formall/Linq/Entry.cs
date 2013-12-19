@@ -38,7 +38,7 @@ namespace Formall.Linq
 
         public string Path
         {
-            get { return (_field.Model as ISegment).Path; }
+            get { throw new NotImplementedException(); }
         }
 
         public EntryType Type

@@ -17,28 +17,9 @@ namespace Formall.Reflection
     using Formall.Reflection;
 
 
-    public abstract class Prototype : Document
+    public abstract class Prototype
     {
-        private IDictionary _data;
-        private IEntity _entity;
-        private ISegment _parent;
-
-        protected Prototype(IEntity entity, ISegment parent)
-            : base(entity as IDocument, parent)
-        {
-            _parent = parent;
-            _entity = entity;
-        }
-
-        protected IDictionary Data
-        {
-            get
-            {
-                return _entity.Data;
-            }
-        }
-
-        public Guid Identity
+        public Guid Id
         {
             get;
             set;

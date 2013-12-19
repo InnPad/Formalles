@@ -11,7 +11,7 @@ namespace Formall.Persistence
 
     public interface IEntity
     {
-        IDictionary Data { get; }
+        dynamic Data { get; }
 
         Guid Id { get; }
 

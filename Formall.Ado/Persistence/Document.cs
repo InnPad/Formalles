@@ -48,7 +48,7 @@ namespace Formall.Persistence
 
         #endregion - Document -
 
-        public IDictionary Data
+        public dynamic Data
         {
             get { throw new NotImplementedException(); }
         }

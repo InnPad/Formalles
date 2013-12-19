@@ -46,7 +46,7 @@ namespace Formall.Persistence
         {
         }
 
-        public IDictionary Data
+        public dynamic Data
         {
             get { throw new NotImplementedException(); }
         }

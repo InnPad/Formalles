@@ -21,7 +21,7 @@ namespace Formall.Linq
 
         private readonly JArray _array;
         private readonly Prototype _dataType;
-        private readonly List<Entry> _items;
+        private readonly System.Collections.Generic.List<Entry> _items;
 
         public Collection(JProperty property, JArray array, Prototype dataType)
             : base(property)

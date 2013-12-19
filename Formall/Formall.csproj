@@ -84,6 +84,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Persistence\IRepository.cs" />
+    <Compile Include="Persistence\ModelExtensions.cs" />
     <Compile Include="Persistence\Store.cs" />
     <Compile Include="Presentation\IHtml.cs">
       <SubType>Code</SubType>
@@ -95,13 +96,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Navigation\Document.cs" />
+    <Compile Include="Presentation\ModelExtensions.cs" />
     <Compile Include="Reflection\Action.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Navigation\Area.cs" />
     <Compile Include="Persistence\IEntity.cs" />
+    <Compile Include="Reflection\DynamicExtensions.cs" />
+    <Compile Include="Reflection\FieldExtensions.cs" />
     <Compile Include="Reflection\IProperty.cs" />
     <Compile Include="Reflection\IPrototype.cs" />
+    <Compile Include="Reflection\ModelExtensions.cs" />
     <Compile Include="Reflection\Prototype.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -120,6 +125,8 @@
     <Compile Include="Reflection\Money.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Reflection\ValidationContext.cs" />
+    <Compile Include="Reflection\ValidationResult.cs" />
     <Compile Include="SuccessResult.cs" />
     <Compile Include="Text.cs">
       <SubType>Code</SubType>

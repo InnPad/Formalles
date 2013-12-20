@@ -9,26 +9,20 @@ namespace Formall.Reflection
     using Formall.Linq;
     using Formall.Navigation;
 
-    public class Value : DataType, IDictionary, IDocument, IEntry, IFileSystem, ISegment
+    public class Value : Prototype
     {
-        public const string GUID = "";
+        private IDictionary<string, Rule> _rules;
 
-        private static readonly object _lock = new object();
-        private static Model _model;
-        
-        protected override Model GetModel()
+        public string Name
         {
-            var model = _model;
+            get;
+            set;
+        }
 
-            if (model == null)
-            {
-                lock (_lock)
-                {
-                    model = _model ?? (_model = new Model());
-                }
-            }
-
-            return model;
+        public IDictionary<string, Rule> Rules
+        {
+            get { return _rules ?? (_rules = new Dictionary<string, Rule>()); }
+            set { _rules = value; }
         }
     }
 }

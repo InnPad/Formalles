@@ -35,7 +35,7 @@ namespace Formall.Persistence
 
         void IDictionary<string, IEntry>.Add(string key, IEntry value)
         {
-            _object.Add(key, Context.Import(value));
+            _object.Add(key, RavenDocumentContext.Import(value));
         }
 
         bool IDictionary<string, IEntry>.ContainsKey(string key)
@@ -78,13 +78,13 @@ namespace Formall.Persistence
             }
             set
             {
-                _object[key] = Context.Import(value);
+                _object[key] = RavenDocumentContext.Import(value);
             }
         }
 
         void ICollection<KeyValuePair<string, IEntry>>.Add(KeyValuePair<string, IEntry> item)
         {
-            _object.Add(item.Key, Context.Import(item.Value));
+            _object.Add(item.Key, RavenDocumentContext.Import(item.Value));
         }
 
         void ICollection<KeyValuePair<string, IEntry>>.Clear()
@@ -95,7 +95,7 @@ namespace Formall.Persistence
         bool ICollection<KeyValuePair<string, IEntry>>.Contains(KeyValuePair<string, IEntry> item)
         {
             RavenJToken token;
-            return _object.TryGetValue(item.Key, out token) && Context.Import(item.Value) == token;
+            return _object.TryGetValue(item.Key, out token) && RavenDocumentContext.Import(item.Value) == token;
         }
 
         void ICollection<KeyValuePair<string, IEntry>>.CopyTo(KeyValuePair<string, IEntry>[] array, int arrayIndex)
@@ -116,7 +116,7 @@ namespace Formall.Persistence
         bool ICollection<KeyValuePair<string, IEntry>>.Remove(KeyValuePair<string, IEntry> item)
         {
             RavenJToken token;
-            if (_object.TryGetValue(item.Key, out token) && token == Context.Import(item.Value))
+            if (_object.TryGetValue(item.Key, out token) && token == RavenDocumentContext.Import(item.Value))
                 return _object.Remove(item.Key);
             return false;
         }

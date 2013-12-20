@@ -46,6 +46,11 @@ namespace Formall.Persistence
         {
         }
 
+        public Stream Content
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public dynamic Data
         {
             get { throw new NotImplementedException(); }
@@ -59,6 +64,11 @@ namespace Formall.Persistence
         public Model Model
         {
             get { return _repository.Model; }
+        }
+
+        public string MediaType
+        {
+            get { return "application/json"; }
         }
 
         public IRepository Repository
@@ -88,7 +98,7 @@ namespace Formall.Persistence
 
         #region - IDocument -
 
-        object IDocument.Content
+        Stream IDocument.Content
         {
             get { return this.Data; }
         }

@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Formall.Persistence")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TradeStation")]
+[assembly: AssemblyCompany("Formall")]
 [assembly: AssemblyProduct("Formall.Persistence")]
-[assembly: AssemblyCopyright("Copyright © TradeStation 2013")]
+[assembly: AssemblyCopyright("Copyright © Formall 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

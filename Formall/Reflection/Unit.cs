@@ -11,7 +11,7 @@ namespace Formall.Reflection
     using Formall.Navigation;
     using Formall.Persistence;
 
-    public class Unit : Prototype
+    public class Unit : Item
     {
         public double Factor
         {

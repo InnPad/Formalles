@@ -73,7 +73,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonCreationConverter.cs" />
-    <Compile Include="Persistence\Context.cs" />
+    <Compile Include="Persistence\DocumentStoreConfig.cs" />
+    <Compile Include="Persistence\EmbeddableRavenStore.cs" />
+    <Compile Include="Persistence\Entity.cs" />
+    <Compile Include="Persistence\RavenDocumentContext.cs" />
     <Compile Include="Persistence\Dictionary.cs" />
     <Compile Include="Persistence\Document.cs" />
     <Compile Include="Persistence\Entry.cs" />

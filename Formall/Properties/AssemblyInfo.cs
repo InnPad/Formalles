@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Formall")]
 [assembly: AssemblyProduct("Formall")]
-[assembly: AssemblyCopyright("Copyright © Formall 2013")]
+[assembly: AssemblyCopyright("Copyright © Formall 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

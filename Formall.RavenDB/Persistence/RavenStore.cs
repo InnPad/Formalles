@@ -6,7 +6,51 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
-    public class RavenStore : Store
+    using Raven.Abstractions.Data;
+    using Raven.Abstractions.Replication;
+
+    internal class RavenStore : Store
     {
+        public string ApiKey
+        {
+            get;
+            set;
+        }
+
+        public List<ApiKeyDefinition> ApiKeys
+        {
+            get;
+            set;
+        }
+
+        public bool Embeddable
+        {
+            get;
+            set;
+        }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public ReplicationDocument Replication
+        {
+            get;
+            set;
+        }
+
+        public string Secret
+        {
+            get;
+            set;
+        }
+
+        public string Url
+        {
+            get;
+            set;
+        }
     }
 }

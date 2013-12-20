@@ -13,6 +13,6 @@ namespace Formall.Persistence
 
     public interface IDataContext
     {
-        IRepository CreateRopository(Model model);
+        IRepository CreateRepository(string name);
     }
 }

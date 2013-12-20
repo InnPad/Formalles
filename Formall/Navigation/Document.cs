@@ -17,21 +17,23 @@ namespace Formall.Navigation
     {
         private IDictionary _internal;
         private IDocument _document;
+        private ISegment _parent;
 
         protected Document(IDocument document, ISegment parent)
             : base(parent)
         {
             _document = document;
+            _parent = parent;
         }
 
-        protected dynamic Content
+        protected Stream Content
         {
             get { return _document.Content; }
         }
 
         #region - IDocument -
 
-        object IDocument.Content
+        Stream IDocument.Content
         {
             get { return _document.Content; }
         }
@@ -44,6 +46,11 @@ namespace Formall.Navigation
         string IDocument.Key
         {
             get { return _document.Key; }
+        }
+
+        public string MediaType
+        {
+            get { return _document.MediaType; }
         }
 
         Metadata IDocument.Metadata

@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Formall.Persistence
 {
     using Formall.Linq;
     using Formall.Reflection;
-
+    
     public interface IEntity : IDocument
     {
+        dynamic Data { get; set; }
+
         Guid Id { get; }
 
         Model Model { get; }
@@ -19,14 +18,18 @@ namespace Formall.Persistence
 
         IResult Delete();
 
-        T Get<T>();
+        T Get<T>() where T : class;
 
         IResult Refresh();
 
-        IResult Set<T>(T value);
+        IResult Set<T>(T value) where T : class;
 
         IResult Patch(IDictionary data);
 
         IResult Update(IDictionary data);
+
+        IResult WriteJson(Stream stream);
+
+        IResult WriteJson(TextWriter writer);
     }
 }

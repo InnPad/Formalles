@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Formall.Persistence
 {
     using Formall.Linq;
     using Formall.Reflection;
-
+    
     internal class Document : IEntity
     {
         private readonly DataRow _dataRow;
@@ -26,7 +27,7 @@ namespace Formall.Persistence
 
         #region - Document -
 
-        dynamic IDocument.Content
+        Stream IDocument.Content
         {
             get { throw new NotImplementedException(); }
         }
@@ -48,12 +49,23 @@ namespace Formall.Persistence
 
         #endregion - Document -
 
-        public dynamic Content
+        public Stream Content
         {
             get { throw new NotImplementedException(); }
         }
 
-        public Guid Id
+        public dynamic Data
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string Id
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string MediaType
         {
             get { throw new NotImplementedException(); }
         }
@@ -62,7 +74,7 @@ namespace Formall.Persistence
         {
             get { throw new NotImplementedException(); }
         }
-
+        
         public IRepository Repository
         {
             get { throw new NotImplementedException(); }
@@ -73,7 +85,7 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public T Get<T>()
+        public T Get<T>() where T : class
         {
             throw new NotImplementedException();
         }
@@ -83,7 +95,7 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public IResult Set<T>(T value)
+        public IResult Set<T>(T value) where T : class
         {
             throw new NotImplementedException();
         }
@@ -94,6 +106,21 @@ namespace Formall.Persistence
         }
 
         public IResult Update(IDictionary data)
+        {
+            throw new NotImplementedException();
+        }
+
+        Guid IEntity.Id
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IResult WriteJson(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IResult WriteJson(TextWriter writer)
         {
             throw new NotImplementedException();
         }

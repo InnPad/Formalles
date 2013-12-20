@@ -21,26 +21,41 @@ namespace Formall.Linq
     {
         private readonly Metadata _metadata;
         private readonly Model _model;
-        private JsonObject _dictionary;
+        private JObject _data;
 
         public Document(JObject document, Metadata metadata, Model model)
         {
-            _dictionary = new JsonObject(document, model);
+            _data = new JsonObject(document, model);
             _metadata = metadata;
             _model = model;
         }
 
-        public JsonObject Content
+        public JObject Data
         {
-            get { return _dictionary; }
-            set { _dictionary = value; }
+            get { return _data; }
+            set { _data = value; }
         }
 
         #region - IDocument -
 
-        object IDocument.Content
+        Stream IDocument.Content
         {
-            get { return this.Content; }
+            get
+            {
+                var stream = new MemoryStream();
+
+                using (var sw = new StreamWriter(stream))
+                {
+                    using (var jw = new JsonTextWriter(sw))
+                    {
+                        this.Data.WriteTo(jw);
+                    }
+                }
+
+                stream.Seek(0L, SeekOrigin.Begin);
+
+                return stream;
+            }
         }
 
         public Guid Id
@@ -50,6 +65,12 @@ namespace Formall.Linq
         }
 
         public string Key
+        {
+            get;
+            set;
+        }
+
+        public string MediaType
         {
             get;
             set;

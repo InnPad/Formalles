@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,8 +108,10 @@
     <Compile Include="Persistence\IEntity.cs" />
     <Compile Include="Reflection\DynamicExtensions.cs" />
     <Compile Include="Reflection\FieldExtensions.cs" />
-    <Compile Include="Reflection\IProperty.cs" />
-    <Compile Include="Reflection\IPrototype.cs" />
+    <Compile Include="Reflection\Function.cs" />
+    <Compile Include="Reflection\Item.cs" />
+    <Compile Include="Reflection\IValidatable.cs" />
+    <Compile Include="Reflection\IValidationProvider.cs" />
     <Compile Include="Reflection\ModelExtensions.cs" />
     <Compile Include="Reflection\Prototype.cs">
       <SubType>Code</SubType>
@@ -126,8 +131,12 @@
     <Compile Include="Reflection\Money.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Reflection\Rule.cs" />
     <Compile Include="Reflection\ValidationContext.cs" />
     <Compile Include="Reflection\ValidationResult.cs" />
+    <Compile Include="Reflection\Value.cs" />
+    <Compile Include="Serialization\JsonEntity.cs" />
+    <Compile Include="Serialization\XmlEntity.cs" />
     <Compile Include="SuccessResult.cs" />
     <Compile Include="Text.cs">
       <SubType>Code</SubType>
@@ -148,6 +157,9 @@
     <Folder Include="Authorization\" />
     <Folder Include="Automation\" />
     <Folder Include="Diagnostics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -16,7 +16,6 @@ namespace Formall.Reflection
     using Formall.Persistence;
     using Formall.Reflection;
 
-
     public abstract class Prototype
     {
         public Guid Id

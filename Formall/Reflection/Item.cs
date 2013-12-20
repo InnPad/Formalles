@@ -6,21 +6,9 @@ using System.Threading.Tasks;
 
 namespace Formall.Reflection
 {
-    public class Item //: IDictionary
+    public class Item : Prototype
     {
         public string Name
-        {
-            get;
-            set;
-        }
-
-        public Text Title
-        {
-            get;
-            set;
-        }
-
-        public Text Tooltip
         {
             get;
             set;

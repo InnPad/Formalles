@@ -52,5 +52,11 @@ namespace Formall.Persistence
         {
             throw new NotImplementedException();
         }
+
+
+        public IEntity Create(object data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

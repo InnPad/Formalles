@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall.Web
 {
-    public class RequestDocumentContext : Json.JsonDocumentContext
+    public class RequestDocumentContext
     {
     }
 }

@@ -16,17 +16,9 @@ namespace Formall.Navigation
 
     public class Schema : DocumentContext, IEdmx
     {
-        [ThreadStatic]
         private static Schema _current;
 
         private readonly static object _lock = new object();
-
-        private static readonly ConcurrentDictionary<string, Schema> _container;
-
-        static Schema()
-        {
-            _container = new ConcurrentDictionary<string, Schema>();
-        }
 
         private static IDocument Arrange(IDocument[] array)
         {
@@ -56,26 +48,41 @@ namespace Formall.Navigation
 
         public static Schema Current
         {
-            get { return _current; }
+            get
+            {
+                var current = _current;
+
+                if (current == null)
+                {
+                    // lock and check again
+                    lock (_lock)
+                    {
+                        // create new instance if doesn't exist
+                        current = _current ?? (_current = new Schema());
+                    }
+                }
+
+                return current;
+            }
         }
 
-        public static void Initialize(string domain)
+        public ISegment Domain(string value)
         {
-            _current = null;
+            Entity<Domain> domain = null;
 
             while (true)
             {
-                if (string.IsNullOrEmpty(domain))
+                if (string.IsNullOrEmpty(value))
                 {
                     break;
                 }
 
-                if (_container.TryGetValue(domain, out _current))
+                if (_container.TryGetValue(value, out domain))
                 {
                     break;
                 }
 
-                var parts = domain.Split('.');
+                var parts = value.Split('.');
 
                 if (parts.Length < 3)
                 {
@@ -84,42 +91,37 @@ namespace Formall.Navigation
 
                 if (parts[0] == "*")
                 {
-                    domain = string.Join(".", parts.Skip(1));
+                    value = string.Join(".", parts.Skip(1));
                 }
                 else
                 {
                     parts[0] = "*";
-                    domain = string.Join(".", parts);
+                    value = string.Join(".", parts);
                 }
             }
+
+            return domain;
         }
 
-        public static void Finalize()
-        {
-            _current = null;
-        }
+        private readonly ConcurrentDictionary<string, Entity<Domain>> _container;
 
-        public static Schema Register(string domain, IDocumentContext context)
+        private Schema()
         {
-            var schema = new Schema(domain, context);
-            _container.AddOrUpdate(domain, schema, (key, value) => { return schema; });
-            return schema;
-        }
-
-        private readonly string _name;
-        private readonly Domain _domain;
-        private readonly IDocumentContext _context;
-
-        private Schema(string name, IDocumentContext context)
-        {
-            _name = name;
-            _domain = new Domain();
-            _context = context;
+            _container = new ConcurrentDictionary<string, Entity<Domain>>();
         }
 
         public ISegment this[string path]
         {
             get { throw new NotImplementedException(); }
+        }
+
+        public ISegment Domain(string pattern, IDocumentContext context, ISegment parent)
+        {
+            var document = context.Read("Domain");
+            var entity = document as IEntity;
+            var domain = new Entity<Domain>(entity, parent);
+            _container.AddOrUpdate(pattern, domain, (key, previous) => { return domain; });
+            return domain;
         }
 
         #region - IDocumentContext -

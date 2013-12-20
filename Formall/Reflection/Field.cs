@@ -32,6 +32,12 @@ namespace Formall.Reflection
             set;
         }
 
+        public bool HasMany
+        {
+            get;
+            set;
+        }
+
         public string Name
         {
             get;

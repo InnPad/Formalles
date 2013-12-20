@@ -25,7 +25,7 @@ namespace Formall.Linq
 
         protected virtual IEntry CreateEntry(string name)
         {
-            var field = _model.Fields.AsQueryable<Field>().FirstOrDefault(o => o.Name == name) ?? _model.Fields.AsQueryable<Field>().FirstOrDefault(o => string.Equals(o.Name, name, StringComparison.OrdinalIgnoreCase));
+            var field = _model.Fields.Values.AsQueryable<Field>().FirstOrDefault(o => o.Name == name) ?? _model.Fields.Values.AsQueryable<Field>().FirstOrDefault(o => string.Equals(o.Name, name, StringComparison.OrdinalIgnoreCase));
 
             return new Entry(field);
         }

@@ -15,7 +15,7 @@ namespace Formall.Persistence
 
         Model Model { get; }
 
-        IResult Create(IDictionary data);
+        IEntity Create(object data);
 
         IResult Delete(Guid id);
 

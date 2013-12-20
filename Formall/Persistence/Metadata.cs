@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
-    public abstract class Metadata
+    public class Metadata
     {
-        public abstract string Key
+        public string Key
         {
             get;
+            set;
+        }
+
+        public string Type
+        {
+            get;
+            set;
         }
     }
 }

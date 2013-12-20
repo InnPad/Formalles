@@ -15,7 +15,6 @@ namespace Formall.Navigation
         
     public abstract class Document : Segment, IDocument, ISegment
     {
-        private IDictionary _internal;
         private IDocument _document;
         private ISegment _parent;
 

@@ -85,12 +85,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public IResult Patch(Guid id, IDictionary data)
+        public IResult Patch(Guid id, object data)
         {
             throw new NotImplementedException();
         }
 
-        public IResult Update(Guid id, IDictionary data)
+        public IResult Update(Guid id, object data)
         {
             throw new NotImplementedException();
         }

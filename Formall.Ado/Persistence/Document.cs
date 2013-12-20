@@ -100,12 +100,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public IResult Patch(IDictionary data)
+        public IResult Patch(object data)
         {
             throw new NotImplementedException();
         }
 
-        public IResult Update(IDictionary data)
+        public IResult Update(object data)
         {
             throw new NotImplementedException();
         }

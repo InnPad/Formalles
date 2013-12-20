@@ -57,12 +57,12 @@ namespace Formall.Serialization
             throw new NotImplementedException();
         }
 
-        IResult IEntity.Patch(Linq.IDictionary data)
+        IResult IEntity.Patch(object data)
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.Update(Linq.IDictionary data)
+        IResult IEntity.Update(object data)
         {
             throw new NotImplementedException();
         }
@@ -77,27 +77,27 @@ namespace Formall.Serialization
             throw new NotImplementedException();
         }
 
-        System.IO.Stream Linq.IDocument.Content
+        System.IO.Stream IDocument.Content
         {
             get { throw new NotImplementedException(); }
         }
 
-        IDocumentContext Linq.IDocument.Context
+        IDocumentContext IDocument.Context
         {
             get { throw new NotImplementedException(); }
         }
 
-        string Linq.IDocument.Key
+        string IDocument.Key
         {
             get { throw new NotImplementedException(); }
         }
 
-        string Linq.IDocument.MediaType
+        string IDocument.MediaType
         {
             get { throw new NotImplementedException(); }
         }
 
-        Metadata Linq.IDocument.Metadata
+        Metadata IDocument.Metadata
         {
             get { throw new NotImplementedException(); }
         }

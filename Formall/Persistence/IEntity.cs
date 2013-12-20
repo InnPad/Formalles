@@ -24,9 +24,9 @@ namespace Formall.Persistence
 
         IResult Set<T>(T value) where T : class;
 
-        IResult Patch(IDictionary data);
+        IResult Patch(object data);
 
-        IResult Update(IDictionary data);
+        IResult Update(object data);
 
         IResult WriteJson(Stream stream);
 

@@ -18,7 +18,7 @@ namespace Formall.Persistence
             get { throw new NotImplementedException(); }
         }
 
-        public IResult Create(Linq.IDictionary data)
+        public IEntity Create(object data)
         {
             throw new NotImplementedException();
         }
@@ -43,18 +43,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public IResult Patch(Guid id, Linq.IDictionary data)
+        public IResult Patch(Guid id, object data)
         {
             throw new NotImplementedException();
         }
 
-        public IResult Update(Guid id, Linq.IDictionary data)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public IEntity Create(object data)
+        public IResult Update(Guid id, object data)
         {
             throw new NotImplementedException();
         }

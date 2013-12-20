@@ -66,12 +66,12 @@ namespace Formall.Navigation
             throw new NotImplementedException("Read only");
         }
 
-        IResult IEntity.Patch(IDictionary data)
+        IResult IEntity.Patch(object data)
         {
             throw new NotImplementedException("Read only");
         }
 
-        IResult IEntity.Update(IDictionary data)
+        IResult IEntity.Update(object data)
         {
             throw new NotImplementedException("Read only");
         }

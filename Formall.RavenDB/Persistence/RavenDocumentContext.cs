@@ -23,11 +23,6 @@ namespace Formall.Persistence
 
     public class RavenDocumentContext : IDataContext, IDocumentContext
     {
-        public static RavenJToken Import(IEntry entry)
-        {
-            throw new NotImplementedException();
-        }
-
         private readonly object _lock = new object();
 
         private readonly DocumentStoreConfig _config;

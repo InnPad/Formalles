@@ -74,12 +74,12 @@ namespace Formall.Serialization
             return null;
         }
 
-        IResult IEntity.Patch(Linq.IDictionary data)
+        IResult IEntity.Patch(object data)
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.Update(Linq.IDictionary data)
+        IResult IEntity.Update(object data)
         {
             throw new NotImplementedException();
         }

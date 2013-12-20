@@ -32,8 +32,8 @@ namespace Formall.Persistence
         /// <returns></returns>
         IResult Remove(Guid id, string field, string value);
 
-        IResult Patch(Guid id, IDictionary data);
+        IResult Patch(Guid id, object data);
 
-        IResult Update(Guid id, IDictionary data);
+        IResult Update(Guid id, object data);
     }
 }

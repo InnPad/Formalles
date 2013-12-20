@@ -17,7 +17,7 @@ namespace Formall.Serialization
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Converters;
     
-    internal class JsonObject : IDictionary
+    internal class JsonObject
     {
         public static implicit operator JObject(JsonObject value)
         {

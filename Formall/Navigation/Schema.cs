@@ -16,6 +16,13 @@ namespace Formall.Navigation
 
     public class Schema : DocumentContext, IEdmx
     {
+        public static string[] Split(string pattern)
+        {
+            var list = new List<string>();
+
+            return list.ToArray();
+        }
+
         private static Schema _current;
 
         private readonly static object _lock = new object();
@@ -26,21 +33,22 @@ namespace Formall.Navigation
 
             Array.Sort(array, (IDocument x, IDocument y) =>
                 {
-                    var xDic = x.Content as IDictionary;
-                    var yDic = y.Content as IDictionary;
-                    var xToken = xDic["Name"];
-                    var yToken = yDic["Name"];
+                    var a = x as IEntity;
+                    var b = y as IEntity;
+                    
+                    var xName = a.Data.Name;
+                    var yName = b.Data.Name;
 
-                    if (xToken.ToString() == "Domain")
+                    if (xName.ToString() == "Domain")
                     {
                         domain = x;
                     }
-                    else if (yToken.ToString() == "Domain")
+                    else if (yName.ToString() == "Domain")
                     {
                         domain = y;
                     }
 
-                    return string.Compare(xToken.ToString(), yToken.ToString(), true);
+                    return string.Compare(xName.ToString(), yName.ToString(), true);
                 });
 
             return domain;

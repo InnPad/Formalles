@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    using Formall.Linq;
     using Formall.Navigation;
     using Formall.Persistence;
     using Formall.Reflection;

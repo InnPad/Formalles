@@ -8,7 +8,6 @@ using System.Xml;
 
 namespace Formall.Persistence
 {
-    using Formall.Linq;
     using Formall.Reflection;
 
     public class DocumentContext : IDocumentContext

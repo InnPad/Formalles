@@ -11,7 +11,6 @@ using System.Linq.Expressions;
 
 namespace Formall.Reflection
 {
-    using Formall.Linq;
     using Formall.Navigation;
     using Formall.Persistence;
     using Formall.Reflection;

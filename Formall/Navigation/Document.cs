@@ -9,16 +9,15 @@ using System.Threading.Tasks;
 
 namespace Formall.Navigation
 {
-    using Formall.Linq;
     using Formall.Persistence;
     using Formall.Reflection;
         
-    public abstract class Document : Segment, IDocument, ISegment
+    internal class Document : Segment, IDocument, ISegment
     {
         private IDocument _document;
         private ISegment _parent;
 
-        protected Document(IDocument document, ISegment parent)
+        public Document(IDocument document, ISegment parent)
             : base(parent)
         {
             _document = document;

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
-    using Formall.Linq;
     using Formall.Reflection;
 
     public class DocumentContextMapper

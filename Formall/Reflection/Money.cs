@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Formall.Reflection
 {
-    using Formall.Linq;
     using Formall.Navigation;
     using Formall.Persistence;
 

@@ -14,6 +14,6 @@ namespace Formall.Navigation
 
         ISegment Parent { get; }
 
-        List<ISegment> Children { get; }
+        IDictionary<string, ISegment> Children { get; }
     }
 }

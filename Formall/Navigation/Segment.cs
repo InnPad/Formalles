@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Formall.Navigation
 {
-    public class Segment : ISegment
+    internal class Segment : ISegment
     {
         private ISegment _parent;
-        private List<ISegment> _children;
+        private SegmentCollection _children;
 
         public Segment(ISegment parent)
         {
@@ -29,7 +30,7 @@ namespace Formall.Navigation
 
         protected string Path
         {
-            get { return Parent.Path + '/' + Name; }
+            get { return Parent != null ? Parent.Path + '/' + Name : Name; }
         }
 
         string ISegment.Name
@@ -47,9 +48,27 @@ namespace Formall.Navigation
             get { return this.Parent; }
         }
 
-        List<ISegment> ISegment.Children
+        public SegmentCollection Children
         {
-            get { return _children ?? (_children = new List<ISegment>()); }
+            get { return _children ?? (_children = new SegmentCollection()); }
+        }
+
+        IDictionary<string, ISegment> ISegment.Children
+        {
+            get { return this.Children.Dictionary; }
+        }
+    }
+
+    internal class SegmentCollection : KeyedCollection<string, ISegment>
+    {
+        public new IDictionary<string, ISegment> Dictionary
+        {
+            get { return base.Dictionary; }
+        }
+
+        protected override string GetKeyForItem(ISegment item)
+        {
+            return item.Name.ToLower();
         }
     }
 }

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Formall.Navigation
 {
-    using Formall.Linq;
     using Formall.Persistence;
     using Formall.Reflection;
     using Formall.Serialization;
@@ -15,7 +14,7 @@ namespace Formall.Navigation
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
     
-    public class Entity : Document, IEntity
+    internal class Entity : Document, IEntity
     {
         private readonly IEntity _entity;
         
@@ -87,7 +86,7 @@ namespace Formall.Navigation
         }
     }
 
-    public class Entity<T> : Entity
+    internal class Entity<T> : Entity
         where T : class
     {
         public static implicit operator T(Entity<T> entity)

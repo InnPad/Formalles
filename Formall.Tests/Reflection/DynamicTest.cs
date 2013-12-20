@@ -4,8 +4,6 @@ using System.Dynamic;
 
 namespace Formall.Reflection
 {
-    using Formall.Linq;
-
     [TestClass]
     public class DynamicTest
     {

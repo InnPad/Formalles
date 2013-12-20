@@ -46,7 +46,7 @@ namespace Formall.Persistence
                     //Secret = string.Empty,
                     //Url = string.Empty
                 });
-            Schema.Current.Domain("*", context, null);
+            Schema.Current.Domain(Guid.Empty, "*", context, null);
         }
     }
 }

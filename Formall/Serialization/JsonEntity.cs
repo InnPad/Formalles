@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Formall.Serialization
 {
-    using Formall.Linq;
     using Formall.Persistence;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -17,6 +16,13 @@ namespace Formall.Serialization
         private readonly Guid _id;
         private JObject _data;
         private Metadata _metadata;
+
+        public JsonEntity(object data, Metadata metadata)
+        {
+            Guid.TryParse(metadata.Key.Split('/').Last(), out _id);
+            _data = JObject.FromObject(data);
+            _metadata = metadata;
+        }
 
         public JsonEntity(Guid id, object data, Metadata metadata)
         {

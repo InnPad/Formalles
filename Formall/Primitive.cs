@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Formall.Linq
+namespace Formall
 {
     public class Primitive : IEquatable<Primitive>
     {

@@ -54,7 +54,7 @@
     <Compile Include="Reflection\ModelTest.cs" />
     <Compile Include="Reflection\DynamicTest.cs" />
     <Compile Include="Reflection\DictionaryTest.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Navigation\SchemaTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

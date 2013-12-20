@@ -9,16 +9,128 @@ using System.Xml.Linq;
 
 namespace Formall.Navigation
 {
-    using Formall.Linq;
     using Formall.Presentation;
     using Formall.Persistence;
     using Formall.Reflection;
+    using System.Globalization;
 
-    public class Schema : DocumentContext, IEdmx
+    public class Match
     {
-        public static string[] Split(string pattern)
+        public CultureInfo Culture
         {
-            var list = new List<string>();
+            get;
+            set;
+        }
+
+        public string Original
+        {
+            get;
+            set;
+        }
+
+        public string Pattern
+        {
+            get;
+            set;
+        }
+
+        public string Redirect
+        {
+            get;
+            set;
+        }
+    }
+
+    public class Schema
+    {
+        public static Match[] Options(string host)
+        {
+            var original = host;
+
+            host = host.ToLower();
+
+            var list = new List<Match>();
+
+            var absolute = host.Split('.');
+            var relative = host.Substring(0, host.LastIndexOf('.')).Split('.');
+            relative[relative.Length - 1] = "*";
+
+            CultureInfo culture = null;
+            string redirect = null;
+
+            if (absolute.Length > 2)
+            {
+                var tag = absolute[0].Split('-');
+
+                switch (tag.Length)
+                {
+                    case 1:
+                        try
+                        {
+                            culture = CultureInfo.GetCultureInfoByIetfLanguageTag(tag[0]);
+                        }
+                        catch (CultureNotFoundException)
+                        {
+                        }
+                        break;
+
+                    case 2:
+                        try
+                        {
+                            culture = CultureInfo.GetCultureInfoByIetfLanguageTag(tag[0] + '-' + tag[1].ToUpper());
+                        }
+                        catch (CultureNotFoundException)
+                        {
+                            try
+                            {
+                                culture = CultureInfo.GetCultureInfoByIetfLanguageTag(tag[0]);
+                                redirect = culture.Name + '.' + string.Join(".", absolute.Skip(1));
+                            }
+                            catch (CultureNotFoundException)
+                            {
+                            }
+                        }
+                        break;
+                }
+
+                if (culture != null)
+                {
+                    absolute = absolute.Skip(1).ToArray();
+                    relative = relative.Skip(1).ToArray();
+                }
+            }
+
+            list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", absolute), Redirect = redirect });
+            list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", relative), Redirect = redirect });
+
+            for (var i = 0; i < absolute.Length - 2; i++)
+            {
+                if (i > 0)
+                {
+                    redirect = string.Join(".", absolute.Skip(i));
+
+                    if (culture != null)
+                    {
+                        redirect = culture.Name + '.' + redirect;
+                    }
+                }
+
+                absolute[i] = "*";
+                list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", absolute.Skip(i)), Redirect = redirect });
+
+                relative[i] = "*";
+                list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", relative.Skip(i)), Redirect = redirect });
+            }
+
+            redirect = absolute.Length > 2 ? string.Join(".", absolute.Skip(absolute.Length - 2)) : null;
+
+            if (culture != null)
+            {
+                redirect = culture.Name + '.' + redirect;
+            }
+
+            list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", absolute.Skip(absolute.Length - 2)), Redirect = redirect });
+            list.Add(new Match { Culture = culture, Original = original, Pattern = "*", Redirect = redirect });
 
             return list.ToArray();
         }
@@ -26,33 +138,6 @@ namespace Formall.Navigation
         private static Schema _current;
 
         private readonly static object _lock = new object();
-
-        private static IDocument Arrange(IDocument[] array)
-        {
-            IDocument domain = null;
-
-            Array.Sort(array, (IDocument x, IDocument y) =>
-                {
-                    var a = x as IEntity;
-                    var b = y as IEntity;
-                    
-                    var xName = a.Data.Name;
-                    var yName = b.Data.Name;
-
-                    if (xName.ToString() == "Domain")
-                    {
-                        domain = x;
-                    }
-                    else if (yName.ToString() == "Domain")
-                    {
-                        domain = y;
-                    }
-
-                    return string.Compare(xName.ToString(), yName.ToString(), true);
-                });
-
-            return domain;
-        }
 
         public static Schema Current
         {
@@ -74,43 +159,6 @@ namespace Formall.Navigation
             }
         }
 
-        public ISegment Domain(string value)
-        {
-            Entity<Domain> domain = null;
-
-            while (true)
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    break;
-                }
-
-                if (_container.TryGetValue(value, out domain))
-                {
-                    break;
-                }
-
-                var parts = value.Split('.');
-
-                if (parts.Length < 3)
-                {
-                    break;
-                }
-
-                if (parts[0] == "*")
-                {
-                    value = string.Join(".", parts.Skip(1));
-                }
-                else
-                {
-                    parts[0] = "*";
-                    value = string.Join(".", parts);
-                }
-            }
-
-            return domain;
-        }
-
         private readonly ConcurrentDictionary<string, Entity<Domain>> _container;
 
         private Schema()
@@ -118,37 +166,69 @@ namespace Formall.Navigation
             _container = new ConcurrentDictionary<string, Entity<Domain>>();
         }
 
-        public ISegment this[string path]
+        public ISegment this[string name]
         {
             get { throw new NotImplementedException(); }
         }
 
-        public ISegment Domain(string pattern, IDocumentContext context, ISegment parent)
+        public ISegment Domain(Guid id, string pattern, IDocumentContext context, ISegment parent)
         {
-            var document = context.Read("Domain");
+            var document = context.Read("Domain/" + id);
             var entity = document as IEntity;
             var domain = new Entity<Domain>(entity, parent);
             _container.AddOrUpdate(pattern, domain, (key, previous) => { return domain; });
             return domain;
         }
 
-        #region - IDocumentContext -
-
-        public IDocument Read(string path)
+        public ISegment Load(Guid id, Domain domain, IDocumentContext context)
         {
-            throw new NotImplementedException();
+            var entity = new Entity<Domain>(domain, new Metadata { Key = "Domain/" + id, Type = "Domain" }, null);
+
+            Load(context, entity);
+
+            return entity;
         }
 
-        #endregion - IDocumentContext -
-
-        #region - IEdmx -
-
-        XElement IEdmx.ToEdmx()
+        internal void Load(IDocumentContext context, Segment root)
         {
-            throw new NotImplementedException();
+            const int pageSize = 65536;
+            int count;
+            for (count = 0; ; )
+            {
+                var page = context.Read(count, pageSize);
+
+                for (var i = 0; i < page.Length; i++)
+                {
+                    root.Insert(page[i]);
+                }
+
+                count += page.Length;
+
+                if (page.Length < pageSize)
+                    break;
+            }
         }
 
-        #endregion - IEdmx -
+        public Match Match(string host)
+        {
+            Match match = null;
+
+            var options = Options(host);
+
+            for (int i = 0, count = options.Length; i < count; i++)
+            {
+                var current = options[i];
+
+                Entity<Domain> entity;
+                if (_container.TryGetValue(current.Pattern, out entity))
+                {
+                    match = current;
+                    break;
+                }
+            }
+
+            return match;
+        }
     }
 
     public static class SchemaExtensions

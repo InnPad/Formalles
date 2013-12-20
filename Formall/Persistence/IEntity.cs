@@ -3,7 +3,6 @@ using System.IO;
 
 namespace Formall.Persistence
 {
-    using Formall.Linq;
     using Formall.Reflection;
     
     public interface IEntity : IDocument

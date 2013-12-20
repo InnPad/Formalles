@@ -9,7 +9,6 @@ using System.Xml.Linq;
 
 namespace Formall.Navigation
 {
-    using Formall.Linq;
     using Formall.Reflection;
 
     public class Area

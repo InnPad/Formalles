@@ -9,7 +9,6 @@ using System.Xml;
 
 namespace Formall.Persistence
 {
-    using Formall.Linq;
     using Formall.Navigation;
     using Formall.Reflection;
     using Raven.Abstractions.Data;
@@ -42,7 +41,7 @@ namespace Formall.Persistence
         {
             _name = name;
 
-            var document = schema.Read(name);
+            var document = schema[name];
 
             if (document == null)
             {
@@ -166,11 +165,9 @@ namespace Formall.Persistence
 
         internal Entity Import(IDocument document)
         {
-            var metadata = RavenJObject.FromObject(new
-            {
-                @key = document.Metadata.Key,
-                Entity_Type = document.Metadata.Type
-            });
+            var metadata = new RavenJObject();
+            metadata["@id"] = document.Metadata.Key;
+            metadata["Raven-Entity-Name"] = document.Metadata.Type;
 
             var source = document as IEntity;
 

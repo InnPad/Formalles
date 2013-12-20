@@ -8,8 +8,6 @@ using System.Xml.Linq;
 
 namespace Formall.Reflection
 {
-    using Formall.Linq;
-
     public class Field
     {
         /// <summary>

@@ -9,15 +9,11 @@ using System.Xml.Linq;
 
 namespace Formall.Persistence
 {
-    using Formall.Linq;
     using Formall.Navigation;
     using Formall.Reflection;
 
-    public class Store //: IDocument, IFileSystem, ISegment
+    public class Store
     {
-        private static Model _model;
-        private IDocument _document;
-
         public string Name
         {
             get;

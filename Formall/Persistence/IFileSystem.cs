@@ -15,5 +15,9 @@ namespace Formall.Persistence
         DateTime LastAccessTime { get; }
 
         DateTime LastWriteTime { get; }
+
+        string Name { get; }
+
+        string Path { get; }
     }
 }

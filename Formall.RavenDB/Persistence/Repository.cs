@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
-    using Formall.Linq;
     using Formall.Reflection;
     using Raven.Json.Linq;
 

@@ -13,7 +13,7 @@ namespace Formall.Persistence
         public void Test_RavenDocumentContext_Import_Seeds()
         {
             var schema = Schema.Current;
-            var context = new RavenDocumentContext(schema, new
+            var context = new RavenDocumentContext("*", schema, new
                 {
                     //ApiKey = string.Empty,
                     /*ApiKeys = new []

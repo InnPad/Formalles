@@ -28,28 +28,30 @@ namespace Formall.Persistence
         private readonly string _name;
         private DocumentStoreBase _store;
         private readonly Schema _schema;
+        private readonly string _host;
         private readonly ConcurrentDictionary<string, Repository> _repositories;
 
-        private RavenDocumentContext(Schema schema)
+        private RavenDocumentContext(Schema schema, string host)
         {
             _schema = schema;
+            _host = host;
             _repositories = new ConcurrentDictionary<string, Repository>();
         }
 
-        public RavenDocumentContext(string name, Schema schema)
-            : this(schema)
+        public RavenDocumentContext(string name, string host, Schema schema)
+            : this(schema, host)
         {
             _name = name;
 
-            var document = schema[name];
+            var segment = schema.Query(name, host);
 
-            if (document == null)
+            if (segment == null)
             {
                 // log error
             }
             else
             {
-                var entity = document as IEntity;
+                var entity = segment as IEntity;
 
                 if (entity == null)
                 {
@@ -62,8 +64,8 @@ namespace Formall.Persistence
             }
         }
 
-        public RavenDocumentContext(Schema schema, object config)
-            : this(schema)
+        public RavenDocumentContext(string host, Schema schema, object config)
+            : this(schema, host)
         {
             var serializer = new JsonSerializer
             {
@@ -85,7 +87,7 @@ namespace Formall.Persistence
                 {
                     //
                     // lock and check again
-                    
+
                     lock (_lock)
                     {
                         store = _store;
@@ -163,15 +165,33 @@ namespace Formall.Persistence
             return this.Repository(name);
         }
 
-        internal Entity Import(IEntity source)
+        internal Entity Import(IDocument document)
         {
-            var metadata = new RavenJObject();
-            metadata["@id"] = source.Metadata.Key;
-            metadata["Raven-Entity-Name"] = source.Metadata.Type;
-            
-            var data = RavenJObject.FromObject(source.Data);
+            RavenJObject data;
 
-            var entity = new Entity(source.Id, data, metadata, Repository(source.Metadata.Type));
+            var serializer = new JsonSerializer
+            {
+                DateParseHandling = DateParseHandling.None,
+                ContractResolver = new DefaultContractResolver()
+            };
+
+            using (var reader = new StreamReader(document.Content))
+            {
+                data = RavenJObject.Load(new JsonTextReader(reader));
+            }
+
+            Guid id;
+            var key = document.Key;
+            var type = document.Metadata != null ? document.Metadata.Type : null;
+            var metadata = new RavenJObject
+            {
+                { "@id", key },
+                { "Raven-Entity-Name", type }
+            };
+            
+            Guid.TryParse(document.Key.Split('/').Last(), out id);
+
+            var entity = new Entity(id, data, metadata, Repository(type));
 
             return entity;
         }
@@ -208,7 +228,7 @@ namespace Formall.Persistence
 
         IDocument IDocumentContext.Import(IDocument document)
         {
-            return this.Import(document as IEntity);
+            return this.Import(document);
         }
 
         public IDocument[] Read(int skip, int take)
@@ -238,7 +258,7 @@ namespace Formall.Persistence
 
             if (!_repositories.TryGetValue(name, out repository))
             {
-                var segment = _schema.Query(name, "*").FirstOrDefault();
+                var segment = _schema.Query(name, _host).FirstOrDefault();
 
                 string keyPrefix = null;
                 Model model = null;
@@ -282,18 +302,8 @@ namespace Formall.Persistence
 
             if (entity == null)
             {
-                var metadata = new RavenJObject();
-                metadata["@id"] = document.Metadata.Key;
-                metadata["Raven-Entity-Name"] = document.Metadata.Type;
+                entity = Import(document);
 
-                var source = document as IEntity;
-
-                var data = RavenJObject.FromObject(source.Data);
-
-                entity = new Entity(source.Id, data, metadata, new Repository(document.Metadata.Key.Exclude(1, '/') + '/', null, this));
-
-                //entity = Import(document as IEntity);
-                
                 document = entity;
             }
 

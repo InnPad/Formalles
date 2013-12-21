@@ -10,6 +10,7 @@ namespace Formall.Serialization
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
+    using System.IO;
 
     public class JsonEntity : IEntity
     {
@@ -90,29 +91,47 @@ namespace Formall.Serialization
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(System.IO.Stream stream)
+        IResult IEntity.WriteJson(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(System.IO.TextWriter writer)
+        IResult IEntity.WriteJson(TextWriter writer)
         {
             throw new NotImplementedException();
         }
 
         System.IO.Stream IDocument.Content
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                var stream = new MemoryStream();
+                var writer = new StreamWriter(stream);
+
+                var serializer = new JsonSerializer
+                {
+                    DateParseHandling = DateParseHandling.None,
+                    ContractResolver = new DefaultContractResolver()
+                };
+
+                serializer.Serialize(writer, _data);
+                
+                writer.Flush();
+
+                stream.Seek(0L, SeekOrigin.Begin);
+
+                return stream;
+            }
         }
 
         IDocumentContext IDocument.Context
         {
-            get { throw new NotImplementedException(); }
+            get { return null; }
         }
 
         string IDocument.Key
         {
-            get { throw new NotImplementedException(); }
+            get { return _metadata.Key; }
         }
 
         string IDocument.MediaType

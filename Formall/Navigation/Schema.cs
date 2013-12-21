@@ -14,127 +14,8 @@ namespace Formall.Navigation
     using Formall.Reflection;
     using System.Globalization;
 
-    public class Match
-    {
-        public CultureInfo Culture
-        {
-            get;
-            set;
-        }
-
-        public string Original
-        {
-            get;
-            set;
-        }
-
-        public string Pattern
-        {
-            get;
-            set;
-        }
-
-        public string Redirect
-        {
-            get;
-            set;
-        }
-    }
-
     public class Schema
     {
-        public static Match[] Options(string host)
-        {
-            var original = host;
-
-            host = host.ToLower();
-
-            var list = new List<Match>();
-
-            var absolute = host.Split('.');
-            var relative = host.Substring(0, host.LastIndexOf('.')).Split('.');
-            relative[relative.Length - 1] = "*";
-
-            CultureInfo culture = null;
-            string redirect = null;
-
-            if (absolute.Length > 2)
-            {
-                var tag = absolute[0].Split('-');
-
-                switch (tag.Length)
-                {
-                    case 1:
-                        try
-                        {
-                            culture = CultureInfo.GetCultureInfoByIetfLanguageTag(tag[0]);
-                        }
-                        catch (CultureNotFoundException)
-                        {
-                        }
-                        break;
-
-                    case 2:
-                        try
-                        {
-                            culture = CultureInfo.GetCultureInfoByIetfLanguageTag(tag[0] + '-' + tag[1].ToUpper());
-                        }
-                        catch (CultureNotFoundException)
-                        {
-                            try
-                            {
-                                culture = CultureInfo.GetCultureInfoByIetfLanguageTag(tag[0]);
-                                redirect = culture.Name + '.' + string.Join(".", absolute.Skip(1));
-                            }
-                            catch (CultureNotFoundException)
-                            {
-                            }
-                        }
-                        break;
-                }
-
-                if (culture != null)
-                {
-                    absolute = absolute.Skip(1).ToArray();
-                    relative = relative.Skip(1).ToArray();
-                }
-            }
-
-            list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", absolute), Redirect = redirect });
-            list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", relative), Redirect = redirect });
-
-            for (var i = 0; i < absolute.Length - 2; i++)
-            {
-                if (i > 0)
-                {
-                    redirect = string.Join(".", absolute.Skip(i));
-
-                    if (culture != null)
-                    {
-                        redirect = culture.Name + '.' + redirect;
-                    }
-                }
-
-                absolute[i] = "*";
-                list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", absolute.Skip(i)), Redirect = redirect });
-
-                relative[i] = "*";
-                list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", relative.Skip(i)), Redirect = redirect });
-            }
-
-            redirect = absolute.Length > 2 ? string.Join(".", absolute.Skip(absolute.Length - 2)) : null;
-
-            if (culture != null)
-            {
-                redirect = culture.Name + '.' + redirect;
-            }
-
-            list.Add(new Match { Culture = culture, Original = original, Pattern = string.Join(".", absolute.Skip(absolute.Length - 2)), Redirect = redirect });
-            list.Add(new Match { Culture = culture, Original = original, Pattern = "*", Redirect = redirect });
-
-            return list.ToArray();
-        }
-
         private static Schema _current;
 
         private readonly static object _lock = new object();
@@ -166,29 +47,22 @@ namespace Formall.Navigation
             _container = new ConcurrentDictionary<string, Entity<Domain>>();
         }
 
-        public ISegment this[string name]
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         public IEnumerable<ISegment> Query(string name, string host)
         {
-            var options = Options(host);
+            var options = RouteOption.FromHost(host);
 
-            for (int i = 0, count = options.Length; i < count; i++)
+            foreach (var current in options)
             {
-                var current = options[i];
-
                 Entity<Domain> entity;
 
                 if (_container.TryGetValue(current.Pattern, out entity))
                 {
                     var domain = (Domain)entity;
-                    
+
                     var path = new Queue<string>(name.Split('/'));
-                    
+
                     var segment = entity.Select(path);
-                    
+
                     if (segment != null && path.Count == 0)
                     {
                         yield return segment;
@@ -228,16 +102,14 @@ namespace Formall.Navigation
             }
         }
 
-        public Match Match(string host)
+        public RouteOption Match(string host)
         {
-            Match match = null;
+            RouteOption match = null;
 
-            var options = Options(host);
+            var options = RouteOption.FromHost(host);
 
-            for (int i = 0, count = options.Length; i < count; i++)
+            foreach(var current in options)
             {
-                var current = options[i];
-
                 Entity<Domain> entity;
                 if (_container.TryGetValue(current.Pattern, out entity))
                 {

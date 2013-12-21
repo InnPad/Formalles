@@ -14,6 +14,12 @@ namespace Formall.Persistence
             set;
         }
 
+        public bool Private
+        {
+            get;
+            set;
+        }
+
         public string Type
         {
             get;

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace Formall.Persistence
 {
     using Formall.Navigation;
-using Formall.Reflection;
-using Formall.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+    using Formall.Reflection;
+    using Formall.Serialization;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
-    
+
     public static class IDocumentContextExtensions
     {
         const string idProp = "id";
@@ -170,9 +170,28 @@ using Newtonsoft.Json.Linq;
 
             //record.Add(idProp, new JValue(id));
 
+            //
+            // Error:
+            //
             IDocument document = new JsonEntity(data, metadata);
-
             context.Store(ref document);
+            //
+            // Reason: Implicit convertion between JObject to RavenJObject not working correctly
+            //
+            // Workaround:
+            // Export as a document, use the Content Stream to create a TextReader, user the TextReader to import from the context 
+
+            /*using (var stream = new MemoryStream())
+            {
+                var writer = new StreamWriter(stream);
+                serializer.Serialize(writer, data);
+                stream.Seek(0L, SeekOrigin.Begin);
+                using (var reader = new StreamReader(stream))
+                {
+                    var document = context.Import(reader);
+                    context.Store(ref document);
+                }
+            }*/
 
             return true;
         }

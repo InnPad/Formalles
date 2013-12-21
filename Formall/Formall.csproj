@@ -45,6 +45,7 @@
     <Compile Include="Error.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Navigation\RouteOption.cs" />
     <Compile Include="Navigation\SegmentExtensions.cs" />
     <Compile Include="Persistence\IDocumentContextExtensions.cs" />
     <Compile Include="Primitive.cs">

@@ -60,7 +60,14 @@ namespace Formall.Navigation
             {
                 var keyPrefix = document.Key.Exclude(1, '/') + '/';
 
-                name = entity.Data.Name as string;
+                try
+                {
+                    name = entity.Data.Name as string;
+                }
+                catch (Exception e)
+                {
+                    var msg = e.Message;
+                }
 
                 if (name == null)
                 {

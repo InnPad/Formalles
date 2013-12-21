@@ -10,7 +10,7 @@ namespace Formall.Persistence
 {
     using Formall.Reflection;
 
-    public interface IDataContext : IDocumentContext
+    public interface IDataContext : IDocumentContext//, IValidationContext
     {
         IRepository CreateRepository(string name);
 

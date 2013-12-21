@@ -1,16 +1,18 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Globalization;
+using System.Linq;
 
 namespace Formall.Navigation
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class SchemaTest
     {
         [TestMethod]
         public void TestSchemaOptions()
         {
-            var options = Schema.Options("data.innpad.formall.com");
+            var options = RouteOption.FromHost("data.innpad.formall.com").ToArray();
 
             Assert.AreEqual(options.Length, 8);
 
@@ -41,7 +43,7 @@ namespace Formall.Navigation
             var culture = new CultureInfo("en-US");
             var principal = "data.innpad.formall.com";
             var original = culture.Name + '.' + principal;
-            options = Schema.Options(original);
+            options = options = RouteOption.FromHost(original).ToArray();
 
             Assert.AreEqual(options.Length, 8);
 

@@ -171,13 +171,32 @@ namespace Formall.Navigation
             get { throw new NotImplementedException(); }
         }
 
-        public ISegment Domain(Guid id, string pattern, IDocumentContext context, ISegment parent)
+        public IEnumerable<ISegment> Query(string name, string host)
         {
-            var document = context.Read("Domain/" + id);
-            var entity = document as IEntity;
-            var domain = new Entity<Domain>(entity, parent);
-            _container.AddOrUpdate(pattern, domain, (key, previous) => { return domain; });
-            return domain;
+            var options = Options(host);
+
+            for (int i = 0, count = options.Length; i < count; i++)
+            {
+                var current = options[i];
+
+                Entity<Domain> entity;
+
+                if (_container.TryGetValue(current.Pattern, out entity))
+                {
+                    var domain = (Domain)entity;
+                    
+                    var path = new Queue<string>(name.Split('/'));
+                    
+                    var segment = entity.Select(path);
+                    
+                    if (segment != null && path.Count == 0)
+                    {
+                        yield return segment;
+                    }
+                }
+            }
+
+            yield break;
         }
 
         public ISegment Load(Guid id, Domain domain, IDocumentContext context)

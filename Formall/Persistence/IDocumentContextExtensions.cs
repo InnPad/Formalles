@@ -12,6 +12,7 @@ using Formall.Reflection;
 using Formall.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json.Serialization;
     
     public static class IDocumentContextExtensions
     {
@@ -90,12 +91,12 @@ using Newtonsoft.Json.Linq;
 
         #region - Import -
 
-        public static void Import(this IDocumentContext store, string fileName, Model descriptor = null)
+        public static void Import(this IDocumentContext context, string fileName, Model descriptor = null)
         {
-            Import(store, new FileInfo(fileName), descriptor);
+            Import(context, new FileInfo(fileName), descriptor);
         }
 
-        public static void Import(this IDocumentContext store, FileInfo file, Model descriptor = null)
+        public static void Import(this IDocumentContext context, FileInfo file, Model descriptor = null)
         {
             JObject record;
 
@@ -109,41 +110,48 @@ using Newtonsoft.Json.Linq;
                 var data = record[dataProp];
 
                 if (data != null && data.Type == JTokenType.Array)
-                    Import(store, data as JArray, descriptor);
+                    Import(context, data as JArray, descriptor);
                 else
-                    Import(store, record, descriptor);
+                    Import(context, record, descriptor);
             }
         }
 
-        public static void Import(this IDocumentContext store, JToken data, Model descriptor = null)
+        internal static void Import(this IDocumentContext context, JToken data, Model descriptor = null)
         {
             switch (data.Type)
             {
                 case JTokenType.Array:
-                    Import(store, data as JArray, descriptor);
+                    Import(context, data as JArray, descriptor);
                     break;
 
                 case JTokenType.Object:
-                    Import(store, data as JObject, descriptor);
+                    Import(context, data as JObject, descriptor);
                     break;
             }
         }
 
-        public static void Import(this IDocumentContext store, JArray data, Model descriptor = null)
+        internal static void Import(this IDocumentContext context, JArray data, Model descriptor = null)
         {
-            Import(store, data.Values().AsEnumerable().OfType<JObject>(), descriptor);
+            Import(context, data.AsEnumerable().OfType<JObject>(), descriptor);
         }
 
-        public static void Import(this IDocumentContext store, IEnumerable<JObject> package, Model descriptor = null)
+        internal static void Import(this IDocumentContext context, IEnumerable<JObject> package, Model descriptor = null)
         {
             foreach (var record in package)
-                Import(store, record);
+                Import(context, record);
         }
 
-        public static bool Import(this IDocumentContext context, JObject data, Model descriptor = null)
+        internal static bool Import(this IDocumentContext context, JObject data, Model descriptor = null)
         {
-            string key = null;
-            var metadata = data.Value<Metadata>("@metadata");
+            var m = data.Value<JObject>("@metadata");
+
+            var serializer = new JsonSerializer
+            {
+                DateParseHandling = DateParseHandling.None,
+                ContractResolver = new DefaultContractResolver()
+            };
+
+            var metadata = (Metadata)serializer.Deserialize(new JTokenReader(m), typeof(Metadata));
 
             if (metadata != null)
             {
@@ -151,18 +159,20 @@ using Newtonsoft.Json.Linq;
             }
             else
             {
-                key = data.Value<string>(keyProp);
+                var key = data.Value<string>(keyProp);
                 data.Remove(keyProp);
                 metadata = new Metadata { Key = key, Type = key.Exclude(1, '/') };
             }
 
             Guid id;
-            if (string.IsNullOrWhiteSpace(key) || !Guid.TryParse(key.Split('/').Last(), out id))
+            if (string.IsNullOrWhiteSpace(metadata.Key) || !Guid.TryParse(metadata.Key.Split('/').Last(), out id))
                 return false;
 
             //record.Add(idProp, new JValue(id));
 
-            var document = context.Import(new JsonEntity(data, metadata));
+            IDocument document = new JsonEntity(data, metadata);
+
+            context.Store(ref document);
 
             return true;
         }

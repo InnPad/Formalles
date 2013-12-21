@@ -20,7 +20,7 @@ namespace Formall.Persistence
     using Raven.Imports.Newtonsoft.Json.Serialization;
     using Raven.Json.Linq;
 
-    public class RavenDocumentContext : IDataContext, IDocumentContext
+    public class RavenDocumentContext : IDataContext
     {
         private readonly object _lock = new object();
 
@@ -107,8 +107,8 @@ namespace Formall.Persistence
                                     {
                                         store = new EmbeddableDocumentStore
                                         {
-                                            ApiKey = apiKey,
-                                            ConnectionStringName = _config.Name,
+                                            //ApiKey = apiKey,
+                                            //ConnectionStringName = _config.Name,
                                             DataDirectory = _config.DataDirectory
                                         };
                                     }
@@ -116,8 +116,8 @@ namespace Formall.Persistence
                                     {
                                         store = new DocumentStore
                                         {
-                                            ApiKey = apiKey,
-                                            ConnectionStringName = _config.Name,
+                                            //ApiKey = apiKey,
+                                            //ConnectionStringName = _config.Name,
                                             Url = _config.Url
                                         };
                                     }
@@ -163,19 +163,22 @@ namespace Formall.Persistence
             return this.Repository(name);
         }
 
-        internal Entity Import(IDocument document)
+        internal Entity Import(IEntity source)
         {
             var metadata = new RavenJObject();
-            metadata["@id"] = document.Metadata.Key;
-            metadata["Raven-Entity-Name"] = document.Metadata.Type;
-
-            var source = document as IEntity;
-
+            metadata["@id"] = source.Metadata.Key;
+            metadata["Raven-Entity-Name"] = source.Metadata.Type;
+            
             var data = RavenJObject.FromObject(source.Data);
 
-            var entity = new Entity(Entity.ParseId(document.Key), data, metadata, Repository(document.Metadata.Type));
+            var entity = new Entity(source.Id, data, metadata, Repository(source.Metadata.Type));
 
             return entity;
+        }
+
+        IEntity IDataContext.Import(IEntity entity)
+        {
+            return this.Import(entity);
         }
 
         #region - IDocumentContext -
@@ -205,14 +208,14 @@ namespace Formall.Persistence
 
         IDocument IDocumentContext.Import(IDocument document)
         {
-            return this.Import(document);
+            return this.Import(document as IEntity);
         }
 
         public IDocument[] Read(int skip, int take)
         {
             var documents = DocumentStore.DatabaseCommands.GetDocuments(skip, take);
 
-            return documents.Select(o => new Entity(Entity.ParseId(o.Key), o.DataAsJson, o.Metadata, Repository(o.Metadata.Value<string>("EntityType")))).OfType<IDocument>().ToArray();
+            return documents.Select(o => new Entity(Entity.ParseId(o.Key), o.DataAsJson, o.Metadata, Repository(o.Metadata.Value<string>("Raven-Entity-Name")))).OfType<IDocument>().ToArray();
         }
 
         public IDocument Read(string key)
@@ -235,18 +238,32 @@ namespace Formall.Persistence
 
             if (!_repositories.TryGetValue(name, out repository))
             {
-                var segment = _schema[name];
-                var entity = segment as Entity<Model>;
-                var model = (Model)entity;
+                var segment = _schema.Query(name, "*").FirstOrDefault();
 
-                var keyPrefix = model.Name + '/';
+                string keyPrefix = null;
+                Model model = null;
 
-                for (var baseType = model.BaseType; baseType != null; )
+                if (segment != null)
                 {
-                    segment = segment.Parent;
-                    entity = segment as Entity<Model>;
-                    var baseModel = (Model)entity;
-                    keyPrefix = baseModel.Name + '/' + keyPrefix;
+                    var entity = segment as Entity<Model>;
+                    if (entity != null)
+                    {
+                        model = (Model)entity;
+
+                        keyPrefix = model.Name + '/';
+
+                        for (var baseType = model.BaseType; baseType != null; )
+                        {
+                            segment = segment.Parent;
+                            if (segment != null)
+                            {
+                                entity = segment as Entity<Model>;
+                                var baseModel = (Model)entity;
+                                keyPrefix = baseModel.Name + '/' + keyPrefix;
+                            }
+
+                        }
+                    }
                 }
 
                 repository = _repositories.AddOrUpdate(name, new Repository(keyPrefix, model, this), (key, previous) =>
@@ -265,11 +282,22 @@ namespace Formall.Persistence
 
             if (entity == null)
             {
-                entity = Import(document);
+                var metadata = new RavenJObject();
+                metadata["@id"] = document.Metadata.Key;
+                metadata["Raven-Entity-Name"] = document.Metadata.Type;
+
+                var source = document as IEntity;
+
+                var data = RavenJObject.FromObject(source.Data);
+
+                entity = new Entity(source.Id, data, metadata, new Repository(document.Metadata.Key.Exclude(1, '/') + '/', null, this));
+
+                //entity = Import(document as IEntity);
+                
                 document = entity;
             }
 
-            var result = _store.DatabaseCommands.Put(entity.Key, null, entity.Data, entity.Metadata);
+            var result = DocumentStore.DatabaseCommands.Put(entity.Key, null, entity.Data, entity.Metadata);
 
             return new SuccessResult
             {

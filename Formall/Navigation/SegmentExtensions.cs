@@ -136,5 +136,25 @@ namespace Formall.Navigation
         {
             return array.Length > 1 ? array.Take(array.Length - count).ToArray() : new string[0];
         }
+
+        public static ISegment Select(this ISegment root, Queue<string> path)
+        {
+            ISegment segment;
+
+            if (path == null || path.Count == 0)
+            {
+                segment = root;
+            }
+            else
+            {
+                var name = path.First();
+                if (root.Children.TryGetValue(name, out segment))
+                {
+                    path.Dequeue();
+                    segment = Select(segment, path);
+                }
+            }
+            return segment;
+        }
     }   
 }

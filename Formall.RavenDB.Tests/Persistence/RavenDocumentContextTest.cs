@@ -46,7 +46,34 @@ namespace Formall.Persistence
                     //Secret = string.Empty,
                     //Url = string.Empty
                 });
-            Schema.Current.Domain(Guid.Empty, "*", context, null);
+
+            var domain = new Domain
+            {
+                Culture = "en-US",
+                Pattern = "*"
+            };
+
+            var metadataDir = new System.IO.DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory)
+                .Parent
+                .Parent
+                .Parent
+                .GetDirectories("Formall.Web.Mvc.Server")[0]
+                .GetDirectories("App_Data")[0]
+                .GetDirectories("Seeds")[0];
+            
+            var metadataSeeds = metadataDir.GetFiles("*.js");
+
+            foreach (var file in metadataSeeds)
+            {
+                context.Import(new System.IO.FileInfo(file.FullName));
+            }
+
+            Schema.Current.Load(Guid.NewGuid(), domain, context);
+        }
+
+        public void Import()
+        {
+
         }
     }
 }

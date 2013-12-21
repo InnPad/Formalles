@@ -153,12 +153,11 @@
             Name: "Value",
             Fields: {
                 "Auto": {
-                    Constraints: {
-                        // ensure unit field is selected
+                    Constraint: {
                         "UnitField": true
                     },
                     Summary: {
-                        "en": "Auto convert on UnitField selection change".
+                        "en": "Auto convert on UnitField selection change"
                     },
                     Type: "Boolean",
                 },

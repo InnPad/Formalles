@@ -10,8 +10,10 @@ namespace Formall.Persistence
 {
     using Formall.Reflection;
 
-    public interface IDataContext
+    public interface IDataContext : IDocumentContext
     {
         IRepository CreateRepository(string name);
+
+        IEntity Import(IEntity entity);
     }
 }

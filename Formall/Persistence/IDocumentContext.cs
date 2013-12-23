@@ -13,18 +13,16 @@ namespace Formall.Persistence
     {
         IResult Delete(string key);
 
-        IDocument Import(Stream stream);
+        IDocument Import(Stream stream, Metadata metadata);
 
-        IDocument Import(TextReader reader);
+        IDocument Import(TextReader reader, Metadata metadata);
 
         IDocument Import(IDocument document);
 
-        IDocument[] Read(int skip, int take);
-
         IDocument Read(string key);
 
-        IDocument[] Read(string keyPrefix, int skip, int take);
+        IDocument[] Read(int skip, int take);
 
-        IResult Store(ref IDocument document);
+        IDocument[] Read(string keyPrefix, int skip, int take);
     }
 }

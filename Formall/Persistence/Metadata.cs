@@ -8,19 +8,25 @@ namespace Formall.Persistence
 {
     public class Metadata
     {
+        public ContentType Type
+        {
+            get;
+            set;
+        }
+
         public string Key
         {
             get;
             set;
         }
 
-        public bool Private
+        public string Model
         {
             get;
             set;
         }
 
-        public string Type
+        public bool Private
         {
             get;
             set;

@@ -173,9 +173,9 @@ namespace Formall.Persistence
             get { return _key; }
         }
 
-        string IDocument.MediaType
+        ContentType IDocument.ContentType
         {
-            get { return "application/json"; }
+            get { return ContentType.Json; }
         }
 
         Metadata IDocument.Metadata

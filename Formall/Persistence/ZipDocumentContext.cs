@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Formall.Persistence
 {
-    public class ZipDocumentContext : StreamDocumentContext, IDataContext
+    public class ZipDocumentContext : IDataContext
     {
         /*public static void Export(IDocumentContext documentStore, Stream outputStream, string password)
         {

@@ -83,12 +83,12 @@ namespace Formall.Serialization
             get { throw new NotImplementedException(); }
         }
 
-        string IDocument.Key
+        ContentType IDocument.ContentType
         {
-            get { throw new NotImplementedException(); }
+            get { return ContentType.Xml; }
         }
 
-        string IDocument.MediaType
+        string IDocument.Key
         {
             get { throw new NotImplementedException(); }
         }
@@ -97,9 +97,5 @@ namespace Formall.Serialization
         {
             get { throw new NotImplementedException(); }
         }
-    }
-
-    public class XmlEntity<T> : XmlEntity
-    {
     }
 }

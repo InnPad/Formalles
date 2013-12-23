@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
-    public class FileDocumentContext : StreamDocumentContext, IDataContext
+    public class FileDocumentContext : IDataContext
     {
         private readonly DirectoryInfo _directory;
 
         public FileDocumentContext(DirectoryInfo directory)
         {
             _directory = directory;
+        }
+
+        public DirectoryInfo Directory
+        {
+            get { return _directory; }
         }
 
         #region - IDocumentContext -

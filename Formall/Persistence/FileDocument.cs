@@ -25,7 +25,17 @@ namespace Formall.Persistence
             get { throw new NotImplementedException(); }
         }
 
+        public ContentType ContentType
+        {
+            get { return _metadata != null ? _metadata.Type : ContentType.Binary; }
+        }
+
         public FileDocumentContext Context
+        {
+            get { return _context; }
+        }
+
+        IDocumentContext IDocument.Context
         {
             get { return _context; }
         }
@@ -38,11 +48,6 @@ namespace Formall.Persistence
         public string Key
         {
             get { return _metadata.Key; }
-        }
-
-        public ContentType ContentType
-        {
-            get { return _metadata != null ? _metadata.ContentType : ContentType.Binary; }
         }
 
         public Metadata Metadata

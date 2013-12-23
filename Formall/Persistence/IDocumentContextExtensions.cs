@@ -161,7 +161,7 @@ namespace Formall.Persistence
             {
                 var key = data.Value<string>(keyProp);
                 data.Remove(keyProp);
-                metadata = new Metadata { Key = key, Type = key.Exclude(1, '/') };
+                metadata = new Metadata { Key = key, Model = key.Exclude(1, '/') };
             }
 
             Guid id;
@@ -173,8 +173,7 @@ namespace Formall.Persistence
             //
             // Error:
             //
-            IDocument document = new JsonEntity(data, metadata);
-            context.Store(ref document);
+            IDocument document = context.Import(new JsonEntity(data, metadata));
             //
             // Reason: Implicit convertion between JObject to RavenJObject not working correctly
             //

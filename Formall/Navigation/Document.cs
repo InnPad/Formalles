@@ -36,6 +36,11 @@ namespace Formall.Navigation
             get { return _document.Content; }
         }
 
+        public ContentType ContentType
+        {
+            get { return _document.ContentType; }
+        }
+
         IDocumentContext IDocument.Context
         {
             get { return _document.Context; }
@@ -44,11 +49,6 @@ namespace Formall.Navigation
         string IDocument.Key
         {
             get { return _document.Key; }
-        }
-
-        public string MediaType
-        {
-            get { return _document.MediaType; }
         }
 
         Metadata IDocument.Metadata

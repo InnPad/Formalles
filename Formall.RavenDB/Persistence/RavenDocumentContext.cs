@@ -183,7 +183,7 @@ namespace Formall.Persistence
 
             Guid id;
             var key = document.Key;
-            var type = document.Metadata != null ? document.Metadata.Type : null;
+            var type = document.Metadata != null ? document.Metadata.Model : null;
             var metadata = new RavenJObject
             {
                 { "@id", key },
@@ -194,12 +194,24 @@ namespace Formall.Persistence
 
             var entity = new Entity(id, data, metadata, Repository(type));
 
-            return entity;
+            return Store(entity);
         }
 
         IEntity IDataContext.Import(IEntity entity)
         {
-            return this.Import(entity);
+            return Store(Import(entity));
+        }
+
+        private Entity Store(Entity entity)
+        {
+            var result = DocumentStore.DatabaseCommands.Put(entity.Key, null, entity.Data, entity.Metadata);
+
+            /*return new SuccessResult
+            {
+                Data = new { Key = result.Key, Etag = result.ETag }
+            };*/
+
+            return entity;
         }
 
         #region - IDocumentContext -
@@ -210,26 +222,28 @@ namespace Formall.Persistence
             return null;
         }
 
-        public IDocument Import(Stream stream)
+        public IDocument Import(Stream stream, Metadata metadata)
         {
             IDocument document;
 
             using (var reader = new StreamReader(stream))
             {
-                document = Import(reader);
+                document = Import(reader, metadata);
             }
 
             return document;
         }
 
-        public IDocument Import(TextReader reader)
+        public IDocument Import(TextReader reader, Metadata metadata)
         {
+            Entity entity = null;
             throw new NotImplementedException();
+            return Store(entity);
         }
 
         IDocument IDocumentContext.Import(IDocument document)
         {
-            return this.Import(document);
+            return Import(document);
         }
 
         public IDocument[] Read(int skip, int take)
@@ -295,25 +309,6 @@ namespace Formall.Persistence
             }
 
             return repository;
-        }
-
-        public IResult Store(ref IDocument document)
-        {
-            var entity = document as Entity;
-
-            if (entity == null)
-            {
-                entity = Import(document);
-
-                document = entity;
-            }
-
-            var result = DocumentStore.DatabaseCommands.Put(entity.Key, null, entity.Data, entity.Metadata);
-
-            return new SuccessResult
-            {
-                Data = new { Key = result.Key, Etag = result.ETag }
-            };
         }
 
         #endregion - IDocumentContext -

@@ -8,13 +8,11 @@ namespace Formall.Persistence
 {
     public abstract class FileEntity : FileDocument, IEntity
     {
-        private readonly string _name;
         private readonly FileRepository _repository;
 
         protected FileEntity(string name, Metadata metadata, FileRepository repository)
-            : base(metadata, repository.Context)
+            : base(name, metadata, repository.Context)
         {
-            _name = name;
             _repository = repository;
         }
 
@@ -73,31 +71,6 @@ namespace Formall.Persistence
         IResult IEntity.WriteJson(System.IO.TextWriter writer)
         {
             throw new NotImplementedException();
-        }
-
-        System.IO.Stream IDocument.Content
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        IDocumentContext IDocument.Context
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        string IDocument.Key
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        ContentType IDocument.ContentType
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        Metadata IDocument.Metadata
-        {
-            get { throw new NotImplementedException(); }
         }
     }
 }

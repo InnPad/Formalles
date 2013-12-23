@@ -36,14 +36,14 @@ namespace Formall.Persistence
             get { return _context; }
         }
 
+        public ContentType ContentType
+        {
+            get { return _metadata != null ? _metadata.Type : ContentType.Binary; }
+        }
+
         public string Key
         {
             get { return _metadata != null ? _metadata.Key : null; }
-        }
-
-        public string MediaType
-        {
-            get { return _metadata != null ? _metadata.MediaType : null; }
         }
 
         public Metadata Metadata

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Formall.Serialization
 {
@@ -10,8 +8,7 @@ namespace Formall.Serialization
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
-    using System.IO;
-
+    
     public class JsonEntity : IEntity
     {
         private readonly string _key;
@@ -130,14 +127,14 @@ namespace Formall.Serialization
             get { return null; }
         }
 
+        ContentType IDocument.ContentType
+        {
+            get { return ContentType.Json; }
+        }
+
         string IDocument.Key
         {
             get { return _metadata.Key; }
-        }
-
-        string IDocument.MediaType
-        {
-            get { return "application/json"; }
         }
 
         Metadata IDocument.Metadata

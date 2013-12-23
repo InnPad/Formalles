@@ -54,6 +54,11 @@ namespace Formall.Persistence
             get { throw new NotImplementedException(); }
         }
 
+        public ContentType ContentType
+        {
+            get { return ContentType.Xml; }
+        }
+
         public dynamic Data
         {
             get { throw new NotImplementedException(); }
@@ -61,11 +66,6 @@ namespace Formall.Persistence
         }
 
         public string Id
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string MediaType
         {
             get { throw new NotImplementedException(); }
         }

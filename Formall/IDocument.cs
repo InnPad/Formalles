@@ -9,11 +9,11 @@ namespace Formall
     {
         Stream Content { get; }
 
+        ContentType ContentType { get; }
+
         IDocumentContext Context { get; }
 
         string Key { get; }
-
-        string MediaType { get; }
 
         Metadata Metadata { get; }
     }

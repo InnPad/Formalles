@@ -22,12 +22,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public IDocument Import(Stream stream)
+        public IDocument Import(Stream stream, Metadata metadata)
         {
             throw new NotImplementedException();
         }
 
-        public IDocument Import(TextReader reader)
+        public IDocument Import(TextReader reader, Metadata metadata)
         {
             throw new NotImplementedException();
         }
@@ -53,11 +53,6 @@ namespace Formall.Persistence
         }
 
         public IDocument[] Read(string keyPrefix, int skip, int take)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IResult Store(ref IDocument document)
         {
             throw new NotImplementedException();
         }

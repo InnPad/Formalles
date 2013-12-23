@@ -30,11 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,7 +50,18 @@
     </Compile>
     <Compile Include="Navigation\RouteOption.cs" />
     <Compile Include="Navigation\SegmentExtensions.cs" />
+    <Compile Include="Persistence\ContentType.cs" />
+    <Compile Include="Persistence\FileDocument.cs" />
+    <Compile Include="Persistence\FileDocumentContext.cs" />
+    <Compile Include="Persistence\FileEntity.cs" />
+    <Compile Include="Persistence\FileRepository.cs" />
     <Compile Include="Persistence\IDocumentContextExtensions.cs" />
+    <Compile Include="Persistence\ZipDocument.cs" />
+    <Compile Include="Persistence\ZipDocumentContext.cs" />
+    <Compile Include="Persistence\ZipEntity.cs" />
+    <Compile Include="Persistence\ZipEntry.cs" />
+    <Compile Include="Persistence\ZipIndex.cs" />
+    <Compile Include="Persistence\ZipRepository.cs" />
     <Compile Include="Primitive.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -125,6 +139,7 @@
     <Compile Include="Reflection\Value.cs" />
     <Compile Include="Serialization\JsonEntity.cs" />
     <Compile Include="Serialization\XmlEntity.cs" />
+    <Compile Include="Set.cs" />
     <Compile Include="SuccessResult.cs" />
     <Compile Include="Text.cs">
       <SubType>Code</SubType>

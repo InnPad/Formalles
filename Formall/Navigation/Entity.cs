@@ -18,8 +18,8 @@ namespace Formall.Navigation
     {
         private readonly IEntity _entity;
         
-        public Entity(IEntity entity, ISegment parent)
-            : base(entity as IDocument, parent)
+        public Entity(IEntity entity, string name, ISegment parent)
+            : base(entity, name, parent)
         {
             _entity = entity;
         }
@@ -111,18 +111,18 @@ namespace Formall.Navigation
 
         private T _content;
 
-        public Entity(Guid id, T data, Metadata metadata, ISegment parent)
-            : this(new JsonEntity(id, data, metadata), parent)
+        public Entity(Guid id, T data, Metadata metadata, string name, ISegment parent)
+            : this(new JsonEntity(id, data, metadata), name, parent)
         {
         }
 
-        public Entity(T data, Metadata metadata, ISegment parent)
-            : this(Guid.NewGuid(), data, metadata, parent)
+        public Entity(T data, Metadata metadata, string name, ISegment parent)
+            : this(Guid.NewGuid(), data, metadata, name, parent)
         {
         }
 
-        public Entity(IEntity entity, ISegment parent)
-            : base(entity, parent)
+        public Entity(IEntity entity, string name, ISegment parent)
+            : base(entity, name, parent)
         {
             _content = null;
         }

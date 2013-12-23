@@ -73,9 +73,11 @@ namespace Formall.Navigation
             yield break;
         }
 
-        public ISegment Load(Guid id, Domain domain, IDocumentContext context)
+        public ISegment Load(Guid id, string host, Domain domain, IDocumentContext context)
         {
-            var entity = new Entity<Domain>(domain, new Metadata { Key = "Domain/" + id, Type = "Domain" }, null);
+            var entity = new Entity<Domain>(domain, new Metadata { Key = "Domain/" + id, Type = "Domain" }, string.Empty, null);
+
+            _container.AddOrUpdate(host, entity, (key, previous) => { return entity; });
 
             Load(context, entity);
 

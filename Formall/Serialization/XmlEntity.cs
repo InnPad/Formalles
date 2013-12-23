@@ -16,10 +16,6 @@ namespace Formall.Serialization
             {
                 throw new NotImplementedException();
             }
-            set
-            {
-                throw new NotImplementedException();
-            }
         }
 
         Guid IEntity.Id

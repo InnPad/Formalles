@@ -27,17 +27,17 @@ namespace Formall.Navigation
                 }
                 else
                 {
-                    segment = new Segment(root);
+                    segment = new Segment(string.Empty, root);
 
-                    root.Children.Dictionary[name] = segment;
+                    root.Children[name] = segment;
 
                     while (path.Count > 0)
                     {
                         name = path.Dequeue();
 
-                        child = new Segment(segment);
+                        child = new Segment(name, segment);
 
-                        segment.Children.Dictionary[name] = child;
+                        segment.Children[name] = child;
 
                         segment = child;
                     }
@@ -83,22 +83,22 @@ namespace Formall.Navigation
                     switch (keyPrefix)
                     {
                         case "Type/Item/":
-                            var item = new Entity<Item>(entity, parent);
+                            var item = new Entity<Item>(entity, name, parent);
                             segment = item;
                             break;
 
                         case "Type/Model/":
-                            var model = new Entity<Model>(entity, parent);
+                            var model = new Entity<Model>(entity, name, parent);
                             segment = model;
                             break;
 
                         case "Type/Value/":
-                            var value = new Entity<Value>(entity, parent);
+                            var value = new Entity<Value>(entity, name, parent);
                             segment = value;
                             break;
 
                         default:
-                            segment = new Entity(entity, parent);
+                            segment = new Entity(entity, name, parent);
                             break;
                     }
                 }
@@ -112,7 +112,7 @@ namespace Formall.Navigation
                     name = file.Name;
                     var path = file.Path.Split(new char[] { '/', '\\' });
                     parent = root.Ensure(new Queue<string>(path));
-                    segment = new Document(document, parent);
+                    segment = new Document(document, name, parent);
                 }
             }
 
@@ -124,11 +124,11 @@ namespace Formall.Navigation
                 {
                     foreach (var child in current.Children)
                     {
-                        segment.Children.Dictionary.Add(child);
+                        segment.Children.Add(child.Value);
                     }
                 }
 
-                parent.Children.Dictionary[name] = segment;
+                parent.Children[name] = segment;
             }
 
             return segment;

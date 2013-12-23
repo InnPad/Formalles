@@ -72,9 +72,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JsonCreationConverter.cs" />
     <Compile Include="Persistence\DocumentStoreConfig.cs" />
     <Compile Include="Persistence\Entity.cs" />
+    <Compile Include="Persistence\MetadataExtensions.cs" />
     <Compile Include="Persistence\RavenDocumentContext.cs" />
     <Compile Include="Persistence\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -14,13 +14,15 @@ namespace Formall.Serialization
 
     public class JsonEntity : IEntity
     {
+        private readonly string _key;
         private readonly Guid _id;
         private JObject _data;
         private Metadata _metadata;
 
         public JsonEntity(object data, Metadata metadata)
         {
-            Guid.TryParse(metadata.Key.Split('/').Last(), out _id);
+            _key = metadata.Key;
+            Guid.TryParse(_key.Split('/').Last(), out _id);
             _data = JObject.FromObject(data);
             _metadata = metadata;
         }
@@ -34,8 +36,7 @@ namespace Formall.Serialization
 
         dynamic IEntity.Data
         {
-            get { return _data; }
-            set { _data = JObject.FromObject(value); }
+            get { return _data ?? (_data = new JObject()); }
         }
 
         Guid IEntity.Id

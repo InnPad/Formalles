@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Linq;
 
 namespace Formall.Persistence
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Formall.Navigation;
-    using Dictionary = System.Collections.Generic.Dictionary<string, object>;
 
     [TestClass]
     public class RavenDocumentContextTest
@@ -68,7 +68,12 @@ namespace Formall.Persistence
                 context.Import(new System.IO.FileInfo(file.FullName));
             }
 
-            Schema.Current.Load(Guid.NewGuid(), domain, context);
+            Schema.Current.Load(Guid.NewGuid(), "*", domain, context);
+
+            var number = Schema.Current.Query("Number", "*").FirstOrDefault();
+
+            Assert.AreNotEqual(number, null);
+            Assert.AreEqual(number.Name, "Number");
         }
 
         public void Import()

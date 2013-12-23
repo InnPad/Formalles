@@ -12,6 +12,7 @@ namespace Formall.Persistence
     using Formall.Navigation;
     using Formall.Reflection;
     using Raven.Abstractions.Data;
+    using Raven.Abstractions.Linq;
     using Raven.Client;
     using Raven.Client.Document;
     using Raven.Client.Embedded;

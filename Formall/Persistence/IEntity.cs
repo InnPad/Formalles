@@ -7,7 +7,7 @@ namespace Formall.Persistence
     
     public interface IEntity : IDocument
     {
-        dynamic Data { get; set; }
+        dynamic Data { get; }
 
         Guid Id { get; }
 

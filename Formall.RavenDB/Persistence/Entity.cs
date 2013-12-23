@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Formall.Persistence
 {
     using Formall.Reflection;
+    using Raven.Abstractions.Linq;
     using Raven.Imports.Newtonsoft.Json;
     using Raven.Imports.Newtonsoft.Json.Serialization;
     using Raven.Json.Linq;
@@ -44,8 +45,7 @@ namespace Formall.Persistence
 
         dynamic IEntity.Data
         {
-            get { return this.Data; }
-            set { _data = value != null ? RavenJObject.FromObject(value) : null; }
+            get { return new DynamicJsonObject(_data ?? (_data = new RavenJObject())); }
         }
 
         public Guid Id
@@ -180,13 +180,7 @@ namespace Formall.Persistence
 
         Metadata IDocument.Metadata
         {
-            get
-            {
-                var metadata = new Metadata
-                {
-                };
-                return metadata;
-            }
+            get { return _metadata.ToMetadata(); }
         }
 
         #endregion - IDocument -

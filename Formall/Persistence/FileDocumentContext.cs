@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Formall.Persistence
+{
+    public class FileDocumentContext : StreamDocumentContext, IDataContext
+    {
+        private readonly DirectoryInfo _directory;
+
+        public FileDocumentContext(DirectoryInfo directory)
+        {
+            _directory = directory;
+        }
+
+        #region - IDocumentContext -
+
+        IResult IDocumentContext.Delete(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        IDocument IDocumentContext.Import(System.IO.Stream stream, Metadata metadata)
+        {
+            throw new NotImplementedException();
+        }
+
+        IDocument IDocumentContext.Import(System.IO.TextReader reader, Metadata metadata)
+        {
+            throw new NotImplementedException();
+        }
+
+        IDocument IDocumentContext.Import(IDocument document)
+        {
+            throw new NotImplementedException();
+        }
+
+        IDocument[] IDocumentContext.Read(int skip, int take)
+        {
+            throw new NotImplementedException();
+        }
+
+        IDocument IDocumentContext.Read(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        IDocument[] IDocumentContext.Read(string keyPrefix, int skip, int take)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion - IDocumentContext -
+
+        #region - IDataContext -
+
+        IRepository IDataContext.CreateRepository(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEntity IDataContext.Import(IEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion - IDataContext -
+    }
+}

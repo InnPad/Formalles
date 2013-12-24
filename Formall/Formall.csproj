@@ -45,6 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Diagnostics\EsbTrace.cs" />
+    <Compile Include="Diagnostics\EventTrace.cs" />
+    <Compile Include="Diagnostics\LogFilter.cs" />
+    <Compile Include="Diagnostics\Logger.cs" />
+    <Compile Include="Diagnostics\TraceExtensions.cs" />
     <Compile Include="Error.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -56,6 +61,7 @@
     <Compile Include="Persistence\FileEntity.cs" />
     <Compile Include="Persistence\FileRepository.cs" />
     <Compile Include="Persistence\IDocumentContextExtensions.cs" />
+    <Compile Include="Persistence\IRepositoryQuery.cs" />
     <Compile Include="Persistence\ZipDocument.cs" />
     <Compile Include="Persistence\ZipDocumentContext.cs" />
     <Compile Include="Persistence\ZipEntity.cs" />
@@ -134,6 +140,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Reflection\Rule.cs" />
+    <Compile Include="Reflection\Scalar.cs" />
     <Compile Include="Reflection\ValidationContext.cs" />
     <Compile Include="Reflection\ValidationResult.cs" />
     <Compile Include="Reflection\Value.cs" />
@@ -159,7 +166,6 @@
     <Folder Include="Authentication\" />
     <Folder Include="Authorization\" />
     <Folder Include="Automation\" />
-    <Folder Include="Diagnostics\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -35,4 +35,20 @@ namespace Formall.Persistence
 
         IResult Update(Guid id, object data);
     }
+
+    public interface IRepository<T> : IDisposable
+        where T : class
+    {
+        bool AutoSave { get; set; }
+
+        IRepositoryQuery<T> Select { get; }
+
+        void Add(T item);
+
+        void AddOrUpdate(T item);
+
+        void Delete(T item);
+
+        void Save();
+    }
 }

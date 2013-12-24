@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Presentation\Content.cs" />
     <Compile Include="Presentation\DisplayMode.cs" />
+    <Compile Include="Presentation\ImageFormat.cs" />
     <Compile Include="Presentation\IXaml.cs" />
     <Compile Include="Presentation\Note.cs" />
     <Compile Include="Presentation\Page.cs" />

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3CACCEB7-3D9B-46A4-876C-09E61ED62816}</ProjectGuid>
+    <ProjectGuid>{F4F49E38-7073-4299-ABBE-421D8CD6E71B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Formall</RootNamespace>
-    <AssemblyName>Formall.EntityFramework</AssemblyName>
+    <AssemblyName>Formall.Web.Drawing</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,35 +30,43 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Persistence\EntityFrameworkDocumentContext.cs" />
+    <Compile Include="DynamicDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Persistence\RepositoryQuery.cs" />
+    <Compile Include="DictionaryWrapper.cs" />
+    <Compile Include="Web\ICustomInitializer.cs" />
+    <Compile Include="Web\Mvc\Controllers\XamlAsyncController.cs" />
+    <Compile Include="Web\Mvc\XamlImageActionResult.cs" />
+    <Compile Include="Web\Mvc\XamlImageView.cs" />
+    <Compile Include="Web\Mvc\XamlImageViewEngine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Formall.Presentation.Drawing\Formall.Presentation.Drawing.csproj">
+      <Project>{28f80512-4eb3-4006-8bb2-7d63b3cfea8f}</Project>
+      <Name>Formall.Presentation.Drawing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Formall.Presentation\Formall.Presentation.csproj">
+      <Project>{774379c8-34a6-4b9d-a114-401bc660b1bb}</Project>
+      <Name>Formall.Presentation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Formall\Formall.csproj">
       <Project>{f2147785-4648-4bd4-9d73-d61e07e1b0de}</Project>
       <Name>Formall</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

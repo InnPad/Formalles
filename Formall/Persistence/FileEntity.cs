@@ -1,54 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
+    using Formall.Reflection;
+    
     public abstract class FileEntity : FileDocument, IEntity
     {
         private readonly FileRepository _repository;
 
-        protected FileEntity(string name, Metadata metadata, FileRepository repository)
-            : base(name, metadata, repository.Context)
+        protected FileEntity(string name, ContentType type, Metadata metadata, FileRepository repository)
+            : base(name, type, metadata, repository.Context)
         {
             _repository = repository;
         }
 
         public abstract dynamic Data { get; }
 
-        Guid IEntity.Id
+        public Guid Id
         {
             get { throw new NotImplementedException(); }
         }
 
-        Reflection.Model IEntity.Model
+        public Model Model
         {
             get { throw new NotImplementedException(); }
+        }
+
+        public FileRepository Repository
+        {
+            get { return _repository; }
         }
 
         IRepository IEntity.Repository
         {
-            get { throw new NotImplementedException(); }
+            get { return _repository; }
         }
 
-        IResult IEntity.Delete()
+        public IResult Delete()
         {
             throw new NotImplementedException();
         }
 
-        T IEntity.Get<T>()
+        public T Get<T>() where T : class
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.Refresh()
+        public IResult Refresh()
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.Set<T>(T value)
+        public IResult Set<T>(T value) where T : class
         {
             throw new NotImplementedException();
         }
@@ -63,12 +71,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(System.IO.Stream stream)
+        IResult IEntity.WriteJson(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(System.IO.TextWriter writer)
+        IResult IEntity.WriteJson(TextWriter writer)
         {
             throw new NotImplementedException();
         }

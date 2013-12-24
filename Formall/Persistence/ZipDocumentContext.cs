@@ -258,7 +258,7 @@ namespace Formall.Persistence
             return null;
         }
 
-        public ZipDocument Import(Stream stream, Metadata metadata)
+        public ZipDocument Import(Stream stream, ContentType type, Metadata metadata)
         {
             var entry = _archive.CreateEntry(metadata.Key, _compressionLevel);
 
@@ -267,12 +267,12 @@ namespace Formall.Persistence
                 writer.Write(stream);
             }
 
-            var document = new ZipDocument(entry, metadata, this);
+            var document = new ZipDocument(entry, type, metadata, this);
 
             return document;
         }
 
-        public ZipDocument Import(TextReader reader, Metadata metadata)
+        public ZipDocument Import(TextReader reader, ContentType type, Metadata metadata)
         {
             var entry = _archive.CreateEntry(metadata.Key, _compressionLevel);
 
@@ -281,7 +281,7 @@ namespace Formall.Persistence
                 writer.Write(reader);
             }
 
-            var document = new ZipDocument(entry, metadata, this);
+            var document = new ZipDocument(entry, type, metadata, this);
 
             return document;
         }
@@ -303,19 +303,19 @@ namespace Formall.Persistence
 
         #region - IDocumentContext -
 
-        IDocument IDocumentContext.Import(Stream stream, Metadata metadata)
+        IDocument IDocumentContext.Import(Stream stream, ContentType type, Metadata metadata)
         {
-            return Import(stream, metadata);
+            return Import(stream, type, metadata);
         }
 
-        IDocument IDocumentContext.Import(TextReader reader, Metadata metadata)
+        IDocument IDocumentContext.Import(TextReader reader, ContentType type, Metadata metadata)
         {
-            return Import(reader, metadata);
+            return Import(reader, type, metadata);
         }
 
         IDocument IDocumentContext.Import(IDocument document)
         {
-            return Import(document.Content, document.Metadata);
+            return Import(document.Content, document.ContentType, document.Metadata);
         }
 
         IDocument IDocumentContext.Read(string key)

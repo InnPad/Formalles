@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 
@@ -11,6 +12,11 @@ namespace Formall.Serialization
     
     public class JsonEntity : IEntity
     {
+        public static JsonEntity Clone(IEntity entity)
+        {
+            return null;
+        }
+
         private readonly string _key;
         private readonly Guid _id;
         private JObject _data;

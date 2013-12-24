@@ -12,10 +12,12 @@ namespace Formall.Persistence
         private readonly FileDocumentContext _context;
         private readonly Metadata _metadata;
         private readonly string _name;
+        private readonly ContentType _type;
 
-        public FileDocument(string name, Metadata metadata, FileDocumentContext context)
+        public FileDocument(string name, ContentType type, Metadata metadata, FileDocumentContext context)
         {
             _name = name;
+            _type = type;
             _metadata = metadata;
             _context = context;
         }
@@ -27,7 +29,7 @@ namespace Formall.Persistence
 
         public ContentType ContentType
         {
-            get { return _metadata != null ? _metadata.Type : ContentType.Binary; }
+            get { return _type; }
         }
 
         public FileDocumentContext Context

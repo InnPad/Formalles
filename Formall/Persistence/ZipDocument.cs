@@ -18,10 +18,12 @@ namespace Formall.Persistence
         private readonly ZipDocumentContext _context;
         private readonly ZipArchiveEntry _entry;
         private readonly Metadata _metadata;
+        private ContentType _type;
 
-        public ZipDocument(ZipArchiveEntry entry, Metadata metadata, ZipDocumentContext context)
+        public ZipDocument(ZipArchiveEntry entry, ContentType type, Metadata metadata, ZipDocumentContext context)
         {
             _entry = entry;
+            _type = type;
             _metadata = metadata;
             _context = context;
         }
@@ -38,7 +40,7 @@ namespace Formall.Persistence
 
         public ContentType ContentType
         {
-            get { return _metadata != null ? _metadata.Type : ContentType.Binary; }
+            get { return _type; }
         }
 
         public string Key

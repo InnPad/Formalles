@@ -183,7 +183,7 @@ namespace Formall.Persistence
 
             Guid id;
             var key = document.Key;
-            var type = document.Metadata != null ? document.Metadata.Model : null;
+            var type = document.Metadata != null ? document.Metadata.Type : null;
             var metadata = new RavenJObject
             {
                 { "@id", key },
@@ -222,19 +222,19 @@ namespace Formall.Persistence
             return null;
         }
 
-        public IDocument Import(Stream stream, Metadata metadata)
+        public IDocument Import(Stream stream, ContentType type, Metadata metadata)
         {
             IDocument document;
 
             using (var reader = new StreamReader(stream))
             {
-                document = Import(reader, metadata);
+                document = Import(reader, type, metadata);
             }
 
             return document;
         }
 
-        public IDocument Import(TextReader reader, Metadata metadata)
+        public IDocument Import(TextReader reader, ContentType type, Metadata metadata)
         {
             Entity entity = null;
             throw new NotImplementedException();

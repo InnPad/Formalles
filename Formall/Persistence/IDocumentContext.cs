@@ -13,9 +13,9 @@ namespace Formall.Persistence
     {
         IResult Delete(string key);
 
-        IDocument Import(Stream stream, Metadata metadata);
+        IDocument Import(Stream stream, ContentType type, Metadata metadata);
 
-        IDocument Import(TextReader reader, Metadata metadata);
+        IDocument Import(TextReader reader, ContentType type, Metadata metadata);
 
         IDocument Import(IDocument document);
 

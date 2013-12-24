@@ -28,12 +28,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        IDocument IDocumentContext.Import(System.IO.Stream stream, Metadata metadata)
+        IDocument IDocumentContext.Import(Stream stream, ContentType type, Metadata metadata)
         {
             throw new NotImplementedException();
         }
 
-        IDocument IDocumentContext.Import(System.IO.TextReader reader, Metadata metadata)
+        IDocument IDocumentContext.Import(TextReader reader, ContentType type, Metadata metadata)
         {
             throw new NotImplementedException();
         }

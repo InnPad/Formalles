@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,11 @@ namespace Formall.Serialization
 
     public class XmlEntity : IEntity
     {
+        public static XmlEntity Clone(IEntity entity)
+        {
+            return null;
+        }
+
         dynamic IEntity.Data
         {
             get

@@ -75,7 +75,7 @@ namespace Formall.Navigation
 
         public ISegment Load(Guid id, string host, Domain domain, IDocumentContext context)
         {
-            var entity = new Entity<Domain>(domain, new Metadata { Key = "Domain/" + id, Model = "Domain" }, string.Empty, null);
+            var entity = new Entity<Domain>(domain, new Metadata { Key = "Domain/" + id, Type = "Domain" }, string.Empty, null);
 
             _container.AddOrUpdate(host, entity, (key, previous) => { return entity; });
 

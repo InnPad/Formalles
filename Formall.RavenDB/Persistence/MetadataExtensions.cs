@@ -15,7 +15,7 @@ namespace Formall.Persistence
             return new RavenJObject
             {
                 { "@id", metadata.Key },
-                { "Raven-Entity-Name", metadata.Model }
+                { "Raven-Entity-Name", metadata.Type }
             };
         }
 
@@ -24,7 +24,7 @@ namespace Formall.Persistence
             var metadata = new Metadata
             {
                 Key = obj.Value<string>("@id"),
-                Model = obj.Value<string>("Raven-Entity-Name")
+                Type = obj.Value<string>("Raven-Entity-Name")
             };
 
             return metadata;

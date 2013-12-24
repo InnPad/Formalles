@@ -14,12 +14,16 @@ namespace Formall.Persistence
     {
         private readonly ZipRepository _repository;
 
-        protected ZipEntity(ZipArchiveEntry entry, Metadata metadata, ZipRepository repository)
-            : base(entry, metadata, repository.Context)
+        protected ZipEntity(ZipArchiveEntry entry, ContentType type, Metadata metadata, ZipRepository repository)
+            : base(entry, type, metadata, repository.Context)
         {
+            _repository = repository;
         }
 
-        public abstract dynamic Data { get; }
+        public dynamic Data
+        {
+            get { return null; }
+        }
 
         public Guid Id
         {
@@ -37,27 +41,32 @@ namespace Formall.Persistence
             get { return _repository.Model; }
         }
 
+        public ZipRepository Repository
+        {
+            get { return _repository; }
+        }
+
         IRepository IEntity.Repository
         {
             get { return _repository; }
         }
 
-        IResult IEntity.Delete()
+        public IResult Delete()
         {
             return this.Context.Delete(Key);
         }
 
-        T IEntity.Get<T>()
+        public T Get<T>() where T : class
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.Refresh()
+        public IResult Refresh()
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.Set<T>(T value)
+        public IResult Set<T>(T value) where T : class
         {
             throw new NotImplementedException();
         }

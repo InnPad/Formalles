@@ -8,8 +8,6 @@ namespace Formall
 {
     public class Binary
     {
-        public int Id { get; set; }
-
         public bool Compressed { get; set; }
 
         public string Encoding { get; set; }

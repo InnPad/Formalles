@@ -42,11 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Argument.cs" />
-    <Compile Include="BinarExtensions.cs" />
-    <Compile Include="Binary.cs" />
-    <Compile Include="IEntity.cs" />
-    <Compile Include="IHistoricalEntity.cs" />
-    <Compile Include="INamedEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="Workflow\ActivityClass.cs" />

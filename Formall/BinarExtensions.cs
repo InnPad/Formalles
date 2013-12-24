@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public static class BinaryHelper
+    public static class BinaryExtensions
     {
         public static Binary Compress(this Binary binary)
         {
@@ -31,7 +31,6 @@ namespace Formall
             }
 
             return binary;
-
         }
 
         public static Binary Decompress(this Binary binary)

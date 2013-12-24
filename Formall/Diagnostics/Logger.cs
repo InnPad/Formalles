@@ -264,12 +264,12 @@ namespace Formall.Diagnostics
 
         public override void Write(string message)
         {
-            _repository.Add(new EventTrace { EventType = TraceEventType.Verbose, Message = message });
+            _repository.Add(Guid.NewGuid(), new EventTrace { EventType = TraceEventType.Verbose, Message = message });
         }
 
         public override void WriteLine(string message)
         {
-            _repository.Add(new EventTrace { EventType = TraceEventType.Verbose, Message = message });
+            _repository.Add(Guid.NewGuid(), new EventTrace { EventType = TraceEventType.Verbose, Message = message });
         }
     }
 }

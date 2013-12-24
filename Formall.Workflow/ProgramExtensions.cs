@@ -1,4 +1,5 @@
-﻿using System.Activities;
+﻿using System;
+using System.Activities;
 using System.Activities.XamlIntegration;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Xaml;
 
 namespace Formall
 {
+    using Formall.Persistence;
     using Formall.Persistence;
     using Formall.Workflow;
     
@@ -26,12 +28,12 @@ namespace Formall
             return WorkflowInvoker.Invoke(activity, inputs);
         }
 
-        public static Workflow.Program Load(this Program program, IRepository<Program> repo)
+        public static Workflow.Program Load(this Program program, Guid id, IRepository<Program> repo)
         {
             if (program.Workflow == null)
             {
-                    var programWithWorkflow = repo.Select.Include(o => o.Workflow).SingleOrDefault(o => o.Id == program.Id);
-                    program.Workflow = programWithWorkflow.Workflow;
+                var entity = repo.Select.Include(o => o.Workflow).SingleOrDefault(o => o.Id == id);
+                program.Workflow = entity.Data.Workflow;
             }
 
             var xaml = program.Workflow.Decompress().Decode();
@@ -43,7 +45,6 @@ namespace Formall
             return new Workflow.Program
             {
                 DisplayName = program.Name,
-
             };
         }
     }

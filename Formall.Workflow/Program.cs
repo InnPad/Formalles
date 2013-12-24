@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    public class Program : IEntity, IHistoricalEntity, INamedEntity
+    using Formall.Reflection;
+
+    public class Program
     {
-        //public Area Area { get; set; }
+        public Set<Argument> Arguments { get; set; }
 
-        public ICollection<Argument> Arguments { get; set; }
+        public string Name { get; set; }
 
-        //public Domain ResultType { get; set; }
+        public Prototype ResultType { get; set; }
 
         public ICollection<Variable> Variables { get; set; }
 
@@ -20,24 +22,6 @@ namespace Formall
         /// Compressed Workflow
         /// </summary>
         public Binary Workflow { get; set; }
-
-        #region - IEntity -
-
-        public int Id { get; set; }
-
-        #endregion - INamedEntity -
-
-        #region - IHistoricalEntity -
-
-        public DateTimeOffset Version { get; set; }
-
-        #endregion - IHistoricalEntity -
-
-        #region - INamedEntity -
-
-        public string Name { get; set; }
-
-        #endregion - INamedEntity -
     }
 
     public abstract class ProgramWithResult : Program

@@ -43,11 +43,11 @@ namespace Formall.Persistence
 
         IRepositoryQuery<T> Select { get; }
 
-        void Add(T item);
+        void Add(Guid id, T item);
 
-        void AddOrUpdate(T item);
+        void AddOrUpdate(Guid id, T item);
 
-        void Delete(T item);
+        void Delete(Guid id, T item);
 
         void Save();
     }

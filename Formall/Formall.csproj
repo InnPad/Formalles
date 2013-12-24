@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinarExtensions.cs" />
+    <Compile Include="Binary.cs" />
     <Compile Include="Diagnostics\EsbTrace.cs" />
     <Compile Include="Diagnostics\EventTrace.cs" />
     <Compile Include="Diagnostics\LogFilter.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Navigation\RouteOption.cs" />
     <Compile Include="Navigation\SegmentExtensions.cs" />
     <Compile Include="Persistence\ContentType.cs" />
+    <Compile Include="Persistence\Entity.cs" />
     <Compile Include="Persistence\FileDocument.cs" />
     <Compile Include="Persistence\FileDocumentContext.cs" />
     <Compile Include="Persistence\FileEntity.cs" />

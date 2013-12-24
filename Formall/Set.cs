@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Formall
 {
-    internal class Set<T> : ICollection<T>, IDictionary<string, T>, IEnumerable<T>
+    public class Set<T> : ICollection<T>, IDictionary<string, T>, IEnumerable<T>
         where T : class
     {
         private readonly Func<T, string> _keyGetter;

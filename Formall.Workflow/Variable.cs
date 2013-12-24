@@ -8,40 +8,19 @@ namespace Formall
 {
     using Formall.Reflection;
 
-    public class Variable : IEntity, IHistoricalEntity, INamedEntity
+    public class Variable
     {
-        //public Area Area { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// If null global to area
         /// </summary>
         public Program Program { get; set; }
 
-        public string Value { get; set; }
+        public bool Readonly { get; set; }
 
         public Prototype Type { get; set; }
 
-        public bool Readonly { get; set; }
-
-        #region - IEntity -
-
-        public int Id { get; set; }
-
-        #endregion - INamedEntity -
-
-        #region - IHistoricalEntity -
-
-        public DateTimeOffset Version { get; set; }
-
-        #endregion - IHistoricalEntity -
-
-        #region - INamedEntity -
-
-        /// <summary>
-        /// Unique to area
-        /// </summary>
-        public string Name { get; set; }
-
-        #endregion - INamedEntity -
+        public object Value { get; set; }
     }
 }

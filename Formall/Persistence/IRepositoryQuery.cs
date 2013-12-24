@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 
 namespace Formall.Persistence
 {
-    public interface IRepositoryQuery<TResult> : IQueryable<TResult>
-        where TResult : class
+    public interface IRepositoryQuery<T> : IQueryable<Entity<T>>
+        where T : class
     {
-        IRepositoryQuery<TResult> Include(string path);
-        IRepositoryQuery<TResult> Include<TProperty>(Expression<Func<TResult, TProperty>> path);
+        IRepositoryQuery<T> Include(string path);
+        IRepositoryQuery<T> Include<TProperty>(Expression<Func<T, TProperty>> path);
     }
 }

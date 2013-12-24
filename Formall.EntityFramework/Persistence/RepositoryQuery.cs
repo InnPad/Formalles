@@ -10,9 +10,9 @@ namespace Formall.Persistence
     public class RepositoryQuery<TResult> : IRepositoryQuery<TResult>
         where TResult : class
     {
-        IQueryable<TResult> _internal;
+        IQueryable<Entity<TResult>> _internal;
 
-        public RepositoryQuery(IQueryable<TResult> dbQuery)
+        public RepositoryQuery(IQueryable<Entity<TResult>> dbQuery)
         {
             _internal = dbQuery;
         }
@@ -31,7 +31,7 @@ namespace Formall.Persistence
             return this;
         }
 
-        public System.Collections.Generic.IEnumerator<TResult> GetEnumerator()
+        public System.Collections.Generic.IEnumerator<Entity<TResult>> GetEnumerator()
         {
             return _internal.GetEnumerator();
         }

@@ -49,12 +49,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DictionaryWrapper.cs" />
     <Compile Include="Web\ICustomInitializer.cs" />
+    <Compile Include="Web\Mvc\Controllers\RenderController.cs" />
     <Compile Include="Web\Mvc\Controllers\XamlAsyncController.cs" />
+    <Compile Include="Web\Mvc\ImageResult.cs" />
+    <Compile Include="Web\Mvc\ImageResultExtensions.cs" />
     <Compile Include="Web\Mvc\XamlImageActionResult.cs" />
     <Compile Include="Web\Mvc\XamlImageView.cs" />
     <Compile Include="Web\Mvc\XamlImageViewEngine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Formall.Imaging\Formall.Imaging.csproj">
+      <Project>{324d6747-88a7-4e91-a427-5162d4c202ef}</Project>
+      <Name>Formall.Imaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Formall.Presentation.Drawing\Formall.Presentation.Drawing.csproj">
       <Project>{28f80512-4eb3-4006-8bb2-7d63b3cfea8f}</Project>
       <Name>Formall.Presentation.Drawing</Name>

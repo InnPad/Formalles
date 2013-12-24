@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Formall.Web.Mvc
 {
-    using Formall.Presentation;
+    using Formall.Imaging;
 
     public class XamlImageViewEngine : VirtualPathProviderViewEngine
     {

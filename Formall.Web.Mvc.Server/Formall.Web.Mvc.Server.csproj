@@ -92,6 +92,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -185,6 +186,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.0.0\lib\net45\WebMatrix.WebData.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -194,7 +196,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ExtController.cs" />
+    <Compile Include="Controllers\FractalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QrCodeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -359,6 +363,14 @@
       <Project>{23adf522-31d0-40d3-9823-d415ff9b83f4}</Project>
       <Name>Formall.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Formall.Imaging.QrCode\Formall.Imaging.QrCode.csproj">
+      <Project>{cb326d97-dd36-4b44-a11a-e5e478347a12}</Project>
+      <Name>Formall.Imaging.QrCode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Formall.Imaging\Formall.Imaging.csproj">
+      <Project>{324d6747-88a7-4e91-a427-5162d4c202ef}</Project>
+      <Name>Formall.Imaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Formall.Persistence\Formall.Persistence.csproj">
       <Project>{1c40ec3c-9d39-4367-92b6-7117cafc73ec}</Project>
       <Name>Formall.Persistence</Name>
@@ -370,6 +382,14 @@
     <ProjectReference Include="..\Formall.RavenDB\Formall.RavenDB.csproj">
       <Project>{9ee4036f-84c0-441b-b17f-c3d16a9fc2b9}</Project>
       <Name>Formall.RavenDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Formall.Web.Drawing\Formall.Web.Drawing.csproj">
+      <Project>{f4f49e38-7073-4299-abbe-421d8cd6e71b}</Project>
+      <Name>Formall.Web.Drawing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Formall.Web\Formall.Web.csproj">
+      <Project>{948b90a0-1d72-4fbb-8f83-dd10662da3ab}</Project>
+      <Name>Formall.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\Formall\Formall.csproj">
       <Project>{f2147785-4648-4bd4-9d73-d61e07e1b0de}</Project>

@@ -11,6 +11,7 @@ namespace Formall.Imaging
 {
     using Formall.Presentation;
     using System.Globalization;
+    using System.IO;
     using System.Windows;
     using WPoint = System.Windows.Point;
     using WRect = System.Windows.Rect;
@@ -41,6 +42,32 @@ namespace Formall.Imaging
             return new string(captcha);
         }
 
+        public static byte[] GenerateImage(string text, ref MediaType mediaType, Color? foreground, Color? background, WSize? size, WSize? box, WPoint? origin)
+        {
+            byte[] result;
+
+            var foreBrush = foreground.HasValue ? new SolidColorBrush(foreground.Value) : Brushes.Black;
+            var backBrush = background.HasValue ? new SolidColorBrush(background.Value) : Brushes.Transparent;
+
+            var bitmap = Print(text, foreBrush, backBrush, size ?? new Size(120, 80), box ?? new Size(160, 100), origin, new Point(96, 96));
+
+            var imageFormat = mediaType.ToImageFormat();
+
+            var encoder = imageFormat.ChooseEncoder();
+
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+
+            mediaType = imageFormat.ToMediaType();
+
+            using (var stream = new MemoryStream())
+            {
+                encoder.Save(stream);
+                stream.Seek(0, SeekOrigin.Begin);
+                result = stream.ToArray();
+            }
+
+            return result;
+        }
 
         private static Typeface GenerateTypeface()
         {
@@ -49,12 +76,7 @@ namespace Formall.Imaging
             return Fonts.SystemTypefaces.Skip(index).First();
         }
 
-        private static BitmapSource Print(string text, ImageFormat format, Brush foreground, Brush background, WSize size, WSize box, WPoint dpi)
-        {
-            return null;
-        }
-
-        private static BitmapSource Print(string text, ImageFormat format, Brush foreground, Brush background, WSize size, WSize box, WPoint? origin, WPoint dpi)
+        private static BitmapSource Print(string text, Brush foreground, Brush background, WSize size, WSize box, WPoint? origin, WPoint dpi)
         {
             var visual = new DrawingVisual();
 

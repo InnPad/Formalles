@@ -57,9 +57,9 @@ namespace Formall.Imaging
                     var foreBrush = foreground.HasValue ? new SolidColorBrush(foreground.Value) : Brushes.Black;
                     var backBrush = background.HasValue ? new SolidColorBrush(background.Value) : Brushes.Transparent;
                     
-                    var imageFormat = mediaType.ToImageFormat();
+                    var bitmap = Print(image, foreBrush, backBrush, size ?? originalSize, box ?? size ?? originalSize, origin, new WPoint(96, 96));
 
-                    var bitmap = Print(image, imageFormat, foreBrush, backBrush, size ?? originalSize, box ?? size ?? originalSize, origin, new WPoint(96, 96));
+                    var imageFormat = mediaType.ToImageFormat();
 
                     var encoder = imageFormat.ChooseEncoder();
                     
@@ -79,7 +79,7 @@ namespace Formall.Imaging
             return result;
         }
 
-        private static BitmapSource Print(ImageSource image, ImageFormat format, Brush foreground, Brush background, WSize size, WSize box, WPoint? origin, WPoint dpi)
+        private static BitmapSource Print(ImageSource image, Brush foreground, Brush background, WSize size, WSize box, WPoint? origin, WPoint dpi)
         {
             var visual = new DrawingVisual();
 

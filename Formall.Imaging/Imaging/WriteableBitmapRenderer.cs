@@ -72,16 +72,16 @@ namespace Formall.Imaging
         /// </summary>
         /// <exception cref="ArgumentNullException">Bitmatrix, wBitmap should not equal to null</exception>
         /// <exception cref="ArgumentOutOfRangeException">wBitmap's pixel width or height should not equal to zero</exception>
-        public void DrawDarkModule(WriteableBitmap wBitmap, BitMatrix matrix, int offsetX, int offsetY)
+        public void DrawDarkModule(WriteableBitmap bitmap, BitMatrix matrix, int offsetX, int offsetY)
         {
             if (matrix == null)
                 throw new ArgumentNullException("Bitmatrix");
 
             DrawingSize size = ISize.GetSize(matrix.Width);
 
-            if (wBitmap == null)
+            if (bitmap == null)
                 throw new ArgumentNullException("wBitmap");
-            else if (wBitmap.PixelHeight == 0 || wBitmap.PixelWidth == 0)
+            else if (bitmap.PixelHeight == 0 || bitmap.PixelWidth == 0)
                 throw new ArgumentOutOfRangeException("wBitmap", "WriteableBitmap's pixelHeight or PixelWidth are equal to zero");
 
             int padding = (size.CodeWidth - size.ModuleSize * matrix.Width) / 2;
@@ -92,7 +92,7 @@ namespace Formall.Imaging
             if (moduleSize == 0)
                 return;
 
-            for (int y = 0; y < matrix.Width; y++)
+            for (int y = 0; y < matrix.Height; y++)
             {
                 for (int x = 0; x < matrix.Width; x++)
                 {
@@ -107,7 +107,7 @@ namespace Formall.Imaging
                                     y * moduleSize + padding + offsetY,
                                     (x - preX + 1) * moduleSize,
                                     moduleSize);
-                            wBitmap.FillRectangle(moduleArea, DarkColor);
+                            bitmap.FillRectangle(moduleArea, DarkColor);
                             preX = -1;
                         }
                     }
@@ -118,26 +118,24 @@ namespace Formall.Imaging
                                 y * moduleSize + padding + offsetY,
                                 (x - preX) * moduleSize,
                                 moduleSize);
-                        wBitmap.FillRectangle(moduleArea, DarkColor);
+                        bitmap.FillRectangle(moduleArea, DarkColor);
                         preX = -1;
                     }
                 }
             }
         }
 
-        public void WriteToStream(BitMatrix qrMatrix, ImageFormat imageFormat, Stream stream)
+        public void WriteToStream(BitMatrix matrix, ImageFormat format, Stream stream)
         {
-            DrawingSize dSize = ISize.GetSize(qrMatrix == null ? 21 : qrMatrix.Width);
+            DrawingSize size = ISize.GetSize(matrix == null ? 21 : matrix.Width);
 
-            WriteableBitmap wBitmap = new WriteableBitmap(dSize.CodeWidth, dSize.CodeWidth, 96, 96, PixelFormats.Gray8, null);
+            WriteableBitmap bitmap = new WriteableBitmap(size.CodeWidth, size.CodeWidth, 96, 96, PixelFormats.Gray8, null);
 
-            this.Draw(wBitmap, qrMatrix);
+            this.Draw(bitmap, matrix);
 
-            BitmapEncoder encoder = imageFormat.ChooseEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(wBitmap));
+            BitmapEncoder encoder = format.ChooseEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
             encoder.Save(stream);
-
         }
-
     }
 }

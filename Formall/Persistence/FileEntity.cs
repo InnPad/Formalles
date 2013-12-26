@@ -13,7 +13,7 @@ namespace Formall.Persistence
     {
         private readonly FileRepository _repository;
 
-        protected FileEntity(string name, ContentType type, Metadata metadata, FileRepository repository)
+        protected FileEntity(string name, ContentType type, FileMetadata metadata, FileRepository repository)
             : base(name, type, metadata, repository.Context)
         {
             _repository = repository;

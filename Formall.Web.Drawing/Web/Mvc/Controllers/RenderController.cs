@@ -31,15 +31,15 @@ namespace Formall.Web.Mvc.Controllers
             set;
         }
 
-        protected ActionResult Render(BitMatrix qrMatrix, ISizeCalculation size)
+        protected ActionResult Render(BitMatrix matrix, ISizeCalculation size)
         {
             var renderer = new WriteableBitmapRenderer(size);
 
-            DrawingSize dSize = size.GetSize(qrMatrix == null ? 21 : qrMatrix.Width);
+            DrawingSize dSize = size.GetSize(matrix == null ? 21 : matrix.Width);
 
             WriteableBitmap wBitmap = new WriteableBitmap(dSize.CodeWidth, dSize.CodeWidth, DPI.X, DPI.Y, PixelFormat, null);
 
-            renderer.Draw(wBitmap, qrMatrix);
+            renderer.Draw(wBitmap, matrix);
 
             return Render(wBitmap, ImageFormat.Png);
         }

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,32 +11,28 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Newtonsoft.Json.Serialization;
-
-    internal class ZipIndex
+    public class FileIndex : IEnumerable<FileEntry>
     {
         public const string IndexEntryName = "_index.json";
 
-        private readonly ZipDocumentContext _context;
+        private readonly FileDocumentContext _context;
         private readonly ReaderWriterLockSlim _lock;
-        private Set<ZipEntry> _byKey;
-        private Set<ZipEntry> _byName;
+        private Set<FileEntry> _byKey;
+        private Set<FileEntry> _byName;
 
-        public ZipIndex(ZipDocumentContext context)
+        public FileIndex(FileDocumentContext context)
         {
             _context = context;
             _lock = new ReaderWriterLockSlim();
-            _byKey = new Set<ZipEntry>((item) => { return item.Metadata.Key; });
-            _byName = new Set<ZipEntry>((item) => { return item.Name; });
+            _byKey = new Set<FileEntry>((item) => { return item.Metadata.Key; });
+            _byName = new Set<FileEntry>((item) => { return item.Name; });
         }
 
-        public ZipEntry this[string key]
+        public FileEntry this[string key]
         {
             get
             {
-                ZipEntry entry;
+                FileEntry entry;
 
                 _lock.EnterReadLock();
 
@@ -46,7 +44,12 @@ namespace Formall.Persistence
             }
         }
 
-        public void Delete(ZipEntry entry)
+        public string[] Keys
+        {
+            get { return _byKey.Keys.ToArray(); }
+        }
+
+        public void Delete(FileEntry entry)
         {
             if (entry != null)
             {
@@ -59,9 +62,9 @@ namespace Formall.Persistence
             }
         }
 
-        public ZipEntry Get(string name)
+        public FileEntry Get(string name)
         {
-            ZipEntry entry;
+            FileEntry entry;
 
             _lock.EnterReadLock();
 
@@ -74,16 +77,24 @@ namespace Formall.Persistence
 
         public void Load()
         {
-            var archive = (ZipArchive)_context;
-            var entry = archive.GetEntry(IndexEntryName);
+            var directory = (DirectoryInfo)_context;
 
-            if (entry != null)
+            var file = new FileInfo(Path.Combine(directory.FullName, IndexEntryName));
+
+            if (file.Exists)
             {
                 JObject data;
 
-                using (var reader = new JsonTextReader(new StreamReader(entry.Open())))
+                using (var reader = new JsonTextReader(new StreamReader(file.Open(FileMode.Open))))
                 {
-                    data = JObject.Load(reader);
+                    try
+                    {
+                        data = JObject.Load(reader);
+                    }
+                    catch
+                    {
+                        data = new JObject();
+                    }
                 }
 
                 var serializer = new JsonSerializer
@@ -92,10 +103,10 @@ namespace Formall.Persistence
                     ContractResolver = new DefaultContractResolver()
                 };
 
-                var index = (Dictionary<string, Metadata>)serializer.Deserialize(new JTokenReader(data), typeof(Dictionary<string, Metadata>));
+                var index = (Dictionary<string, FileMetadata>)serializer.Deserialize(new JTokenReader(data), typeof(Dictionary<string, FileMetadata>));
 
-                var byKey = new Set<ZipEntry>((item) => { return item.Metadata.Key; });
-                var byName = new Set<ZipEntry>((item) => { return item.Name; });
+                var byKey = new Set<FileEntry>((item) => { return item.Metadata.Key; });
+                var byName = new Set<FileEntry>((item) => { return item.Name; });
 
                 foreach (var pair in index)
                 {
@@ -114,7 +125,7 @@ namespace Formall.Persistence
                         continue;
                     }
 
-                    var e = new ZipEntry { Name = pair.Key, Metadata = pair.Value };
+                    var e = new FileEntry { Name = pair.Key, Metadata = pair.Value };
 
                     byKey[pair.Value.Key] = e;
                     byName[pair.Key] = e;
@@ -129,7 +140,7 @@ namespace Formall.Persistence
             }
         }
 
-        public void Set(string name, Metadata metadata)
+        public void Set(string name, FileMetadata metadata)
         {
             if (name == null)
             {
@@ -151,7 +162,7 @@ namespace Formall.Persistence
                 throw new ArgumentException("metadata");
             }
 
-            ZipEntry entry;
+            FileEntry entry;
 
             _lock.EnterReadLock();
 
@@ -165,7 +176,7 @@ namespace Formall.Persistence
             }
             else
             {
-                entry = new ZipEntry { Name = name, Metadata = metadata };
+                entry = new FileEntry { Name = name, Metadata = metadata };
             }
 
             _lock.ExitReadLock();
@@ -200,12 +211,8 @@ namespace Formall.Persistence
 
         public void Save()
         {
-            var entry = _context.Archive.GetEntry(IndexEntryName);
-
-            if (entry == null)
-            {
-                entry = _context.Archive.CreateEntry(IndexEntryName, _context.CompressionLevel);
-            }
+            var directory = (DirectoryInfo)_context;
+            var file = new FileInfo(Path.Combine(directory.FullName, IndexEntryName));
 
             var serializer = new JsonSerializer
             {
@@ -215,16 +222,29 @@ namespace Formall.Persistence
 
             _lock.EnterReadLock();
 
-            var dictionary = _byName.AsEnumerable<ZipEntry>().ToDictionary(o => o.Name, o => o.Metadata);
+            var dictionary = _byName.AsEnumerable<FileEntry>().ToDictionary(o => o.Name, o => o.Metadata);
 
             _lock.ExitReadLock();
 
             var data = JObject.FromObject(dictionary, serializer);
 
-            using (var writer = new StreamWriter(entry.Open()))
+            using (var stream = file.Open(FileMode.OpenOrCreate | FileMode.Truncate))
             {
-                writer.Write(new JTokenReader(data));
+                using (var writer = new StreamWriter(stream))
+                {
+                    writer.Write(new JTokenReader(data));
+                }
             }
+        }
+
+        public IEnumerator<FileEntry> GetEnumerator()
+        {
+            return _byName.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

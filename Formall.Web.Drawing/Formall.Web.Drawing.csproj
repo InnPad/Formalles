@@ -62,10 +62,6 @@
       <Project>{324d6747-88a7-4e91-a427-5162d4c202ef}</Project>
       <Name>Formall.Imaging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Formall.Presentation.Drawing\Formall.Presentation.Drawing.csproj">
-      <Project>{28f80512-4eb3-4006-8bb2-7d63b3cfea8f}</Project>
-      <Name>Formall.Presentation.Drawing</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Formall.Presentation\Formall.Presentation.csproj">
       <Project>{774379c8-34a6-4b9d-a114-401bc660b1bb}</Project>
       <Name>Formall.Presentation</Name>

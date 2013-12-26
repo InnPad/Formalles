@@ -36,6 +36,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,17 +44,23 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="zxing">
+      <HintPath>..\packages\ZXing.Net.0.12.0.0\lib\net40\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation">
+      <HintPath>..\packages\ZXing.Net.0.12.0.0\lib\net40\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Imaging\Barcode.cs" />
+    <Compile Include="Imaging\Captcha.cs" />
+    <Compile Include="Imaging\DoubleUtil.cs" />
     <Compile Include="Imaging\BitMatrix.cs" />
-    <Compile Include="Imaging\DrawingBrushRenderer.cs" />
+    <Compile Include="Imaging\Int32Array.cs" />
+    <Compile Include="Imaging\Glyph.cs" />
+    <Compile Include="Presistence\ImageDocumentContext.cs" />
     <Compile Include="Imaging\ImageFormatExtensions.cs" />
-    <Compile Include="Imaging\BitList.cs" />
-    <Compile Include="Imaging\BitListExtensions.cs" />
-    <Compile Include="Imaging\ByteMatrix.cs" />
-    <Compile Include="Imaging\ByteMatrixExtensions.cs" />
     <Compile Include="Imaging\DrawingSize.cs" />
-    <Compile Include="Imaging\EncapsulatedPostScriptRenderer.cs" />
     <Compile Include="Imaging\EPSColor.cs" />
     <Compile Include="Imaging\EPSMediaColor.cs" />
     <Compile Include="Imaging\FixedCodeSize.cs" />
@@ -67,21 +74,35 @@
     <Compile Include="Imaging\GeometryExtensions.cs" />
     <Compile Include="Imaging\ImageFormat.cs" />
     <Compile Include="Imaging\ISizeCalculation.cs" />
-    <Compile Include="Imaging\MatrixPoint.cs" />
-    <Compile Include="Imaging\MatrixRectangle.cs" />
-    <Compile Include="Imaging\MatrixSize.cs" />
-    <Compile Include="Imaging\MatrixStatus.cs" />
+    <Compile Include="Imaging\MatrixTypes.cs" />
+    <Compile Include="Imaging\MatrixUtil.cs" />
+    <Compile Include="Imaging\Point.cs" />
     <Compile Include="Imaging\QuietZoneModules.cs" />
-    <Compile Include="Imaging\SquareBitMatrix.cs" />
-    <Compile Include="Imaging\StateMatrix.cs" />
-    <Compile Include="Imaging\StringBuilderExtension.cs" />
-    <Compile Include="Imaging\SVGRenderer.cs" />
-    <Compile Include="Imaging\TriStateMatrix.cs" />
+    <Compile Include="Imaging\Rect.cs" />
+    <Compile Include="Imaging\Size.cs" />
+    <Compile Include="Imaging\Vector.cs" />
     <Compile Include="Imaging\WriteableBitmapExtension.cs" />
     <Compile Include="Imaging\WriteableBitmapRenderer.cs" />
+    <Compile Include="Imaging\Matrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Imaging\RenderHelper.cs" />
     <Compile Include="Imaging\XamlImage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Formall.Presentation\Formall.Presentation.csproj">
+      <Project>{774379c8-34a6-4b9d-a114-401bc660b1bb}</Project>
+      <Name>Formall.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Formall\Formall.csproj">
+      <Project>{f2147785-4648-4bd4-9d73-d61e07e1b0de}</Project>
+      <Name>Formall</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

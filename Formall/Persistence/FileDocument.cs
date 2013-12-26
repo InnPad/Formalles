@@ -10,11 +10,19 @@ namespace Formall.Persistence
     public class FileDocument : IDocument
     {
         private readonly FileDocumentContext _context;
-        private readonly Metadata _metadata;
+        private readonly FileMetadata _metadata;
         private readonly string _name;
         private readonly ContentType _type;
 
-        public FileDocument(string name, ContentType type, Metadata metadata, FileDocumentContext context)
+        public FileDocument(FileEntry entry, FileDocumentContext context)
+        {
+            _name = entry.Name;
+            _type = ContentType.Binary;
+            _metadata = entry.Metadata;
+            _context = context;
+        }
+
+        public FileDocument(string name, ContentType type, FileMetadata metadata, FileDocumentContext context)
         {
             _name = name;
             _type = type;
@@ -24,7 +32,7 @@ namespace Formall.Persistence
 
         public Stream Content
         {
-            get { throw new NotImplementedException(); }
+            get { return File.Open(FileMode.OpenOrCreate); }
         }
 
         public ContentType ContentType
@@ -44,7 +52,7 @@ namespace Formall.Persistence
 
         public FileInfo File
         {
-            get { return new FileInfo(Path); }
+            get { return new FileInfo(FullName); }
         }
 
         public string Key
@@ -52,7 +60,7 @@ namespace Formall.Persistence
             get { return _metadata.Key; }
         }
 
-        public Metadata Metadata
+        public FileMetadata Metadata
         {
             get { return _metadata; }
         }
@@ -62,9 +70,19 @@ namespace Formall.Persistence
             get { return _name; }
         }
 
-        public string Path
+        public string FullName
         {
-            get { return System.IO.Path.Combine(_context.Directory.FullName, Name); }
+            get
+            {
+                var name = _name + _metadata.Extension;
+                
+                return System.IO.Path.Combine(_context.Directory.FullName, name);
+            }
+        }
+
+        Metadata IDocument.Metadata
+        {
+            get { return _metadata; }
         }
     }
 }

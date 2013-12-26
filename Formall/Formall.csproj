@@ -62,6 +62,9 @@
     <Compile Include="Persistence\FileDocument.cs" />
     <Compile Include="Persistence\FileDocumentContext.cs" />
     <Compile Include="Persistence\FileEntity.cs" />
+    <Compile Include="Persistence\FileEntry.cs" />
+    <Compile Include="Persistence\FileIndex.cs" />
+    <Compile Include="Persistence\FileMetadata.cs" />
     <Compile Include="Persistence\FileRepository.cs" />
     <Compile Include="Persistence\IDocumentContextExtensions.cs" />
     <Compile Include="Persistence\IRepositoryQuery.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="Persistence\ZipEntry.cs" />
     <Compile Include="Persistence\ZipIndex.cs" />
     <Compile Include="Persistence\ZipRepository.cs" />
+    <Compile Include="Presentation\MediaType.cs" />
     <Compile Include="Primitive.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -156,6 +156,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -196,9 +197,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ExtController.cs" />
-    <Compile Include="Controllers\FractalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\QrCodeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -345,6 +345,7 @@
     <Content Include="Views\Ext\TreeGrid.cshtml" />
     <Content Include="Views\Ext\Value.cshtml" />
     <Content Include="Views\Ext\Widget.cshtml" />
+    <Content Include="Views\Image\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Formall.Authentication\Formall.Authentication.csproj">
@@ -362,10 +363,6 @@
     <ProjectReference Include="..\Formall.Data\Formall.Data.csproj">
       <Project>{23adf522-31d0-40d3-9823-d415ff9b83f4}</Project>
       <Name>Formall.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Formall.Imaging.QrCode\Formall.Imaging.QrCode.csproj">
-      <Project>{cb326d97-dd36-4b44-a11a-e5e478347a12}</Project>
-      <Name>Formall.Imaging.QrCode</Name>
     </ProjectReference>
     <ProjectReference Include="..\Formall.Imaging\Formall.Imaging.csproj">
       <Project>{324d6747-88a7-4e91-a427-5162d4c202ef}</Project>

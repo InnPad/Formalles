@@ -24,6 +24,11 @@ namespace Formall.Navigation
             _entity = entity;
         }
 
+        public override SegmentClass Class
+        {
+            get { return SegmentClass.Entity; }
+        }
+
         public dynamic Data
         {
             get;
@@ -75,14 +80,14 @@ namespace Formall.Navigation
             throw new NotImplementedException("Read only");
         }
 
-        public IResult WriteJson(Stream stream)
+        public void WriteJson(Stream stream)
         {
-            return _entity.WriteJson(stream);
+            _entity.WriteJson(stream);
         }
 
-        public IResult WriteJson(TextWriter writer)
+        public void WriteJson(TextWriter writer)
         {
-            return _entity.WriteJson(writer);
+            _entity.WriteJson(writer);
         }
     }
 
@@ -110,6 +115,7 @@ namespace Formall.Navigation
         }
 
         private T _content;
+        private SegmentType _type;
 
         public Entity(Guid id, T data, Metadata metadata, string name, ISegment parent)
             : this(new JsonEntity(id, data, metadata), name, parent)
@@ -125,6 +131,11 @@ namespace Formall.Navigation
             : base(entity, name, parent)
         {
             _content = null;
+        }
+
+        public override SegmentType Type
+        {
+            get { return _type ?? (_type = (SegmentType)typeof(T).Name); }
         }
 
         public override IResult Refresh()

@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
+    using Formall.Presentation;
     using Formall.Reflection;
 
     public abstract class ZipEntity : ZipDocument, IEntity
     {
         private readonly ZipRepository _repository;
 
-        protected ZipEntity(ZipArchiveEntry entry, ContentType type, Metadata metadata, ZipRepository repository)
+        protected ZipEntity(ZipArchiveEntry entry, MediaType type, Metadata metadata, ZipRepository repository)
             : base(entry, type, metadata, repository.Context)
         {
             _repository = repository;
@@ -81,12 +82,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(Stream stream)
+        void IEntity.WriteJson(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(TextWriter writer)
+        void IEntity.WriteJson(TextWriter writer)
         {
             throw new NotImplementedException();
         }

@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace Formall.Imaging
 {
+    using Formall.Persistence;
     using Formall.Presentation;
     using WPoint = System.Windows.Point;
     using WRect = System.Windows.Rect;

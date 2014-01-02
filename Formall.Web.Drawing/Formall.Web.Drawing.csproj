@@ -66,6 +66,10 @@
       <Project>{774379c8-34a6-4b9d-a114-401bc660b1bb}</Project>
       <Name>Formall.Presentation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Formall.Web\Formall.Web.csproj">
+      <Project>{948b90a0-1d72-4fbb-8f83-dd10662da3ab}</Project>
+      <Name>Formall.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Formall\Formall.csproj">
       <Project>{f2147785-4648-4bd4-9d73-d61e07e1b0de}</Project>
       <Name>Formall</Name>

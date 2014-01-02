@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Formall.Navigation
 {
     using Formall.Persistence;
+    using Formall.Presentation;
     using Formall.Reflection;
         
     internal class Document : Segment, IDocument, ISegment
@@ -24,6 +25,11 @@ namespace Formall.Navigation
             _parent = parent;
         }
 
+        public override SegmentClass Class
+        {
+            get { return SegmentClass.Document; }
+        }
+
         protected Stream Content
         {
             get { return _document.Content; }
@@ -36,7 +42,12 @@ namespace Formall.Navigation
             get { return _document.Content; }
         }
 
-        public ContentType ContentType
+        public Encoding ContentEncoding
+        {
+            get { return _document.ContentEncoding; }
+        }
+
+        public MediaType ContentType
         {
             get { return _document.ContentType; }
         }
@@ -51,7 +62,7 @@ namespace Formall.Navigation
             get { return _document.Key; }
         }
 
-        Metadata IDocument.Metadata
+        public Metadata Metadata
         {
             get { return _document.Metadata; }
         }

@@ -19,7 +19,7 @@
         }
 </style>
 
-<section>
+@*<section>
     
     <h2>Barcodes</h2>
 
@@ -30,7 +30,7 @@
         }
         <div>Qr Code - formall.net</div>
     </div>
-</section>
+</section>*@
 
 <section>
 
@@ -41,7 +41,7 @@
         <div class="cell">
             @if (entry.Metadata.MediaType.StartsWith("image/"))
             {
-                url = Url.Content("~/Image/Glyph/" + entry.Name) + query;
+                url = Url.Content("~/Image/Glyph/" + entry.Metadata.Key.Replace('/', '-')) + query;
                 <img src="@url" alt="@entry.Metadata.Key (@entry.Metadata.MediaType)" />
             }
             <div>@entry.Name@entry.Metadata.Extension</div>

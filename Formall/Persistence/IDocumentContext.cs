@@ -11,11 +11,14 @@ namespace Formall.Persistence
 
     public interface IDocumentContext
     {
+        // V1, V2...
+        //public string Version { get; }
+
         IResult Delete(string key);
 
-        IDocument Import(Stream stream, ContentType type, Metadata metadata);
+        IDocument Import(Stream stream, MediaType type, Metadata metadata);
 
-        IDocument Import(TextReader reader, ContentType type, Metadata metadata);
+        IDocument Import(TextReader reader, MediaType type, Metadata metadata);
 
         IDocument Import(IDocument document);
 

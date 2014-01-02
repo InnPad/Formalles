@@ -2,27 +2,21 @@
     data: [
         {
             "@metadata": {
-                Key: "Type/Model/",
-                Type: "Model"
+                Key: "Type/Item/Unit"
             },
-            BaseType: "Item",
             Name: "Unit",
         },
         {
             "@metadata": {
-                Key: "Type/Model/",
-                Type: "Model"
+                Key: "Type/Item/Unit/Length",
             },
-            BaseType: "Unit",
-            Name: "Length",
+            Name: "Unit/Length",
         },
         {
             "@metadata": {
-                Key: "Type/Model/",
-                Type: "Model"
+                Key: "Type/Item/Unit/f03fd1d5-1659-40c7-a484-736a872f7938"
             },
-            BaseType: "Unit",
-            Name: "Radix",
+            Name: "Unit/Radix",
             Summary: {
                 "en": "The radix or base is the number of unique digits, including zero."
             },
@@ -33,24 +27,19 @@
         },
         {
             "@metadata": {
-                Key: "Type/Model/",
-                Type: "Model"
+                Key: "Type/Item/Unit/Weight"
             },
-            BaseType: "Unit",
-            Name: "Weight",
+            Name: "Unit/Weight",
         },
         {
             "@metadata": {
-                Key: "Type/Unit/Length/",
-                Type: "Unit/Length"
+                Key: "Type/Item/Unit/Length/2d6f5bdd-db58-4f64-9cb7-2c638abae248",
             },
-            BaseType: "Unit",
             Name: "Length/Mile",
         },
         {
             "@metadata": {
-                Key: "Type/Unit/Length/",
-                Type: "Unit/Length"
+                Key: "Type/Unit/Length/949080cd-62c9-4ab2-b6d5-53731e79b709",
             },
             BaseType: "Unit",
             Name: "Length/Kilometer",

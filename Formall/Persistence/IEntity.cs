@@ -27,8 +27,8 @@ namespace Formall.Persistence
 
         IResult Update(object data);
 
-        IResult WriteJson(Stream stream);
+        void WriteJson(Stream stream);
 
-        IResult WriteJson(TextWriter writer);
+        void WriteJson(TextWriter writer);
     }
 }

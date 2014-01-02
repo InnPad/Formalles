@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
+    using Formall.Presentation;
+
     public class FileDocument : IDocument
     {
         private readonly FileDocumentContext _context;
         private readonly FileMetadata _metadata;
         private readonly string _name;
-        private readonly ContentType _type;
+        private readonly MediaType _type;
 
         public FileDocument(FileEntry entry, FileDocumentContext context)
         {
             _name = entry.Name;
-            _type = ContentType.Binary;
+            _type = MediaType.Binary;
             _metadata = entry.Metadata;
             _context = context;
         }
 
-        public FileDocument(string name, ContentType type, FileMetadata metadata, FileDocumentContext context)
+        public FileDocument(string name, MediaType type, FileMetadata metadata, FileDocumentContext context)
         {
             _name = name;
             _type = type;
@@ -35,7 +37,12 @@ namespace Formall.Persistence
             get { return File.Open(FileMode.OpenOrCreate); }
         }
 
-        public ContentType ContentType
+        public Encoding ContentEncoding
+        {
+            get { return Encoding.Unicode; }
+        }
+
+        public MediaType ContentType
         {
             get { return _type; }
         }

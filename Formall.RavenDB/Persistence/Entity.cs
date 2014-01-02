@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Formall.Persistence
 {
@@ -12,6 +13,7 @@ namespace Formall.Persistence
     using Raven.Imports.Newtonsoft.Json;
     using Raven.Imports.Newtonsoft.Json.Serialization;
     using Raven.Json.Linq;
+    
 
     internal class Entity : IDocument, IEntity
     {
@@ -120,25 +122,21 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public IResult WriteJson(Stream stream)
+        public void WriteJson(Stream stream)
         {
             using (var writer = new StreamWriter(stream))
             {
                 WriteJson(writer);
             }
-
-            return null;
         }
 
-        public IResult WriteJson(TextWriter writer)
+        public void WriteJson(TextWriter writer)
         {
             using (var jsonWriter = new JsonTextWriter(writer))
             {
                 jsonWriter.Formatting = Formatting.Indented;
                 Data.WriteTo(jsonWriter);
             }
-
-            return null;
         }
 
         #region - IDocument -
@@ -149,18 +147,26 @@ namespace Formall.Persistence
             {
                 var stream = new MemoryStream();
 
-                using (var sw = new StreamWriter(stream))
+                var serializer = new JsonSerializer
                 {
-                    using (var jw = new JsonTextWriter(sw))
-                    {
-                        this.Data.WriteTo(jw);
-                    }
-                }
+                };
+
+                var writer = new StreamWriter(stream, ContentEncoding);
+
+                writer.Write(Data.ToString());
+
+                //serializer.Serialize(new JsonTextWriter(new StreamWriter(stream, ContentEncoding)) { Formatting = Formatting.Indented }, Data);
+
 
                 stream.Seek(0L, SeekOrigin.Begin);
 
                 return stream;
             }
+        }
+
+        public Encoding ContentEncoding
+        {
+            get { return Encoding.UTF8; }
         }
 
         IDocumentContext IDocument.Context
@@ -173,9 +179,9 @@ namespace Formall.Persistence
             get { return _key; }
         }
 
-        ContentType IDocument.ContentType
+        MediaType IDocument.ContentType
         {
-            get { return ContentType.Json; }
+            get { return MediaType.Json; }
         }
 
         Metadata IDocument.Metadata

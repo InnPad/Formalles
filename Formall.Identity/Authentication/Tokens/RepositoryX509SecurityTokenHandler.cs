@@ -30,7 +30,7 @@ namespace Formall.Authentication.Tokens
             //Tracing.Information(String.Format("Client certificate thumbprint: {0}", clientCert.Thumbprint));
 
             // check if mapped user exists
-            string userName;
+            string userName = null;
             if (!UserRepository.ValidateUser(clientCert, out userName))
             {
                 var message = String.Format("No mapped user exists for thumbprint {0}", clientCert.Thumbprint);

@@ -3,6 +3,7 @@ using System.Windows.Media.Imaging;
 
 namespace Formall.Imaging
 {
+    using Formall.Persistence;
     using Formall.Presentation;
 
     public static class ImageFormatExtensions

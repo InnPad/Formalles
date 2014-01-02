@@ -51,7 +51,6 @@
     <Compile Include="Authentication\Tokens\X509CertificateSessionSecurityTokenHandler.cs" />
     <Compile Include="Authentication\TokenTypes.cs" />
     <Compile Include="Authorization\Certificate.cs" />
-    <Compile Include="Authorization\Client.cs" />
     <Compile Include="Authorization\ClientSecretTypes.cs" />
     <Compile Include="Authorization\CodeToken.cs" />
     <Compile Include="Authorization\CodeTokenTypes.cs" />
@@ -66,8 +65,6 @@
     <Compile Include="Authorization\Configuration\SimpleHttpConfiguration.cs" />
     <Compile Include="Authorization\Configuration\WSFederationConfiguration.cs" />
     <Compile Include="Authorization\Configuration\WSTrustConfiguration.cs" />
-    <Compile Include="Authorization\Profile.cs" />
-    <Compile Include="Authorization\Role.cs" />
     <Compile Include="Authorization\StoredGrant.cs" />
     <Compile Include="Authorization\StoredGrantTypes.cs" />
     <Compile Include="Authentication\Tokens\ClientCertificateIssuerNameRegistry.cs" />

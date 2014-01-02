@@ -18,6 +18,16 @@ namespace Formall.Web.Mvc
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: MvcApplication.RouteNames.DefaultPathRouteName,
+                url: "{*path}",
+                defaults: new
+                {
+                    controller = "Domain",
+                    action = "Index"
+                }
+            );
         }
     }
 }

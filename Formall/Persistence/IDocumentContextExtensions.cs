@@ -151,15 +151,15 @@ namespace Formall.Persistence
                 ContractResolver = new DefaultContractResolver()
             };
 
+            string key;
             var metadata = (Metadata)serializer.Deserialize(new JTokenReader(m), typeof(Metadata));
 
             if (metadata != null)
             {
                 data.Remove("@metadata");
             }
-            else
+            else if ((key = data.Value<string>(keyProp)) != null)
             {
-                var key = data.Value<string>(keyProp);
                 data.Remove(keyProp);
                 metadata = new Metadata { Key = key, Type = key.Exclude(1, '/') };
             }

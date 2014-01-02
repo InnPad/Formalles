@@ -22,12 +22,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public IDocument Import(Stream stream, ContentType type, Metadata metadata)
+        public IDocument Import(Stream stream, MediaType type, Metadata metadata)
         {
             throw new NotImplementedException();
         }
 
-        public IDocument Import(TextReader reader, ContentType type, Metadata metadata)
+        public IDocument Import(TextReader reader, MediaType type, Metadata metadata)
         {
             throw new NotImplementedException();
         }

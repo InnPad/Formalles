@@ -9,6 +9,7 @@ using System.Windows.Media.TextFormatting;
 
 namespace Formall.Imaging
 {
+    using Formall.Persistence;
     using Formall.Presentation;
     using System.Globalization;
     using System.IO;

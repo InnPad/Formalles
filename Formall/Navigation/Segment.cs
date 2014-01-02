@@ -18,6 +18,11 @@ namespace Formall.Navigation
             _parent = parent;
         }
 
+        public virtual SegmentClass Class
+        {
+            get { return SegmentClass.Segment; }
+        }
+
         public string Name
         {
             get;
@@ -57,6 +62,11 @@ namespace Formall.Navigation
         IDictionary<string, ISegment> ISegment.Children
         {
             get { return this.Children; }
+        }
+
+        public virtual SegmentType Type
+        {
+            get { return SegmentType.Namespace; }
         }
     }
 

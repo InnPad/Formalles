@@ -359,8 +359,6 @@ namespace Formall.Web.Routing
             }
 
             return result;
-
-            return null;
         }
         #endregion
 

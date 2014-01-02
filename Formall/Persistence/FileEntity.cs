@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
+    using Formall.Presentation;
     using Formall.Reflection;
     
     public abstract class FileEntity : FileDocument, IEntity
     {
         private readonly FileRepository _repository;
 
-        protected FileEntity(string name, ContentType type, FileMetadata metadata, FileRepository repository)
+        protected FileEntity(string name, MediaType type, FileMetadata metadata, FileRepository repository)
             : base(name, type, metadata, repository.Context)
         {
             _repository = repository;
@@ -71,12 +72,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(Stream stream)
+        void IEntity.WriteJson(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(TextWriter writer)
+        void IEntity.WriteJson(TextWriter writer)
         {
             throw new NotImplementedException();
         }

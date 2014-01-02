@@ -40,12 +40,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        public FileDocument Import(Stream stream, ContentType type, Metadata metadata)
+        public FileDocument Import(Stream stream, MediaType type, Metadata metadata)
         {
             throw new NotImplementedException();
         }
 
-        public FileDocument Import(TextReader reader, ContentType type, Metadata metadata)
+        public FileDocument Import(TextReader reader, MediaType type, Metadata metadata)
         {
             throw new NotImplementedException();
         }
@@ -64,7 +64,7 @@ namespace Formall.Persistence
         {
             var entry = _index[key];
 
-            return entry != null ? new FileDocument(entry.Name, ContentType.Binary, entry.Metadata, this) : null;
+            return entry != null ? new FileDocument(entry.Name, MediaType.Binary, entry.Metadata, this) : null;
         }
 
         public FileDocument[] Read(int skip, int take)
@@ -149,12 +149,12 @@ namespace Formall.Persistence
             throw new NotImplementedException();
         }
 
-        IDocument IDocumentContext.Import(Stream stream, ContentType type, Metadata metadata)
+        IDocument IDocumentContext.Import(Stream stream, MediaType type, Metadata metadata)
         {
             return Import(stream, type, metadata);
         }
 
-        IDocument IDocumentContext.Import(TextReader reader, ContentType type, Metadata metadata)
+        IDocument IDocumentContext.Import(TextReader reader, MediaType type, Metadata metadata)
         {
             return Import(reader, type, metadata);
         }

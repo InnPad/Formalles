@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Formall.Serialization
 {
     using Formall.Persistence;
+    using Formall.Presentation;
 
     public class XmlEntity : IEntity
     {
@@ -69,12 +70,12 @@ namespace Formall.Serialization
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(System.IO.Stream stream)
+        void IEntity.WriteJson(System.IO.Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(System.IO.TextWriter writer)
+        void IEntity.WriteJson(System.IO.TextWriter writer)
         {
             throw new NotImplementedException();
         }
@@ -84,14 +85,19 @@ namespace Formall.Serialization
             get { throw new NotImplementedException(); }
         }
 
+        public Encoding ContentEncoding
+        {
+            get { return Encoding.Unicode; }
+        }
+
         IDocumentContext IDocument.Context
         {
             get { throw new NotImplementedException(); }
         }
 
-        ContentType IDocument.ContentType
+        MediaType IDocument.ContentType
         {
-            get { return ContentType.Xml; }
+            get { return MediaType.Xml; }
         }
 
         string IDocument.Key

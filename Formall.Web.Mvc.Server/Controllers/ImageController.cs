@@ -81,7 +81,7 @@ namespace Formall.Web.Mvc.Controllers
 
                 stream.Close();
 
-                return new ImageResult(content, mediaType);
+                return new BinaryResult { Content = content, ContentType = mediaType };
             }
             else
             {

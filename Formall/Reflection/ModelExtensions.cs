@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace Formall.Reflection
 {
+    using Formall.Validation;
+
     public static class ModelExtensions
     {
         public static object GetPropertyValue(object o, string member)

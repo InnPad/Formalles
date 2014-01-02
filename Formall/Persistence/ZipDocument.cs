@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Formall.Persistence
 {
+    using Formall.Presentation;
+
     public class ZipDocument : IDocument
     {
         public static implicit operator ZipArchiveEntry(ZipDocument document)
@@ -18,9 +20,9 @@ namespace Formall.Persistence
         private readonly ZipDocumentContext _context;
         private readonly ZipArchiveEntry _entry;
         private readonly Metadata _metadata;
-        private ContentType _type;
+        private MediaType _type;
 
-        public ZipDocument(ZipArchiveEntry entry, ContentType type, Metadata metadata, ZipDocumentContext context)
+        public ZipDocument(ZipArchiveEntry entry, MediaType type, Metadata metadata, ZipDocumentContext context)
         {
             _entry = entry;
             _type = type;
@@ -38,7 +40,12 @@ namespace Formall.Persistence
             get { return _context; }
         }
 
-        public ContentType ContentType
+        public Encoding ContentEncoding
+        {
+            get { return Encoding.Unicode; }
+        }
+
+        public MediaType ContentType
         {
             get { return _type; }
         }

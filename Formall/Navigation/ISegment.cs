@@ -8,12 +8,14 @@ namespace Formall.Navigation
 {
     public interface ISegment
     {
+        IDictionary<string, ISegment> Children { get; }
+
         string Name { get; }
 
         string Path { get; }
 
         ISegment Parent { get; }
 
-        IDictionary<string, ISegment> Children { get; }
+        SegmentType Type { get; }
     }
 }

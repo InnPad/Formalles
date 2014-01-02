@@ -144,7 +144,7 @@ namespace Formall.Persistence
                                         new RavenDocumentsByEntityName().Execute(store);
                                     }
                                 }
-                                catch (Exception e)
+                                catch (Exception)
                                 {
                                     // log exception
                                 }
@@ -166,6 +166,19 @@ namespace Formall.Persistence
             return this.Repository(name);
         }
 
+        internal Entity Import(RavenJObject data, Metadata metadata)
+        {
+            Guid id;
+            var key = metadata.Key;
+            var type = metadata != null ? metadata.Type : null;
+
+            Guid.TryParse(key.Split('/').Last(), out id);
+
+            var entity = new Entity(id, data, metadata.FromMetadata(), Repository(type));
+
+            return Store(entity);
+        }
+
         internal Entity Import(IDocument document)
         {
             RavenJObject data;
@@ -181,20 +194,7 @@ namespace Formall.Persistence
                 data = RavenJObject.Load(new JsonTextReader(reader));
             }
 
-            Guid id;
-            var key = document.Key;
-            var type = document.Metadata != null ? document.Metadata.Type : null;
-            var metadata = new RavenJObject
-            {
-                { "@id", key },
-                { "Raven-Entity-Name", type }
-            };
-            
-            Guid.TryParse(document.Key.Split('/').Last(), out id);
-
-            var entity = new Entity(id, data, metadata, Repository(type));
-
-            return Store(entity);
+            return Import(data, document.Metadata);
         }
 
         IEntity IDataContext.Import(IEntity entity)
@@ -222,7 +222,7 @@ namespace Formall.Persistence
             return null;
         }
 
-        public IDocument Import(Stream stream, ContentType type, Metadata metadata)
+        public IDocument Import(Stream stream, MediaType type, Metadata metadata)
         {
             IDocument document;
 
@@ -234,11 +234,21 @@ namespace Formall.Persistence
             return document;
         }
 
-        public IDocument Import(TextReader reader, ContentType type, Metadata metadata)
+        public IDocument Import(TextReader reader, MediaType type, Metadata metadata)
         {
-            Entity entity = null;
-            throw new NotImplementedException();
-            return Store(entity);
+            RavenJObject data;
+
+            if (type == MediaType.Json)
+            {
+                data = RavenJObject.Load(new JsonTextReader(reader));
+            }
+            else
+            {
+                // TODO: support import of other content types like XML
+                throw new NotImplementedException("RavenDocumentContext doesnt support importing other content type than JSON.");
+            }
+
+            return Import(data, metadata);
         }
 
         IDocument IDocumentContext.Import(IDocument document)

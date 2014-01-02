@@ -45,6 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\Client.cs" />
+    <Compile Include="Authorization\Member.cs" />
+    <Compile Include="Authorization\Profile.cs" />
+    <Compile Include="Authorization\Role.cs" />
+    <Compile Include="Automation\Task.cs" />
     <Compile Include="BinarExtensions.cs" />
     <Compile Include="Binary.cs" />
     <Compile Include="Diagnostics\EsbTrace.cs" />
@@ -56,8 +61,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Navigation\RouteOption.cs" />
+    <Compile Include="Navigation\SegmentClass.cs" />
     <Compile Include="Navigation\SegmentExtensions.cs" />
-    <Compile Include="Persistence\ContentType.cs" />
+    <Compile Include="Navigation\SegmentType.cs" />
     <Compile Include="Persistence\Entity.cs" />
     <Compile Include="Persistence\FileDocument.cs" />
     <Compile Include="Persistence\FileDocumentContext.cs" />
@@ -74,7 +80,8 @@
     <Compile Include="Persistence\ZipEntry.cs" />
     <Compile Include="Persistence\ZipIndex.cs" />
     <Compile Include="Persistence\ZipRepository.cs" />
-    <Compile Include="Presentation\MediaType.cs" />
+    <Compile Include="Persistence\MediaType.cs" />
+    <Compile Include="Presentation\EntityWriter.cs" />
     <Compile Include="Primitive.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -125,8 +132,8 @@
     <Compile Include="Reflection\FieldExtensions.cs" />
     <Compile Include="Reflection\Function.cs" />
     <Compile Include="Reflection\Item.cs" />
-    <Compile Include="Reflection\IValidatable.cs" />
-    <Compile Include="Reflection\IValidationProvider.cs" />
+    <Compile Include="Validation\IValidatable.cs" />
+    <Compile Include="Validation\IValidationProvider.cs" />
     <Compile Include="Reflection\ModelExtensions.cs" />
     <Compile Include="Reflection\Prototype.cs">
       <SubType>Code</SubType>
@@ -147,9 +154,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Reflection\Rule.cs" />
-    <Compile Include="Reflection\Scalar.cs" />
-    <Compile Include="Reflection\ValidationContext.cs" />
-    <Compile Include="Reflection\ValidationResult.cs" />
+    <Compile Include="Validation\ValidationContext.cs" />
+    <Compile Include="Validation\ValidationResult.cs" />
     <Compile Include="Reflection\Value.cs" />
     <Compile Include="Serialization\JsonEntity.cs" />
     <Compile Include="Serialization\XmlEntity.cs" />
@@ -171,8 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authentication\" />
-    <Folder Include="Authorization\" />
-    <Folder Include="Automation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

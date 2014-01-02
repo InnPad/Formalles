@@ -8,22 +8,16 @@ namespace Formall.Persistence
 {
     public class Metadata
     {
-        public string Type
-        {
-            get;
-            set;
-        }
+        public virtual string Key { get; set; }
 
-        public string Key
-        {
-            get;
-            set;
-        }
+        public virtual bool Private { get; set; }
 
-        public bool Private
-        {
-            get;
-            set;
-        }
+        public virtual string Type { get; set; }
+
+        /// <summary>
+        /// {IDocumentContext.Version.V1}.{Change.Number}
+        /// Examples: V1, V1.1, V1.2, V1.3, V2
+        /// </summary>
+        public virtual string Version { get; set; }
     }
 }

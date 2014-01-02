@@ -49,6 +49,8 @@ namespace Formall.Navigation
 
         public IEnumerable<ISegment> Query(string name, string host)
         {
+            name = name.TrimStart('/');
+
             var options = RouteOption.FromHost(host);
 
             foreach (var current in options)

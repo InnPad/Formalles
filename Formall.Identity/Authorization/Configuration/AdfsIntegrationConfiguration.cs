@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace Formall.Authorization.Configuration
 {
+    using Formall.Validation;
+
     public class AdfsIntegrationConfiguration : ProtocolConfiguration, IValidatable
     {
         // general settings - authentication

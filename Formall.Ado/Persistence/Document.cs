@@ -54,9 +54,14 @@ namespace Formall.Persistence
             get { throw new NotImplementedException(); }
         }
 
-        public ContentType ContentType
+        public Encoding ContentEncoding
         {
-            get { return ContentType.Xml; }
+            get { return Encoding.Unicode; }
+        }
+
+        public MediaType ContentType
+        {
+            get { return MediaType.Xml; }
         }
 
         public dynamic Data
@@ -115,12 +120,12 @@ namespace Formall.Persistence
             get { throw new NotImplementedException(); }
         }
 
-        public IResult WriteJson(Stream stream)
+        public void WriteJson(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public IResult WriteJson(TextWriter writer)
+        public void WriteJson(TextWriter writer)
         {
             throw new NotImplementedException();
         }

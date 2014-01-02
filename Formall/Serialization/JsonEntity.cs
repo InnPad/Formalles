@@ -6,9 +6,11 @@ using System.Linq;
 namespace Formall.Serialization
 {
     using Formall.Persistence;
+    using Formall.Presentation;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
+    using System.Text;
     
     public class JsonEntity : IEntity
     {
@@ -95,12 +97,12 @@ namespace Formall.Serialization
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(Stream stream)
+        void IEntity.WriteJson(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        IResult IEntity.WriteJson(TextWriter writer)
+        void IEntity.WriteJson(TextWriter writer)
         {
             throw new NotImplementedException();
         }
@@ -128,14 +130,19 @@ namespace Formall.Serialization
             }
         }
 
+        public Encoding ContentEncoding
+        {
+            get { return Encoding.Unicode; }
+        }
+
         IDocumentContext IDocument.Context
         {
             get { return null; }
         }
 
-        ContentType IDocument.ContentType
+        MediaType IDocument.ContentType
         {
-            get { return ContentType.Json; }
+            get { return MediaType.Json; }
         }
 
         string IDocument.Key

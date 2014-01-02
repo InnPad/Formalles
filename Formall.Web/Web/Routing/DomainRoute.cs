@@ -10,7 +10,6 @@ namespace Formall.Web.Routing
     public class DomainRoute : GreedyRoute
     {
         private Regex domainRegex;
-        private Regex pathRegex;
 
         public string Domain { get; set; }
 

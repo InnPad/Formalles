@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Formall.Authentication
 {
+    using Formall.Validation;
+
     public class IdentityProvider
     {
         //[UIHint("HiddenInput")]

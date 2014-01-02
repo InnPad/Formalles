@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Formall.Presentation;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -258,7 +259,7 @@ namespace Formall.Persistence
             return null;
         }
 
-        public ZipDocument Import(Stream stream, ContentType type, Metadata metadata)
+        public ZipDocument Import(Stream stream, MediaType type, Metadata metadata)
         {
             var entry = _archive.CreateEntry(metadata.Key, _compressionLevel);
 
@@ -272,7 +273,7 @@ namespace Formall.Persistence
             return document;
         }
 
-        public ZipDocument Import(TextReader reader, ContentType type, Metadata metadata)
+        public ZipDocument Import(TextReader reader, MediaType type, Metadata metadata)
         {
             var entry = _archive.CreateEntry(metadata.Key, _compressionLevel);
 
@@ -303,12 +304,12 @@ namespace Formall.Persistence
 
         #region - IDocumentContext -
 
-        IDocument IDocumentContext.Import(Stream stream, ContentType type, Metadata metadata)
+        IDocument IDocumentContext.Import(Stream stream, MediaType type, Metadata metadata)
         {
             return Import(stream, type, metadata);
         }
 
-        IDocument IDocumentContext.Import(TextReader reader, ContentType type, Metadata metadata)
+        IDocument IDocumentContext.Import(TextReader reader, MediaType type, Metadata metadata)
         {
             return Import(reader, type, metadata);
         }

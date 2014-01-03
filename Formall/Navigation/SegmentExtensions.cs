@@ -82,6 +82,16 @@ namespace Formall.Navigation
 
                     switch (keyPrefix)
                     {
+                        case "Type/":
+                            var type = new Entity(entity, name, parent);
+                            segment = type;
+                            break;
+
+                        case "Type/Boolean/":
+                            var boolean = new Entity<Item>(entity, name, parent);
+                            segment = boolean;
+                            break;
+
                         case "Type/Item/":
                             var item = new Entity<Item>(entity, name, parent);
                             segment = item;
@@ -92,9 +102,24 @@ namespace Formall.Navigation
                             segment = model;
                             break;
 
-                        case "Type/Value/":
-                            var value = new Entity<Value>(entity, name, parent);
-                            segment = value;
+                        case "Type/Number/":
+                            var number = new Entity<Item>(entity, name, parent);
+                            segment = number;
+                            break;
+
+                        case "Type/String/":
+                            var str = new Entity<Item>(entity, name, parent);
+                            segment = str;
+                            break;
+
+                        case "Type/Table/":
+                            var table = new Entity<Value>(entity, name, parent);
+                            segment = table;
+                            break;
+
+                        case "Type/Unit/":
+                            var unit = new Entity<Value>(entity, name, parent);
+                            segment = unit;
                             break;
 
                         default:

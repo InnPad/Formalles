@@ -2,7 +2,7 @@
     data: [
         {
             "@metadata": {
-                Key: "Type/Item/Unit/Currency"
+                Key: "Type/Unit/55084524-d547-4ad6-8e59-99d4bf7ca34f"
             },
             Name: "Currency",
             Fields: {
@@ -26,7 +26,7 @@
         },
         {
             "@metadata": {
-                Key: "Type/Item/Unit/Currency/049a37a0-6d58-4ca2-a028-07cb898b5b10"
+                Key: "Currency/049a37a0-6d58-4ca2-a028-07cb898b5b10"
             },
             Name: "Currency/EUR",
             ISO4217: "EUR",
@@ -39,7 +39,7 @@
         },
         {
             "@metadata": {
-                Key: "Type/Item/Unit/Currency/46480544-e901-4887-8e37-399fae0f4dce"
+                Key: "Currency/46480544-e901-4887-8e37-399fae0f4dce"
             },
             Name: "Currency/JPY",
             ISO4217: "JPY",
@@ -52,7 +52,7 @@
         },
         {
             "@metadata": {
-                Key: "Type/Item/Unit/Currency/6c0edc24-4fab-4a07-85bb-4c57b7a68a41"
+                Key: "Currency/6c0edc24-4fab-4a07-85bb-4c57b7a68a41"
             },
             Name: "Currency/GBP",
             ISO4217: "GBP",
@@ -65,9 +65,8 @@
         },
         {
             "@metadata": {
-                Key: "Type/Item/Unit/Currency/a3e25a36-18b7-4d5a-bfa8-d7162266bc31"
+                Key: "Currency/a3e25a36-18b7-4d5a-bfa8-d7162266bc31"
             },
-            BaseType: "Currency",
             Name: "Currency/USD",
             ISO4217: "USD",
             Rank: 1,

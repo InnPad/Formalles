@@ -161,7 +161,7 @@ namespace Formall.Persistence
             else if ((key = data.Value<string>(keyProp)) != null)
             {
                 data.Remove(keyProp);
-                metadata = new Metadata { Key = key, Type = key.Exclude(1, '/') };
+                metadata = new Metadata { Key = key };
             }
 
             Guid id;

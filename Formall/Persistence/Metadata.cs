@@ -12,8 +12,6 @@ namespace Formall.Persistence
 
         public virtual bool Private { get; set; }
 
-        public virtual string Type { get; set; }
-
         /// <summary>
         /// {IDocumentContext.Version.V1}.{Change.Number}
         /// Examples: V1, V1.1, V1.2, V1.3, V2

@@ -14,12 +14,32 @@ namespace Formall.Web.Mvc.Controllers
 
     public class DomainController : Controller
     {
+        private ISegment Segment(string path)
+        {
+            path = string.IsNullOrEmpty(path) ? string.Empty : path.TrimStart('/');
+
+            ISegment segment;
+
+            if (path.StartsWith("$/"))
+            {
+                var key = path.Substring(2);
+
+                segment = Schema.Current.Get(key, "*").FirstOrDefault();
+            }
+            else
+            {
+                segment = Schema.Current.Query(path, "*"/*Request.Url.Host*/).FirstOrDefault();
+            }
+
+            return segment;
+        }
+
         //
         // GET: /Domain/{name}/$children
         
         public ActionResult Index(string path)
         {
-            var segment = Schema.Current.Query(path, "*"/*Request.Url.Host*/).FirstOrDefault();
+            var segment = Segment(path);
 
             object response = segment != null ? (object)new { success = true, data = segment } : (object)new { success = false, message = "Not found" };
 
@@ -62,7 +82,7 @@ namespace Formall.Web.Mvc.Controllers
 
         public ActionResult Data(string path)
         {
-            var segment = Schema.Current.Query(path, "*"/*Request.Url.Host*/).FirstOrDefault();
+            var segment = Segment(path);
 
             if (segment == null)
             {
@@ -87,7 +107,7 @@ namespace Formall.Web.Mvc.Controllers
 
         public ActionResult Deep(string path)
         {
-            var segment = Schema.Current.Query(path, "*"/*Request.Url.Host*/).FirstOrDefault();
+            var segment = Segment(path);
 
             if (segment == null)
             {
@@ -105,7 +125,7 @@ namespace Formall.Web.Mvc.Controllers
 
         public ActionResult DeepData(string path)
         {
-            var segment = Schema.Current.Query(path, "*"/*Request.Url.Host*/).FirstOrDefault();
+            var segment = Segment(path);
 
             if (segment == null)
             {
@@ -123,7 +143,7 @@ namespace Formall.Web.Mvc.Controllers
 
         public ActionResult DeepMetadata(string path)
         {
-            var segment = Schema.Current.Query(path, "*"/*Request.Url.Host*/).FirstOrDefault();
+            var segment = Segment(path);
 
             if (segment == null)
             {
@@ -141,7 +161,7 @@ namespace Formall.Web.Mvc.Controllers
 
         public ActionResult Metadata(string path)
         {
-            var segment = Schema.Current.Query(path, "*"/*Request.Url.Host*/).FirstOrDefault();
+            var segment = Segment(path);
 
             if (segment == null)
             {

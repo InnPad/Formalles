@@ -170,7 +170,7 @@ namespace Formall.Persistence
         {
             Guid id;
             var key = metadata.Key;
-            var type = metadata != null ? metadata.Type : null;
+            var type = key.Exclude(1, '/');
 
             Guid.TryParse(key.Split('/').Last(), out id);
 
@@ -265,27 +265,38 @@ namespace Formall.Persistence
 
         public IDocument Read(string key)
         {
-            var document = DocumentStore.DatabaseCommands.Get(key);
-            var data = document.DataAsJson;
-            var metadata = document.Metadata;
+            Entity entity = null;
 
-            throw new NotImplementedException();
+            var document = DocumentStore.DatabaseCommands.Get(key);
+
+            if (document != null)
+            {
+                var data = document.DataAsJson;
+                var metadata = document.Metadata;
+                entity = new Entity(Entity.ParseId(key), data, metadata, Repository(metadata.Value<string>("Raven-Entity-Name")));
+            }
+
+            return entity;
         }
 
         public IDocument[] Read(string keyPrefix, int skip, int take)
         {
-            throw new NotImplementedException();
+            var documents = DocumentStore.DatabaseCommands.StartsWith(keyPrefix, null, skip, take);
+
+            return documents.Select(o => new Entity(Entity.ParseId(o.Key), o.DataAsJson, o.Metadata, Repository(o.Metadata.Value<string>("Raven-Entity-Name")))).OfType<IDocument>().ToArray();
         }
 
         internal Repository Repository(string name)
         {
+            var keyPrefix = name + '/';
+
             Repository repository;
 
             if (!_repositories.TryGetValue(name, out repository))
             {
                 var segment = _schema.Query(name, _host).FirstOrDefault();
 
-                string keyPrefix = null;
+                //string keyPrefix = null;
                 Model model = null;
 
                 if (segment != null)
@@ -295,19 +306,19 @@ namespace Formall.Persistence
                     {
                         model = (Model)entity;
 
-                        keyPrefix = model.Name + '/';
+                        //keyPrefix = model.Name + '/';
 
-                        for (var baseType = model.BaseType; baseType != null; )
+                        /*for (var baseType = model.BaseType; baseType != null; )
                         {
                             segment = segment.Parent;
                             if (segment != null)
                             {
                                 entity = segment as Entity<Model>;
                                 var baseModel = (Model)entity;
-                                keyPrefix = baseModel.Name + '/' + keyPrefix;
+                                //keyPrefix = baseModel.Name + '/' + keyPrefix;
                             }
 
-                        }
+                        }*/
                     }
                 }
 

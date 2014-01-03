@@ -113,8 +113,7 @@ namespace Formall.Persistence
                     {
                         Extension = ext,
                         Key = key,
-                        Private = false,
-                        Type = null
+                        Private = false
                     };
 
                     MediaType mt;
@@ -130,7 +129,6 @@ namespace Formall.Persistence
                     if (old != null)
                     {
                         metadata.Private = old.Metadata.Private;
-                        metadata.Type = old.Metadata.Type;
                     }
 
                     index.Set(name, metadata);

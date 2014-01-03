@@ -209,6 +209,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Seeds\Base.package.js" />
     <Content Include="App_Data\Seeds\Core.package.js" />
     <Content Include="App_Data\Seeds\Money.package.js" />
     <Content Include="App_Data\Seeds\Unit.package.js" />

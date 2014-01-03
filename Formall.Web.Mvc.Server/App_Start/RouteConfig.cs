@@ -24,8 +24,7 @@ namespace Formall.Web.Mvc
                 url: "{*path}",
                 defaults: new
                 {
-                    controller = "Domain",
-                    action = "Index"
+                    controller = "Domain"
                 }
             );
         }

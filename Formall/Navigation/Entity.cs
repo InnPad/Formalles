@@ -17,7 +17,8 @@ namespace Formall.Navigation
     internal class Entity : Document, IEntity
     {
         private readonly IEntity _entity;
-        
+        private IDataContext _context;
+
         public Entity(IEntity entity, string name, ISegment parent)
             : base(entity, name, parent)
         {
@@ -27,6 +28,12 @@ namespace Formall.Navigation
         public override SegmentClass Class
         {
             get { return SegmentClass.Entity; }
+        }
+
+        public IDataContext Context
+        {
+            get { return _context ?? (_context = _entity.Repository.Context); }
+            set { _context = value; }
         }
 
         public dynamic Data

@@ -13,7 +13,7 @@ namespace Formall.Web.Mvc
         {
             var controllerType = base.GetControllerType(requestContext, controllerName);
 
-            if (controllerType == null)
+            if (controllerType == null || controllerType == typeof(Formall.Web.Mvc.Controllers.DomainController))
             {
                 var path = requestContext.HttpContext.Request.Path;
 
@@ -21,7 +21,7 @@ namespace Formall.Web.Mvc
 
                 var actionIndex = pathSplit
                     .Select((item, index) => new { Action = item, Index = index })
-                    .Where(o => o.Action.Length > 0 && o.Action[0] == '$')
+                    .Where(o => o.Action.Length > 1 && o.Action[0] == '$')
                     .LastOrDefault();
 
                 var action = "Index";

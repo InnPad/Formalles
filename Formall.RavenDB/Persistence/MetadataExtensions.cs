@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Formall.Persistence
 {
     using Raven.Json.Linq;
+    using Formall.Navigation;
 
     public static class MetadataExtensions
     {
@@ -15,7 +16,7 @@ namespace Formall.Persistence
             return new RavenJObject
             {
                 { "@id", metadata.Key },
-                { "Raven-Entity-Name", metadata.Type }
+                { "Raven-Entity-Name", metadata.Key.Exclude(1, '/') }
             };
         }
 
@@ -23,8 +24,8 @@ namespace Formall.Persistence
         {
             var metadata = new Metadata
             {
-                Key = obj.Value<string>("@id"),
-                Type = obj.Value<string>("Raven-Entity-Name")
+                Key = obj.Value<string>("@id")
+                //Type = obj.Value<string>("Raven-Entity-Name")
             };
 
             return metadata;

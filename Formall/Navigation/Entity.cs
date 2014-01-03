@@ -19,7 +19,7 @@ namespace Formall.Navigation
         private readonly IEntity _entity;
         private IDataContext _context;
 
-        public Entity(IEntity entity, string name, ISegment parent)
+        public Entity(IEntity entity, string name, Segment parent)
             : base(entity, name, parent)
         {
             _entity = entity;
@@ -124,17 +124,17 @@ namespace Formall.Navigation
         private T _content;
         private SegmentType _type;
 
-        public Entity(Guid id, T data, Metadata metadata, string name, ISegment parent)
+        public Entity(Guid id, T data, Metadata metadata, string name, Segment parent)
             : this(new JsonEntity(id, data, metadata), name, parent)
         {
         }
 
-        public Entity(T data, Metadata metadata, string name, ISegment parent)
+        public Entity(T data, Metadata metadata, string name, Segment parent)
             : this(Guid.NewGuid(), data, metadata, name, parent)
         {
         }
 
-        public Entity(IEntity entity, string name, ISegment parent)
+        public Entity(IEntity entity, string name, Segment parent)
             : base(entity, name, parent)
         {
             _content = null;

@@ -27,7 +27,7 @@ namespace Formall.Navigation
                 }
                 else
                 {
-                    segment = new Segment(string.Empty, root);
+                    segment = new Segment(name, root);
 
                     root.Children[name] = segment;
 
@@ -149,7 +149,8 @@ namespace Formall.Navigation
                 {
                     foreach (var child in current.Children)
                     {
-                        segment.Children.Add(child.Value);
+                        child.Parent = segment;
+                        segment.Children.Add(child);
                     }
                 }
 

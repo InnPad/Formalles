@@ -13,169 +13,163 @@ namespace Formall.Web.Mvc.Controllers
     using Formall.Validation;
 
     public class DomainController : Controller
-    {
-        private ISegment Segment(string path)
+    {   
+        #region - by name -
+
+        public ActionResult Index(string name)
         {
-            path = string.IsNullOrEmpty(path) ? string.Empty : path.TrimStart('/');
-
-            ISegment segment;
-
-            if (path.StartsWith("$/"))
-            {
-                var key = path.Substring(2);
-
-                segment = Schema.Current.Get(key, "*").FirstOrDefault();
-            }
-            else
-            {
-                segment = Schema.Current.Query(path, "*"/*Request.Url.Host*/).FirstOrDefault();
-            }
-
-            return segment;
-        }
-
-        //
-        // GET: /Domain/{name}/$children
-        
-        public ActionResult Index(string path)
-        {
-            var segment = Segment(path);
-
-            object response = segment != null ? (object)new { success = true, data = segment } : (object)new { success = false, message = "Not found" };
-
-            var document = segment as IDocument;
-
-            if (document != null)
-            {
-                var entity = document as Entity;
-
-                if (entity != null)
-                {
-                    var result = new ContentWriteResult
-                    {
-                        Write = entity.WriteJson
-                    };
-                    return result;
-                }
-                else
-                {
-                    using (var stream = document.Content)
-                    {
-                        var buffer = new byte[stream.Length];
-                        stream.Read(buffer, 0, buffer.Length);
-                        return new BinaryResult
-                        {
-                            Content = buffer,
-                            ContentEncoding = document.ContentEncoding,
-                            ContentType = document.ContentType
-                        };
-                    }
-                }
-            }
-
-            return Content(Newtonsoft.Json.Linq.JObject.FromObject(response).ToString(), "application/json");// Json(response, JsonRequestBehavior.AllowGet);
-
-            /*return segment != null
-                ? Success(segment.ToRavenJObject(true)["children"])
-                : Failure("Not found");*/
-        }
-
-        public ActionResult Data(string path)
-        {
-            var segment = Segment(path);
+            var segment = Schema.Current.Query(name, "*").FirstOrDefault();
 
             if (segment == null)
             {
                 return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
             }
 
-            var entity = segment as Entity;
-
-            if (entity == null)
-            {
-                return Json(new { success = false, message = "Not an entity" }, JsonRequestBehavior.AllowGet);
-            }
-
-            var writer = new EntityWriter(entity, true, false, false, 2);
+            var writer = new SegmentOutput(segment, true, true, false, 2);
 
             return new ContentWriteResult
+            {
+                ContentType = MediaType.Json,
+                Write = writer.Write
+            };
+        }
+
+        public ActionResult Deep(string name)
+        {
+            var segment = Schema.Current.Query(name, "*").FirstOrDefault();
+
+            if (segment == null)
+            {
+                return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+            var writer = new SegmentOutput(segment, true, true, true, 2);
+
+            return new ContentWriteResult
+            {
+                ContentType = MediaType.Json,
+                Write = writer.Write
+            };
+        }
+
+        #endregion - by name -
+
+        #region - by keyPrefix and/or id -
+
+        public ActionResult Data(string keyPrefix, Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var document = Schema.Current.Get(keyPrefix, id.Value, "*").FirstOrDefault();
+
+                if (document == null)
+                {
+                    return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var entity = document as Entity;
+
+                if (entity == null)
+                {
+                    return Json(new { success = false, message = "Not an entity" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var writer = new DocumentOutput(document, true, false, 2);
+
+                return new ContentWriteResult
                 {
                     ContentType = MediaType.Json,
                     Write = writer.Write
                 };
-        }
-
-        public ActionResult Deep(string path)
-        {
-            var segment = Segment(path);
-
-            if (segment == null)
-            {
-                return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
             }
-
-            var writer = new EntityWriter(segment, true, true, true, 2);
-
-            return new ContentWriteResult
+            else
             {
-                ContentType = MediaType.Json,
-                Write = writer.Write
-            };
-        }
+                var documents = Schema.Current.Get(keyPrefix, "*");
 
-        public ActionResult DeepData(string path)
-        {
-            var segment = Segment(path);
+                var writer = new DocumentArrayOutput(documents, true, false, 2);
 
-            if (segment == null)
-            {
-                return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
+                return new ContentWriteResult
+                {
+                    ContentType = MediaType.Json,
+                    Write = writer.Write
+                };
             }
-
-            var writer = new EntityWriter(segment, true, false, true, 2);
-
-            return new ContentWriteResult
-            {
-                ContentType = MediaType.Json,
-                Write = writer.Write
-            };
         }
 
-        public ActionResult DeepMetadata(string path)
+        public ActionResult Metadata(string keyPrefix, Guid? id)
         {
-            var segment = Segment(path);
-
-            if (segment == null)
+            if (id.HasValue)
             {
-                return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
+                var document = Schema.Current.Get(keyPrefix, id.Value, "*").FirstOrDefault();
+
+                if (document == null)
+                {
+                    return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var writer = new DocumentOutput(document, false, true, 2);
+
+                return new ContentWriteResult
+                {
+                    ContentType = MediaType.Json,
+                    Write = writer.Write
+                };
             }
-
-            var writer = new EntityWriter(segment, false, true, true, 2);
-
-            return new ContentWriteResult
+            else
             {
-                ContentType = MediaType.Json,
-                Write = writer.Write
-            };
+                var documents = Schema.Current.Get(keyPrefix, "*");
+
+                var writer = new DocumentArrayOutput(documents, false, true, 2);
+
+                return new ContentWriteResult
+                {
+                    ContentType = MediaType.Json,
+                    Write = writer.Write
+                };
+            }
         }
 
-        public ActionResult Metadata(string path)
+        public ActionResult Read(string keyPrefix, Guid? id)
         {
-            var segment = Segment(path);
-
-            if (segment == null)
+            if (id.HasValue)
             {
-                return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
+                var document = Schema.Current.Get(keyPrefix, id.Value, "*").FirstOrDefault();
+
+                if (document == null)
+                {
+                    return Json(new { success = false, message = "Not found" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var entity = document as IEntity;
+
+                if (entity == null)
+                {
+                    return Json(new { success = false, message = "Not an entity" }, JsonRequestBehavior.AllowGet);
+                }
+
+                var writer = new DocumentOutput(document, true, false, 2);
+
+                return new ContentWriteResult
+                {
+                    ContentType = MediaType.Json,
+                    Write = writer.Write
+                };
             }
-
-            var writer = new EntityWriter(segment, false, true, false, 2);
-
-            return new ContentWriteResult
+            else
             {
-                ContentType = MediaType.Json,
-                Write = writer.Write
-            };
+                var documents = Schema.Current.Get(keyPrefix, "*");
+
+                var writer = new DocumentArrayOutput(documents, true, false, 2);
+
+                return new ContentWriteResult
+                {
+                    ContentType = MediaType.Json,
+                    Write = writer.Write
+                };
+            }
         }
+
+        #endregion - by keyPrefix & id -
 
         /*
         //

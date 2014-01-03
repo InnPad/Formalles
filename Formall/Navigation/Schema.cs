@@ -23,7 +23,45 @@ namespace Formall.Navigation
             _container = new ConcurrentDictionary<string, Entity<Domain>>();
         }
 
-        public IEnumerable<ISegment> Get(string key, string host)
+        private ISegment ToSegment(IDocument document, Segment root)
+        {
+            ISegment segment = null;
+
+            if (document != null)
+            {
+                var entity = document as IEntity;
+
+                string name = null;
+
+                if (entity != null)
+                {
+                    name = entity.Data.Name as string;
+                }
+
+                if (name == null)
+                {
+                    var file = document as IFileSystem;
+
+                    if (file != null)
+                    {
+                        name = file.Name;
+                    }
+                }
+
+                var path = new Queue<string>(name.Split('/'));
+
+                segment = root.Select(path);
+
+                if (path.Count != 0)
+                {
+                    segment = root.Insert(document);
+                }
+            }
+
+            return segment;
+        }
+
+        public IEnumerable<IDocument> Get(string keyPrefix, Guid id, string host)
         {
             var options = RouteOption.FromHost(host);
 
@@ -33,81 +71,56 @@ namespace Formall.Navigation
 
                 if (_container.TryGetValue(current.Pattern, out root))
                 {
-                    Func<IDocument, ISegment> ToSegment = (document) =>
-                    {
-                        ISegment segment = null;
-
-                        if (document != null)
-                        {
-                            var entity = document as IEntity;
-
-                            string name = null;
-
-                            if (entity != null)
-                            {
-                                name = entity.Data.Name as string;
-                            }
-
-                            if (name == null)
-                            {
-                                var file = document as IFileSystem;
-
-                                if (file != null)
-                                {
-                                    name = file.Name;
-                                }
-                            }
-
-                            var path = new Queue<string>(name.Split('/'));
-
-                            segment = root.Select(path);
-
-                            if (path.Count != 0)
-                            {
-                                segment = root.Insert(document);
-                            }
-                        }
-
-                        return segment;
-                    };
-
                     var domain = (Domain)root;
 
                     var context = root.Context;
 
                     if (context != null)
                     {
-                        ISegment segment;
+                        var document = context.Read(keyPrefix + id);
 
-                        Guid id;
-                        if (Guid.TryParse(key.Split('/').Last(), out id))
+                        if (document != null)
                         {
-                            if (null != (segment = segment = ToSegment(context.Read(key))))
-                            {
-                                yield return segment;
-                            }
+                            yield return document;
                         }
-                        else
+                    }
+                }
+            }
+
+            yield break;
+        }
+
+        public IEnumerable<IDocument> Get(string keyPrefix, string host)
+        {
+            var options = RouteOption.FromHost(host);
+
+            foreach (var current in options)
+            {
+                Entity<Domain> root;
+
+                if (_container.TryGetValue(current.Pattern, out root))
+                {
+                    var domain = (Domain)root;
+
+                    var context = root.Context;
+
+                    if (context != null)
+                    {
+                        const int pageSize = 65536;
+                        int count;
+                        for (count = 0; ; )
                         {
-                            const int pageSize = 65536;
-                            int count;
-                            for (count = 0; ; )
+                            var page = context.Read(keyPrefix, count, pageSize);
+
+                            for (var i = 0; i < page.Length; i++)
                             {
-                                var page = context.Read(key, count, pageSize);
-
-                                for (var i = 0; i < page.Length; i++)
-                                {
-                                    if (null != (segment = ToSegment(page[i])))
-                                    {
-                                        yield return segment;
-                                    }
-                                }
-
-                                count += page.Length;
-
-                                if (page.Length < pageSize)
-                                    break;
+                                yield return page[i];
                             }
+
+                            count += page.Length;
+
+                            if (page.Length < pageSize)
+                                break;
                         }
                     }
                 }

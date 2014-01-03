@@ -9,10 +9,10 @@ namespace Formall.Navigation
 {
     internal class Segment : ISegment
     {
-        private ISegment _parent;
-        private Set<ISegment> _children;
+        private Segment _parent;
+        private Set<Segment> _children;
 
-        public Segment(string name, ISegment parent)
+        public Segment(string name, Segment parent)
         {
             Name = name;
             _parent = parent;
@@ -29,14 +29,31 @@ namespace Formall.Navigation
             set;
         }
 
-        protected ISegment Parent
+        public Segment Parent
         {
             get { return _parent; }
+            internal set { _parent = value; }
         }
 
         protected string Path
         {
-            get { return Parent != null ? Parent.Path + '/' + Name : Name; }
+            get
+            {
+                var parent = Parent;
+                var name = Name;
+                var path = parent != null ? parent.Path : null;
+
+                if (path == null)
+                {
+                    path = name;
+                }
+                else if (name != null)
+                {
+                    path = path + '/' + name;
+                }
+
+                return path;
+            }
         }
 
         string ISegment.Name
@@ -54,14 +71,14 @@ namespace Formall.Navigation
             get { return this.Parent; }
         }
 
-        public Set<ISegment> Children
+        public Set<Segment> Children
         {
-            get { return _children ?? (_children = new Set<ISegment>((segment) => { return segment.Name; })); }
+            get { return _children ?? (_children = new Set<Segment>((segment) => { return segment.Name; })); }
         }
 
         IDictionary<string, ISegment> ISegment.Children
         {
-            get { return this.Children; }
+            get { return this.Children.AsEnumerable<KeyValuePair<string, Segment>>().ToDictionary(o => o.Key, o => (ISegment)o.Value); }
         }
 
         public virtual SegmentType Type

@@ -18,7 +18,7 @@ namespace Formall.Navigation
         private IDocument _document;
         private ISegment _parent;
 
-        public Document(IDocument document, string name, ISegment parent)
+        public Document(IDocument document, string name, Segment parent)
             : base(name, parent)
         {
             _document = document;

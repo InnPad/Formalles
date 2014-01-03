@@ -12,7 +12,7 @@ namespace Formall.Presentation
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public class EntityWriter
+    public class SegmentOutput
     {
         private readonly ISegment _segment;
         private readonly bool _writeData;
@@ -21,7 +21,7 @@ namespace Formall.Presentation
         private readonly int _indentation;
         private readonly int _startIndent;
 
-        public EntityWriter(ISegment segment, bool writeData = true, bool writeMetadata = false, bool deep = false, int indentation = 0, int startIndent = 0)
+        public SegmentOutput(ISegment segment, bool writeData = true, bool writeMetadata = false, bool deep = false, int indentation = 0, int startIndent = 0)
         {
             _segment = segment;
             _writeData = writeData;
@@ -44,7 +44,7 @@ namespace Formall.Presentation
             {
                 writer.WriteLine(startIndent, "data: {");
                 startIndent += _indentation;
-                WriteDeep(writer, _segment, startIndent);
+                WriteDeep(writer, _segment.Path.TrimStart('/'), _segment, startIndent);
                 startIndent -= _indentation;
                 writer.WriteLine();
                 writer.Write(startIndent, "}");
@@ -115,12 +115,12 @@ namespace Formall.Presentation
             }
         }
 
-        private void WriteDeep(TextWriter writer, ISegment segment, int startIndent)
+        private void WriteDeep(TextWriter writer, string key, ISegment segment, int startIndent)
         {
             IDocument document;
             IEntity entity;
 
-            writer.WriteLine(startIndent, "\"" + segment.Name + "\": {");
+            writer.WriteLine(startIndent, "\"" + key + "\": {");
 
             startIndent += _indentation;
 
@@ -153,7 +153,7 @@ namespace Formall.Presentation
                         writer.WriteLine(",");
                     }
 
-                    WriteDeep(writer, child.Value, startIndent);
+                    WriteDeep(writer, child.Value.Name, child.Value, startIndent);
                     appendComma = true;
                 }
             }

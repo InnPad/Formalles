@@ -81,7 +81,9 @@
     <Compile Include="Persistence\ZipIndex.cs" />
     <Compile Include="Persistence\ZipRepository.cs" />
     <Compile Include="Persistence\MediaType.cs" />
-    <Compile Include="Presentation\EntityWriter.cs" />
+    <Compile Include="Presentation\DocumentArrayOutput.cs" />
+    <Compile Include="Presentation\DocumentOutput.cs" />
+    <Compile Include="Presentation\SegmentOutput.cs" />
     <Compile Include="Primitive.cs">
       <SubType>Code</SubType>
     </Compile>
